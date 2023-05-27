@@ -7,6 +7,7 @@ interface ICorporation {
 
     struct Corporation{
         uint256 id;
+        uint256 tokenId;
         string name;
         string description;
         string uri;

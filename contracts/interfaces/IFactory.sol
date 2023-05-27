@@ -7,6 +7,7 @@ interface IFactory {
 
     struct Factory {
         uint256 id;
+        uint256 tokenId;
         string name;
         string description;
         string uri;

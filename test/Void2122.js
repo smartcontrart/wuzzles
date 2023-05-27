@@ -4,6 +4,13 @@ const {
 } = require("@nomicfoundation/hardhat-network-helpers");
 const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
+// const {
+//   defaultCorporation,
+//   defaultFactory,
+//   defaultLoot,
+//   defaultMod,
+//   defaultUnit,
+// } = require("./helpers.js");
 
 describe("Void2122", function () {
   // We define a fixture to reuse the same setup in every test.
@@ -12,36 +19,49 @@ describe("Void2122", function () {
 
   const defaultCorporation = {
     id: 1,
-    name: "test unit",
-    description: "test description",
-    uri: "uri",
+    tokenId: 0,
+    name: "test corporation",
+    description: "corporation description",
+    uri: "corporation uri",
     members: [],
   };
 
   const defaultFactory = {
     id: 1,
-    name: "test unit",
-    description: "test description",
-    uri: "uri",
+    tokenId: 0,
+    name: "test factory",
+    description: "factory description",
+    uri: "factory uri",
   };
 
   const defaultLoot = {
     id: 1,
-    name: "test unit",
-    description: "test description",
-    uri: "uri",
+    tokenId: 0,
+    name: "test loot",
+    description: "loot description",
+    uri: "loot uri",
     isBroken: true,
   };
 
-  const defaultModification = {
+  const defaultMod = {
     id: 1,
-    name: "test unit",
-    description: "test description",
-    uri: "uri",
+    tokenId: 0,
+    name: "test mod",
+    description: "mod description",
+    uri: "mod uri",
+  };
+
+  const defaultSchematics = {
+    id: 1,
+    tokenId: 0,
+    name: "test schematics",
+    description: "schematics description",
+    uri: "schematics uri",
   };
 
   const defaultUnit = {
     id: 1,
+    tokenId: 0,
     name: "test unit",
     level: 1,
     generation: 1,
@@ -51,8 +71,8 @@ describe("Void2122", function () {
     uris: ["uri1", "uri2"],
     values: [1, 1, 1, 1],
     rarity: "Rare",
-    modificationSlots: 2,
-    modifications: [],
+    modSlots: 2,
+    mods: [],
   };
 
   async function deployVoid2122() {
@@ -91,25 +111,33 @@ describe("Void2122", function () {
 
     it("Should create a loot", async function () {
       const { void2122 } = await loadFixture(deployVoid2122);
-      expect(await void2122.createLoot(defaultCorporation)).to.emit(
+      expect(await void2122.createLoot(defaultLoot)).to.emit(
         void2122,
         "LootCreated"
       );
     });
 
-    it("Should create a modification", async function () {
+    it("Should create a mod", async function () {
       const { void2122 } = await loadFixture(deployVoid2122);
-      expect(await void2122.createModification(defaultCorporation)).to.emit(
+      expect(await void2122.createMod(defaultMod)).to.emit(
         void2122,
-        "ModificationCreated"
+        "ModCreated"
+      );
+    });
+
+    it("Should create a schematics", async function () {
+      const { void2122 } = await loadFixture(deployVoid2122);
+      expect(await void2122.createMod(defaultSchematics)).to.emit(
+        void2122,
+        "SchematicsCreated"
       );
     });
 
     it("Should create a unit", async function () {
-      const { void2122, deployer } = await loadFixture(deployVoid2122);
+      const { void2122 } = await loadFixture(deployVoid2122);
       expect(await void2122.createUnit(defaultUnit)).to.emit(
         void2122,
-        "CreateUnit"
+        "UnitCreated"
       );
     });
     //   it("Should set the right owner", async function () {

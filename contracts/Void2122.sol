@@ -4,30 +4,33 @@ pragma solidity ^0.8.18;
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/ICorporation.sol";
 import "./interfaces/IFactory.sol";
 import "./interfaces/ILoot.sol";
-import "./interfaces/IModification.sol";
+import "./interfaces/IMod.sol";
+import "./interfaces/ISchematics.sol";
 import "./interfaces/IUnit.sol";
 
-contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IModification, IUnit {
-    uint256 tokenId;
-    uint256 unitIds;
-    uint256 lootIds;
-    uint256 factoryIds;
-    uint256 corporationIds;
-    uint256 modificationIds;
-    uint256 _royaltyAmount;
-    address _royalties_recipient;
+contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, ISchematics, IUnit {
+    uint256 public tokenId;
+    uint256 public unitIds;
+    uint256 public lootIds;
+    uint256 public factoryIds;
+    uint256 public corporationIds;
+    uint256 public modIds;
+    uint256 public _royaltyAmount;
+    address public _royalties_recipient;
     string constant public contractName = "Void 2122";
     mapping (uint256 => Unit) units;
     mapping (uint256 => Loot) loots;
     mapping (uint256 => Factory) factories;
     mapping (uint256 => Corporation) corporations;
-    mapping (uint256 => Modification) modifications;
+    mapping (uint256 => Mod) mods;
     mapping(address => bool) isAdmin;
 
+    error InvalidLoots();
     error Unauthorized();
 
     function initialize() public initializer {
@@ -37,7 +40,7 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IModific
         lootIds = 1;
         factoryIds = 1;
         corporationIds = 1;
-        modificationIds = 1;
+        modIds = 1;
         isAdmin[msg.sender] = true;
     }
 
@@ -75,31 +78,57 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IModific
         _mintBatch(to, ids, amounts, "0x0");
     }
 
-    function createCorporation(Corporation calldata _corporation)external{
+    // CORPORATIONS MANAGEMENT //
+
+    function createCorporation(Corporation calldata _corporation) external {
         corporations[corporationIds] = _corporation;
         corporationIds ++;
         emit CorporationCreated(_corporation);
     }
 
-    function disbandCorporation(Corporation calldata _corporation)external{}
+    function disbandCorporation(Corporation calldata _corporation) external {
 
-    function createFactory(Factory calldata _factory)external{
+    }
+
+    // FACTORY MANAGEMENT //
+
+    function createFactory(Factory calldata _factory) external {
         factories[factoryIds] = _factory;
         factoryIds ++;
         emit FactoryCreated(_factory);
     }
 
-    function createLoot(Loot calldata _loot)external {
+    // LOOT MANAGEMENT //
+
+    function createLoot(Loot calldata _loot) external {
         loots[lootIds] = _loot;
         lootIds ++;
         emit LootCreated(_loot);
     }
 
-    function createModification(Modification calldata _modification)external {
-        modifications[modificationIds] = _modification;
-        modificationIds ++;
-        emit ModificationCreated(_modification);
+    function mergeLoots(uint256 _schematicId, uint256 [] calldata _loots, uint256 [] calldata _amounts) external {
+        if( _loots.length > 10 ) revert InvalidLoots();
+        if(ERC1155Upgradeable.balanceOf(msg.sender, _schematicId) == 0 ) revert Unauthorized();
+        // Check if that reverts correctly when sender doesn't owm the tokens
+        _burn(msg.sender, _schematicId, 1);
+        _burnBatch(msg.sender, _loots, _amounts);
+        // _mintBatch(
+        //     msg.sender, 
+        //     craftsIds[keccak256(abi.encodePacked(_loots, _amounts))], 
+        //     craftsQuantities[keccak256(abi.encodePacked(_loots, _amounts))], 
+        //     '0x0'
+        // );
     }
+
+    // MOD MANAGEMENT //
+
+    function createMod(Mod calldata _mod) external {
+        mods[modIds] = _mod;
+        modIds ++;
+        emit ModCreated(_mod);
+    }
+
+    // UNIT MANAGEMENT //
 
     function createUnit(
         Unit calldata _unit
