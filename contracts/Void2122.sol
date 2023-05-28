@@ -1,25 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-// Uncomment this line to use console.log
-// import "hardhat/console.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
-import "./interfaces/ICorporation.sol";
-import "./interfaces/IFactory.sol";
-import "./interfaces/ILoot.sol";
-import "./interfaces/IMod.sol";
-import "./interfaces/ISchematics.sol";
-import "./interfaces/IUnit.sol";
+import "./interfaces/IVoid2122.sol";
 
-contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, ISchematics, IUnit {
+contract Void2122 is ERC1155Upgradeable, IVoid2122 {
     uint256 public tokenId;
     uint256 public unitIds;
     uint256 public lootIds;
     uint256 public factoryIds;
     uint256 public corporationIds;
     uint256 public modIds;
+    uint256 public schematicsIds;
     uint256 public _royaltyAmount;
     address public _royalties_recipient;
     string constant public contractName = "Void 2122";
@@ -29,6 +23,7 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
     mapping (uint256 => Corporation) corporations;
     mapping (uint256 => mapping (address => bool)) corporationsMembers;
     mapping (uint256 => Mod) mods;
+    mapping (uint256 => Schematics) schematics;
     mapping(address => bool) isAdmin;
 
     error InvalidLoots();
@@ -79,7 +74,42 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
         _mintBatch(to, ids, amounts, "0x0");
     }
 
-    // CORPORATIONS MANAGEMENT //
+        function burnBatch(
+        uint256[] memory ids,
+        uint256[] memory amounts
+    ) external {
+        _burnBatch(msg.sender, ids, amounts);
+    }
+
+    function setRoyalties(
+        address payable _recipient,
+        uint256 _royaltyPerCent
+    ) external adminRequired {
+        _royalties_recipient = _recipient;
+        _royaltyAmount = _royaltyPerCent;
+    }
+
+    function royaltyInfo(
+        uint256 salePrice
+    ) external view returns (address, uint256) {
+        if (_royalties_recipient != address(0)) {
+            return (_royalties_recipient, (salePrice * _royaltyAmount) / 100);
+        }
+        return (address(0), 0);
+    }
+
+    // function withdraw(address recipient) external adminRequired {
+    //     payable(recipient).transfer(address(this).balance);
+    // }
+
+
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //                                                        //
+    //                      CORPORATIONS                      //
+    //                                                        //
+    //                                                        //
+    ////////////////////////////////////////////////////////////
 
     function createCorporation(Corporation calldata _corporation) external {
         corporations[corporationIds] = _corporation;
@@ -92,12 +122,19 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
     }
 
     function addOrRemoveMember(address _member, uint256 _corporationId) external{
-        Corporation memory corp = corporations[_corporationId];
-        if(msg.sender != corp.owner) revert Unauthorized();
-        corporationsMembers[corp.id][_member] != corporationsMembers[corp.id][_member];
+        // Corporation memory corp = corporations[_corporationId];
+        // if(msg.sender != corp.owner) revert Unauthorized();
+        // corporationsMembers[corp.id][_member] != corporationsMembers[corp.id][_member];
     }
 
-    // FACTORY MANAGEMENT //
+
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //                                                        //
+    //                       FACTORIES                        //
+    //                                                        //
+    //                                                        //
+    ////////////////////////////////////////////////////////////
 
     function createFactory(Factory calldata _factory) external {
         factories[factoryIds] = _factory;
@@ -105,7 +142,14 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
         emit FactoryCreated(_factory);
     }
 
-    // LOOT MANAGEMENT //
+
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //                                                        //
+    //                         LOOTS                          //
+    //                                                        //
+    //                                                        //
+    ////////////////////////////////////////////////////////////
 
     function createLoot(Loot calldata _loot) external {
         loots[lootIds] = _loot;
@@ -117,8 +161,8 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
         if( _loots.length > 10 ) revert InvalidLoots();
         if(ERC1155Upgradeable.balanceOf(msg.sender, _schematicId) == 0 ) revert Unauthorized();
         // Check if that reverts correctly when sender doesn't owm the tokens
-        _burn(msg.sender, _schematicId, 1);
-        _burnBatch(msg.sender, _loots, _amounts);
+        // _burn(msg.sender, _schematicId, 1);
+        // _burnBatch(msg.sender, _loots, _amounts);
         // _mintBatch(
         //     msg.sender, 
         //     craftsIds[keccak256(abi.encodePacked(_loots, _amounts))], 
@@ -127,7 +171,14 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
         // );
     }
 
-    // MOD MANAGEMENT //
+
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //                                                        //
+    //                          MODS                          //
+    //                                                        //
+    //                                                        //
+    ////////////////////////////////////////////////////////////   
 
     function createMod(Mod calldata _mod) external {
         mods[modIds] = _mod;
@@ -135,7 +186,29 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
         emit ModCreated(_mod);
     }
 
-    // UNIT MANAGEMENT //
+
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //                                                        //
+    //                       SCHEMATICS                       //
+    //                                                        //
+    //                                                        //
+    ////////////////////////////////////////////////////////////   
+
+    function createSchematics(Schematics calldata _schematics) external {
+        schematics[schematicsIds] = _schematics;
+        schematicsIds ++;
+        emit SchematicsCreated(_schematics);
+    }
+
+
+    ////////////////////////////////////////////////////////////
+    //                                                        //
+    //                                                        //
+    //                         UNITS                          //
+    //                                                        //
+    //                                                        //
+    ////////////////////////////////////////////////////////////  
 
     function createUnit(
         Unit calldata _unit
@@ -160,31 +233,4 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
     //     _burn(msg.sender, tokenId, quantity);
     // }
 
-    function burnBatch(
-        uint256[] memory ids,
-        uint256[] memory amounts
-    ) external {
-        _burnBatch(msg.sender, ids, amounts);
-    }
-
-    function setRoyalties(
-        address payable _recipient,
-        uint256 _royaltyPerCent
-    ) external adminRequired {
-        _royalties_recipient = _recipient;
-        _royaltyAmount = _royaltyPerCent;
-    }
-
-    function royaltyInfo(
-        uint256 salePrice
-    ) external view returns (address, uint256) {
-        if (_royalties_recipient != address(0)) {
-            return (_royalties_recipient, (salePrice * _royaltyAmount) / 100);
-        }
-        return (address(0), 0);
-    }
-
-    function withdraw(address recipient) external adminRequired {
-        payable(recipient).transfer(address(this).balance);
-    }
 }

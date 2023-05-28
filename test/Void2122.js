@@ -4,6 +4,7 @@ const {
 } = require("@nomicfoundation/hardhat-network-helpers");
 const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
+const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 // const {
 //   defaultCorporation,
 //   defaultFactory,
@@ -21,9 +22,9 @@ describe("Void2122", function () {
     id: 1,
     tokenId: 0,
     name: "test corporation",
+    owner: ADDRESS_ZERO,
     description: "corporation description",
     uri: "corporation uri",
-    members: [],
   };
 
   const defaultFactory = {
@@ -65,7 +66,7 @@ describe("Void2122", function () {
     name: "test unit",
     level: 1,
     generation: 1,
-    make: "test make",
+    corporation: "test corporation",
     model: "test model",
     description: "test description",
     uris: ["uri1", "uri2"],
