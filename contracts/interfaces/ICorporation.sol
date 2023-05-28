@@ -8,10 +8,10 @@ interface ICorporation {
     struct Corporation{
         uint256 id;
         uint256 tokenId;
+        address owner;
         string name;
         string description;
         string uri;
-        address [] members;
     }
 
     event CorporationCreated(Corporation);
@@ -21,5 +21,7 @@ interface ICorporation {
     function createCorporation(Corporation calldata corporation) external;
 
     function disbandCorporation(Corporation calldata corporation) external;
+
+    function addMember(address _member, uint256 _corporationId) external;
 
 }

@@ -27,6 +27,7 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
     mapping (uint256 => Loot) loots;
     mapping (uint256 => Factory) factories;
     mapping (uint256 => Corporation) corporations;
+    mapping (uint256 => mapping (address => bool)) corporationsMembers;
     mapping (uint256 => Mod) mods;
     mapping(address => bool) isAdmin;
 
@@ -88,6 +89,12 @@ contract Void2122 is ERC1155Upgradeable, ICorporation, IFactory, ILoot, IMod, IS
 
     function disbandCorporation(Corporation calldata _corporation) external {
 
+    }
+
+    function addOrRemoveMember(address _member, uint256 _corporationId) external{
+        Corporation memory corp = corporations[_corporationId];
+        if(msg.sender != corp.owner) revert Unauthorized();
+        corporationsMembers[corp.id][_member] != corporationsMembers[corp.id][_member];
     }
 
     // FACTORY MANAGEMENT //
