@@ -26,4 +26,8 @@ interface IUnit {
 
     // function addMod(uint256 unitId, uint256 modId) external;
 
+    // function destroyMod(uint256 unitId, uint256 modId) external;
+
+    // function switchVisual(uint256 unitId, uint256 modId) external;
+
 }
