@@ -10,7 +10,7 @@ interface IUnit {
         string name;
         uint256 level;
         uint256 generation;
-        string make;
+        string corporation;
         string model;
         string description;
         string [] uris;
