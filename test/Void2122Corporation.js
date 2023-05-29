@@ -45,7 +45,7 @@ describe("Void2122Corporation", async function () {
     };
   }
 
-  describe("Corporations work as expected", async function () {
+  describe("Initialization", async function () {
     it("Should have a name", async function () {
       const { void2122Corporation } = await loadFixture(
         deployVoid2122Corporation
@@ -76,7 +76,33 @@ describe("Void2122Corporation", async function () {
       expect(royaltyInfo[0]).to.equal(player1.address);
       expect(royaltyInfo[1]).to.equal(15);
     });
+  });
 
+  describe("Royalties", async function () {
+    it("Should have royalties and allow to set them", async function () {
+      const { void2122Corporation, deployer, player1 } = await loadFixture(
+        deployVoid2122Corporation
+      );
+
+      let royaltyInfo = await void2122Corporation
+        .connect(deployer)
+        .royaltyInfo(100);
+      expect(royaltyInfo[0]).to.equal(deployer.address);
+      expect(royaltyInfo[1]).to.equal(10);
+
+      await void2122Corporation
+        .connect(deployer)
+        .setRoyalties(player1.address, 15);
+
+      royaltyInfo = await void2122Corporation
+        .connect(deployer)
+        .royaltyInfo(100);
+      expect(royaltyInfo[0]).to.equal(player1.address);
+      expect(royaltyInfo[1]).to.equal(15);
+    });
+  });
+
+  describe("Main functionalities", async function () {
     it("Should create a corporation, add and remove members and disband a coropration", async function () {
       const { void2122Corporation, deployer, player1 } = await loadFixture(
         deployVoid2122Corporation

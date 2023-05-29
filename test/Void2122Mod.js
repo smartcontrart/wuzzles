@@ -33,12 +33,14 @@ describe("Void2122Mod", function () {
     };
   }
 
-  describe("Initialization", function () {
+  describe("Mod tests", async function () {
     it("Should have a name", async function () {
       const { void2122Mod } = await loadFixture(deployVoid2122Mod);
       expect(await void2122Mod.name()).to.equal("Void 2122 - Mods");
     });
+  });
 
+  describe("Royalties tests", async function () {
     it("Should have royalties and allow to set them", async function () {
       const { void2122Mod, deployer, player1 } = await loadFixture(
         deployVoid2122Mod
@@ -57,9 +59,8 @@ describe("Void2122Mod", function () {
   });
 
   describe("Unit tests", async function () {
-    const { void2122Mod, deployer } = await loadFixture(deployVoid2122Mod);
-
     it("Should create a mod", async function () {
+      const { void2122Mod, deployer } = await loadFixture(deployVoid2122Mod);
       expect(await void2122Mod.connect(deployer).createMod(defaultMod)).to.emit(
         void2122Mod,
         "ModCreated"

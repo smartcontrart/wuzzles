@@ -46,7 +46,9 @@ describe("Void2122Unit", function () {
       const { void2122Unit } = await loadFixture(deployVoid2122Unit);
       expect(await void2122Unit.name()).to.equal("Void 2122 - Units");
     });
+  });
 
+  describe("Royalties tests", async function () {
     it("Should have royalties and allow to set them", async function () {
       const { void2122Unit, deployer, player1 } = await loadFixture(
         deployVoid2122Unit

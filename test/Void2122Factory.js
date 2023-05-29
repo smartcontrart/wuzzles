@@ -41,7 +41,9 @@ describe("Void2122Factory", function () {
       const { void2122Factory } = await loadFixture(deployVoid2122Factory);
       expect(await void2122Factory.name()).to.equal("Void 2122 - Factories");
     });
+  });
 
+  describe("Royalties tests", async function () {
     it("Should have royalties and allow to set them", async function () {
       const { void2122Factory, deployer, player1 } = await loadFixture(
         deployVoid2122Factory

@@ -43,7 +43,9 @@ describe("Void2122Schematic", function () {
       const { void2122Schematic } = await loadFixture(deployVoid2122Schematic);
       expect(await void2122Schematic.name()).to.equal("Void 2122 - Schematics");
     });
+  });
 
+  describe("Royalties tests", async function () {
     it("Should have royalties and allow to set them", async function () {
       const { void2122Schematic, deployer, player1 } = await loadFixture(
         deployVoid2122Schematic
