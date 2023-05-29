@@ -10,8 +10,8 @@ import "hardhat/console.sol";
 
 contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation {
     uint256 public corporationIds;
-    uint256 public _royaltyAmount;
-    address public _royalties_recipient;
+    uint256 public royaltyAmount;
+    address public royalties_recipient;
     string constant public contractName = "Void 2122 - Corporations";
     string [] uriComponents;
     mapping (uint256 => Corporation) public corporations;
@@ -25,6 +25,8 @@ contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation
         __ERC1155_init("");
         corporationIds = 1;
         isAdmin[msg.sender] = true;
+        royaltyAmount = 10;
+        royalties_recipient = msg.sender;
         uriComponents = [
             'data:application/json;utf8,{"name":"',
             '", "description":"',
@@ -69,7 +71,6 @@ contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation
         _mintBatch(to, ids, amounts, "0x0");
     }
 
-
     function burn(uint256 tokenId, uint256 quantity) public {
         _burn(msg.sender, tokenId, quantity);
     }
@@ -103,20 +104,19 @@ contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation
         return string(byteString);
     }
 
-
     function setRoyalties(
         address payable _recipient,
         uint256 _royaltyPerCent
     ) external adminRequired {
-        _royalties_recipient = _recipient;
-        _royaltyAmount = _royaltyPerCent;
+        royalties_recipient = _recipient;
+        royaltyAmount = _royaltyPerCent;
     }
 
     function royaltyInfo(
         uint256 salePrice
     ) external view returns (address, uint256) {
-        if (_royalties_recipient != address(0)) {
-            return (_royalties_recipient, (salePrice * _royaltyAmount) / 100);
+        if (royalties_recipient != address(0)) {
+            return (royalties_recipient, (salePrice * royaltyAmount) / 100);
         }
         return (address(0), 0);
     }
@@ -130,7 +130,6 @@ contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation
         corp.owner = msg.sender;
         corp.active = true;
         corporations[corporationIds] = corp;
-        console.log(corporationIds);
         corporationIds ++;
         emit CorporationCreated(corp);
     }
@@ -149,10 +148,6 @@ contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation
             corporationsMembers[corp.id][_member] = false;
             emit MemberRemoved(_member);
         }
-    }
-
-    function getOwner(uint256 _corporationId) external view returns(address){
-        return corporations[_corporationId].owner;
     }
 
 }

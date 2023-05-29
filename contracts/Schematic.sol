@@ -8,8 +8,8 @@ import "./interfaces/ISchematics.sol";
 
 contract Void2122Schematic is ERC1155Upgradeable, ISchematics{
     uint256 public schematicsIds;
-    uint256 public _royaltyAmount;
-    address public _royalties_recipient;
+    uint256 public royaltyAmount;
+    address public royalties_recipient;
     string constant public contractName = "Void 2122 - Schematics";
     mapping (uint256 => Schematics) schematics;
     mapping(address => bool) isAdmin;
@@ -20,6 +20,8 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics{
     function initialize() public initializer {
         __ERC1155_init("");
         schematicsIds = 1;
+        royaltyAmount = 10;
+        royalties_recipient = msg.sender;
         isAdmin[msg.sender] = true;
     }
 
@@ -84,15 +86,15 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics{
         address payable _recipient,
         uint256 _royaltyPerCent
     ) external adminRequired {
-        _royalties_recipient = _recipient;
-        _royaltyAmount = _royaltyPerCent;
+        royalties_recipient = _recipient;
+        royaltyAmount = _royaltyPerCent;
     }
 
     function royaltyInfo(
         uint256 salePrice
     ) external view returns (address, uint256) {
-        if (_royalties_recipient != address(0)) {
-            return (_royalties_recipient, (salePrice * _royaltyAmount) / 100);
+        if (royalties_recipient != address(0)) {
+            return (royalties_recipient, (salePrice * royaltyAmount) / 100);
         }
         return (address(0), 0);
     }
