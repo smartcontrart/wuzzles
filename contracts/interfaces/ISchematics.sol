@@ -20,7 +20,7 @@ interface ISchematics {
     /// @notice Function used to create a Schematics
     function createSchematics(Schematics calldata schematics) external;
 
-    function validateCraft(uint256, uint256 [] calldata loots, uint256 [] calldata amounts) external returns(bool);
+    function validateCraft(uint256, uint256 [] calldata loots, uint256 [] calldata amounts) external returns(uint256);
 
 
 }

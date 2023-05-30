@@ -18,4 +18,13 @@ interface IFactory {
     /// @dev Callable only by the admin
     function createFactory(Factory calldata factory) external;
 
+    /// @notice Merge multiple loots to create a an item
+    /// @dev Explain to a developer any extra details
+    /// @param loots is an array of ids of loots to be merged
+    /// @param loots is an array of amounts of loots to be merged
+    function craft(uint256, uint256, uint256 [] calldata loots, uint256 [] calldata amounts) external;
+
+    function claimCraft(uint256 _tokenId) external;
+
+
 }
