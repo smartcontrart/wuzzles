@@ -20,11 +20,4 @@ interface ILoot {
      * @notice Function to create a loot
      */
     function createLoot(Loot calldata loot) external;
-
-    /// @notice Merge multiple loots to create a an item
-    /// @dev Explain to a developer any extra details
-    /// @param loots is an array of ids of loots to be merged
-    /// @param loots is an array of amounts of loots to be merged
-    function mergeLoots(uint256, uint256 [] calldata loots, uint256 [] calldata amounts) external;
-
 }

@@ -26,10 +26,31 @@ describe("Void2122Factory", function () {
       deployer
     );
 
+    const Void2122Loot = await ethers.getContractFactory("Void2122Loot");
+    const void2122Loot = await upgrades.deployProxy(Void2122Loot, deployer);
+
+    const Void2122Mod = await ethers.getContractFactory("Void2122Mod");
+    const void2122Mod = await upgrades.deployProxy(Void2122Mod, deployer);
+
+    const Void2122Schematic = await ethers.getContractFactory(
+      "Void2122Schematic"
+    );
+    const void2122Schematic = await upgrades.deployProxy(
+      Void2122Schematic,
+      deployer
+    );
+
+    const Void2122Unit = await ethers.getContractFactory("Void2122Unit");
+    const void2122Unit = await upgrades.deployProxy(Void2122Unit, deployer);
+
     await void2122Factory.deployed();
 
     return {
       void2122Factory,
+      void2122Loot,
+      void2122Mod,
+      void2122Schematic,
+      void2122Unit,
       deployer,
       player1,
       player2,
@@ -45,9 +66,15 @@ describe("Void2122Factory", function () {
 
   describe("Royalties tests", async function () {
     it("Should have royalties and allow to set them", async function () {
-      const { void2122Factory, deployer, player1 } = await loadFixture(
-        deployVoid2122Factory
-      );
+      const {
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+        deployer,
+        player1,
+      } = await loadFixture(deployVoid2122Factory);
 
       let royaltyInfo = await void2122Factory
         .connect(deployer)
@@ -60,6 +87,53 @@ describe("Void2122Factory", function () {
       royaltyInfo = await void2122Factory.connect(deployer).royaltyInfo(100);
       expect(royaltyInfo[0]).to.equal(player1.address);
       expect(royaltyInfo[1]).to.equal(15);
+    });
+  });
+
+  describe("Administrative tasks", function () {
+    it("Should set the loot address", async function () {
+      const {
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+      } = await loadFixture(deployVoid2122Factory);
+      await void2122Factory.setLootAddress(void2122Loot.address);
+    });
+
+    it("Should set the mod address", async function () {
+      const {
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+      } = await loadFixture(deployVoid2122Factory);
+      console.log(void2122Mod.address);
+      await void2122Factory.setModAddress(void2122Mod.address);
+    });
+
+    it("Should set the schematic address", async function () {
+      const {
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+      } = await loadFixture(deployVoid2122Factory);
+      await void2122Factory.setSchematicAddress(void2122Schematic.address);
+    });
+
+    it("Should set the unit address", async function () {
+      const {
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+      } = await loadFixture(deployVoid2122Factory);
+      await void2122Factory.setUnitAddress(void2122Unit.address);
     });
   });
 

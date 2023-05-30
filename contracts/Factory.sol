@@ -5,9 +5,17 @@ import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/IFactory.sol";
+import "./Loot.sol";
+import "./Mod.sol";
+import "./Schematic.sol";
+import "./Unit.sol";
 
 contract Void2122Factory is ERC1155Upgradeable, IFactory {
     uint256 public factoryIds;
+    address public lootAddress;
+    address public modAddress;
+    address public schematicAddress;
+    address public unitAddress;
     uint256 public royaltyAmount;
     address public royalties_recipient;
     string constant public contractName = "Void 2122 - Factories";
@@ -102,10 +110,38 @@ contract Void2122Factory is ERC1155Upgradeable, IFactory {
         payable(recipient).transfer(address(this).balance);
     }
 
+    function setLootAddress(address _lootAddress) external adminRequired{
+        lootAddress = _lootAddress;
+    }
+
+    function setModAddress(address _modAddress) external adminRequired{
+        modAddress = _modAddress;
+    }
+
+    function setSchematicAddress(address _schematicAddress) external adminRequired{
+        schematicAddress = _schematicAddress;
+    }
+
+    function setUnitAddress(address _unitAddress) external adminRequired{
+        unitAddress = _unitAddress;
+    }
+
     function createFactory(Factory calldata _factory) external {
         factories[factoryIds] = _factory;
         factoryIds ++;
         emit FactoryCreated(_factory);
+    }
+
+    function craft(uint256 _schematicId, uint256 [] calldata _lootIds, uint256 [] calldata _amounts) external {
+        Void2122Schematic(schematicAddress).validateCraft(_schematicId, _lootIds, _amounts);
+        Void2122Schematic(schematicAddress).burn(_schematicId, 1);
+        _burnBatch(msg.sender, _lootIds, _amounts);
+        // _mintBatch(
+        //     msg.sender, 
+        //     craftsIds[keccak256(abi.encodePacked(_loots, _amounts))], 
+        //     craftsQuantities[keccak256(abi.encodePacked(_loots, _amounts))], 
+        //     '0x0'
+        // );
     }
 
 }

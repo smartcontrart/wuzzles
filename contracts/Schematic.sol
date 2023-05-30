@@ -108,4 +108,8 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics{
         schematicsIds ++;
         emit SchematicsCreated(_schematics);
     }
+
+     function validateCraft(uint256, uint256 [] calldata loots, uint256 [] calldata amounts) external returns(bool){
+        return true;
+     }
 }

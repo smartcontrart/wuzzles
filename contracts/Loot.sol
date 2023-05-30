@@ -5,20 +5,16 @@ import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/ILoot.sol";
-import "./Mod.sol";
-import "./Schematic.sol";
+
 
 contract Void2122Loot is ERC1155Upgradeable, ILoot {
     uint256 public lootIds;
     uint256 public royaltyAmount;
     address public royalties_recipient;
-    address public modAddress;
-    address public schematicAddress;
     string constant public contractName = "Void 2122 - Loots";
     mapping (uint256 => Loot) loots;
     mapping(address => bool) isAdmin;
 
-    error InvalidLoots();
     error Unauthorized();
 
     function initialize() public initializer {
@@ -45,14 +41,6 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
 
     function name() public pure returns (string memory) {
         return contractName;
-    }
-
-    function setModAddress(address _modAddress) external adminRequired{
-        modAddress = _modAddress;
-    }
-
-    function setSchematicAddress(address _schematicAddress) external adminRequired{
-        schematicAddress = _schematicAddress;
     }
 
     function mint(
@@ -120,18 +108,6 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
         emit LootCreated(_loot);
     }
 
-    function mergeLoots(uint256 _schematicId, uint256 [] calldata _loots, uint256 [] calldata _amounts) external {
-        if( _loots.length > 10 ) revert InvalidLoots();
-        if(Void2122Schematic(schematicAddress).balanceOf(msg.sender, _schematicId) == 0 ) revert Unauthorized();
-        // Check if that reverts correctly when sender doesn't owm the tokens
-        // _burn(msg.sender, _schematicId, 1);
-        // _burnBatch(msg.sender, _loots, _amounts);
-        // _mintBatch(
-        //     msg.sender, 
-        //     craftsIds[keccak256(abi.encodePacked(_loots, _amounts))], 
-        //     craftsQuantities[keccak256(abi.encodePacked(_loots, _amounts))], 
-        //     '0x0'
-        // );
-    }
+
 
 }

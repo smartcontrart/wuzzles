@@ -22,8 +22,10 @@ describe("Void2122Loot", function () {
 
     const Void2122Loot = await ethers.getContractFactory("Void2122Loot");
     const void2122Loot = await upgrades.deployProxy(Void2122Loot, deployer);
+
     const Void2122Mod = await ethers.getContractFactory("Void2122Mod");
     const void2122Mod = await upgrades.deployProxy(Void2122Mod, deployer);
+
     const Void2122Schematic = await ethers.getContractFactory(
       "Void2122Schematic"
     );
@@ -32,12 +34,16 @@ describe("Void2122Loot", function () {
       deployer
     );
 
+    const Void2122Unit = await ethers.getContractFactory("Void2122Unit");
+    const void2122Unit = await upgrades.deployProxy(Void2122Unit, deployer);
+
     await void2122Loot.deployed();
 
     return {
       void2122Loot,
       void2122Mod,
       void2122Schematic,
+      void2122Unit,
       deployer,
       player1,
       player2,
@@ -51,26 +57,16 @@ describe("Void2122Loot", function () {
     });
   });
 
-  describe("Administrative tasks", function () {
-    it("Should set the mod address", async function () {
-      const { void2122Loot, void2122Mod, void2122Schematic } =
-        await loadFixture(deployVoid2122Loot);
-      console.log(void2122Mod.address);
-      await void2122Loot.setModAddress(void2122Mod.address);
-    });
-
-    it("Should set the schematic address", async function () {
-      const { void2122Loot, void2122Mod, void2122Schematic } =
-        await loadFixture(deployVoid2122Loot);
-      await void2122Loot.setSchematicAddress(void2122Schematic.address);
-    });
-  });
-
   describe("Royalties tests", async function () {
     it("Should have royalties and allow to set them", async function () {
-      const { void2122Loot, deployer, player1 } = await loadFixture(
-        deployVoid2122Loot
-      );
+      const {
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+        deployer,
+        player1,
+      } = await loadFixture(deployVoid2122Loot);
 
       let royaltyInfo = await void2122Loot.connect(deployer).royaltyInfo(100);
       expect(royaltyInfo[0]).to.equal(deployer.address);
