@@ -24,6 +24,7 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     mapping (uint256 => uint256) availableUnlock;
 
     error FactoryInUse();
+    error InvalidCraft();
     error Unauthorized();
 
     function initialize() public initializer {
@@ -116,11 +117,12 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
 
     function craft(uint256 _tokenId, uint256 _schematicId, uint256 [] calldata _lootIds, uint256 [] calldata _amounts) external {
         if(timeLocks[_tokenId] > block.timestamp) revert FactoryInUse();
-        uint256 _craftReward = Void2122Schematic(schematicAddress).validateCraft(_schematicId, _lootIds, _amounts);
+        (uint256  _craftReward, uint256  _constructionTime) = Void2122Schematic(schematicAddress).validateCraft(_schematicId, _lootIds, _amounts);
+        if (_craftReward == 0) revert InvalidCraft();
         Void2122Schematic(schematicAddress).burn(_schematicId, 1);
         Void2122Loot(lootAddress).burnBatch(_lootIds, _amounts);
         availableUnlock[_tokenId] = _craftReward;
-        // start timer
+        timeLocks[_tokenId] = block.timestamp + _constructionTime;
     }
 
     function claimCraft(uint256 _tokenId) external {

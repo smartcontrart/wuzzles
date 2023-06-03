@@ -110,7 +110,6 @@ describe("Void2122Factory", function () {
         void2122Schematic,
         void2122Unit,
       } = await loadFixture(deployVoid2122Factory);
-      console.log(void2122Mod.address);
       await void2122Factory.setModAddress(void2122Mod.address);
     });
 
