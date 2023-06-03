@@ -5,6 +5,13 @@ pragma solidity 0.8.18;
 
 interface IFactory {
 
+    error FactoryInUse();
+    error InvalidCraft();
+    error OnlyOwner();
+    error RewardUnavailable();
+    error TimerOngoing();
+    error Unauthorized();
+
     struct Factory {
         uint256 id;
         string name;

@@ -2,7 +2,6 @@
 pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/IFactory.sol";
 import "./Loot.sol";
@@ -22,10 +21,6 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     mapping(address => bool) isAdmin;
     mapping (uint256 => uint256) timeLocks;
     mapping (uint256 => uint256) availableUnlock;
-
-    error FactoryInUse();
-    error InvalidCraft();
-    error Unauthorized();
 
     function initialize() public initializer {
         __ERC721_init("Void 2122 - Factories","");
@@ -126,8 +121,11 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     }
 
     function claimCraft(uint256 _tokenId) external {
-        // checkTimer
-        // mint Unit
+        if(block.timestamp < timeLocks[_tokenId]) revert TimerOngoing();
+        if(availableUnlock[_tokenId] == 0) revert RewardUnavailable();
+        if(msg.sender != IERC721Upgradeable(address(this)).ownerOf(_tokenId)) revert OnlyOwner();
+        Void2122Unit(unitAddress).mint(msg.sender, availableUnlock[_tokenId], 1);
+        availableUnlock[_tokenId] = 0;
     }
 
 }
