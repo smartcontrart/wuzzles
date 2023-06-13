@@ -17,13 +17,14 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     address public unitAddress;
     uint256 public royaltyAmount;
     address public royalties_recipient;
-    mapping (uint256 => Factory) factories;
+    mapping(uint256 => Factory) factories;
     mapping(address => bool) isAdmin;
-    mapping (uint256 => uint256) timeLocks;
-    mapping (uint256 => uint256) availableUnlock;
+    mapping(uint256 => uint256) timeLocks;
+    mapping(uint256 => uint256) rewardPendingUnlock;
+    mapping(uint256 => bool) rewardIsUnit;
 
     function initialize() public initializer {
-        __ERC721_init("Void 2122 - Factories","");
+        __ERC721_init("Void 2122 - Factories", "");
         factoryIds = 1;
         royaltyAmount = 10;
         royalties_recipient = msg.sender;
@@ -44,10 +45,7 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
             super.supportsInterface(interfaceId);
     }
 
-    function mint(
-        address to,
-        uint256 id
-    ) external adminRequired {
+    function mint(address to, uint256 id) external adminRequired {
         _mint(to, id);
     }
 
@@ -65,7 +63,6 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     //     return
     //         string(abi.encodePacked(_uri, Strings.toString(tokenId), ".json"));
     // }
-
 
     function setRoyalties(
         address payable _recipient,
@@ -88,44 +85,65 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
         payable(recipient).transfer(address(this).balance);
     }
 
-    function setLootAddress(address _lootAddress) external adminRequired{
+    function setLootAddress(address _lootAddress) external adminRequired {
         lootAddress = _lootAddress;
     }
 
-    function setModAddress(address _modAddress) external adminRequired{
+    function setModAddress(address _modAddress) external adminRequired {
         modAddress = _modAddress;
     }
 
-    function setSchematicAddress(address _schematicAddress) external adminRequired{
+    function setSchematicAddress(
+        address _schematicAddress
+    ) external adminRequired {
         schematicAddress = _schematicAddress;
     }
 
-    function setUnitAddress(address _unitAddress) external adminRequired{
+    function setUnitAddress(address _unitAddress) external adminRequired {
         unitAddress = _unitAddress;
     }
 
     function createFactory(Factory calldata _factory) external {
         factories[factoryIds] = _factory;
-        factoryIds ++;
+        factoryIds++;
         emit FactoryCreated(_factory);
     }
 
-    function craft(uint256 _tokenId, uint256 _schematicId, uint256 [] calldata _lootIds, uint256 [] calldata _amounts) external {
-        if(timeLocks[_tokenId] > block.timestamp) revert FactoryInUse();
-        (uint256  _craftReward, uint256  _constructionTime) = Void2122Schematic(schematicAddress).validateCraft(_schematicId, _lootIds, _amounts);
+    function craft(uint256 _tokenId, uint256 _schematicId) external {
+        if (timeLocks[_tokenId] > block.timestamp) revert FactoryInUse();
+        (
+            uint256 _craftReward,
+            bool _rewardIsUnit,
+            uint256 _constructionTime,
+            uint256[] memory _lootIds,
+            uint256[] memory _amounts
+        ) = Void2122Schematic(schematicAddress).validateCraft(_schematicId);
         if (_craftReward == 0) revert InvalidCraft();
         Void2122Schematic(schematicAddress).burn(_schematicId, 1);
         Void2122Loot(lootAddress).burnBatch(_lootIds, _amounts);
-        availableUnlock[_tokenId] = _craftReward;
+        rewardPendingUnlock[_tokenId] = _craftReward;
+        rewardIsUnit[_tokenId] = _rewardIsUnit;
         timeLocks[_tokenId] = block.timestamp + _constructionTime;
     }
 
     function claimCraft(uint256 _tokenId) external {
-        if(block.timestamp < timeLocks[_tokenId]) revert TimerOngoing();
-        if(availableUnlock[_tokenId] == 0) revert RewardUnavailable();
-        if(msg.sender != IERC721Upgradeable(address(this)).ownerOf(_tokenId)) revert OnlyOwner();
-        Void2122Unit(unitAddress).mint(msg.sender, availableUnlock[_tokenId], 1);
-        availableUnlock[_tokenId] = 0;
+        if (block.timestamp < timeLocks[_tokenId]) revert TimerOngoing();
+        if (rewardPendingUnlock[_tokenId] == 0) revert RewardUnavailable();
+        if (msg.sender != IERC721Upgradeable(address(this)).ownerOf(_tokenId))
+            revert OnlyOwner();
+        if (rewardIsUnit[_tokenId]) {
+            Void2122Unit(unitAddress).mint(
+                msg.sender,
+                rewardPendingUnlock[_tokenId],
+                1
+            );
+        } else {
+            Void2122Mod(modAddress).mint(
+                msg.sender,
+                rewardPendingUnlock[_tokenId],
+                1
+            );
+        }
+        rewardPendingUnlock[_tokenId] = 0;
     }
-
 }

@@ -6,12 +6,12 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/ISchematics.sol";
 
-contract Void2122Schematic is ERC1155Upgradeable, ISchematics{
+contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
     uint256 public schematicsIds;
     uint256 public royaltyAmount;
     address public royalties_recipient;
-    string constant public contractName = "Void 2122 - Schematics";
-    mapping (uint256 => Schematics) schematics;
+    string public constant contractName = "Void 2122 - Schematics";
+    mapping(uint256 => Schematics) schematics;
     mapping(address => bool) isAdmin;
 
     error InvalidLoots();
@@ -59,7 +59,6 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics{
         _mintBatch(to, ids, amounts, "0x0");
     }
 
-
     function burn(uint256 tokenId, uint256 quantity) public {
         _burn(msg.sender, tokenId, quantity);
     }
@@ -105,11 +104,23 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics{
 
     function createSchematics(Schematics calldata _schematics) external {
         schematics[schematicsIds] = _schematics;
-        schematicsIds ++;
+        schematicsIds++;
         emit SchematicsCreated(_schematics);
     }
 
-     function validateCraft(uint256, uint256 [] calldata loots, uint256 [] calldata amounts) external returns(uint256, uint256){
-        return (0, 0);
-     }
+    function validateCraft(
+        uint256 _schematicsId
+    )
+        external
+        returns (uint256, bool, uint256, uint256[] memory, uint256[] memory)
+    {
+        Schematics memory schematic = schematics[_schematicsId];
+        return (
+            schematic.output,
+            schematic.outputIsUnit,
+            schematic.constructionTime,
+            schematic.inputs,
+            schematic.inputAmounts
+        );
+    }
 }

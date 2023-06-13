@@ -2,17 +2,18 @@
 
 pragma solidity 0.8.18;
 
-
 interface ISchematics {
-
-    struct Schematics{
+    struct Schematics {
         uint256 id;
         string name;
         string description;
         string uri;
         bytes32 inputsHash;
-        string [] inputs;
-        string [] outputs;
+        uint256 constructionTime;
+        uint256[] inputs;
+        uint256[] inputAmounts;
+        uint256 output;
+        bool outputIsUnit;
     }
 
     event SchematicsCreated(Schematics);
@@ -20,7 +21,9 @@ interface ISchematics {
     /// @notice Function used to create a Schematics
     function createSchematics(Schematics calldata schematics) external;
 
-    function validateCraft(uint256, uint256 [] calldata loots, uint256 [] calldata amounts) external returns(uint256, uint256);
-
-
+    function validateCraft(
+        uint256
+    )
+        external
+        returns (uint256, bool, uint256, uint256[] memory, uint256[] memory);
 }

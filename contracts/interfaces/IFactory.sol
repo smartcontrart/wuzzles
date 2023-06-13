@@ -2,9 +2,7 @@
 
 pragma solidity 0.8.18;
 
-
 interface IFactory {
-
     error FactoryInUse();
     error InvalidCraft();
     error OnlyOwner();
@@ -27,11 +25,7 @@ interface IFactory {
 
     /// @notice Merge multiple loots to create a an item
     /// @dev Explain to a developer any extra details
-    /// @param loots is an array of ids of loots to be merged
-    /// @param loots is an array of amounts of loots to be merged
-    function craft(uint256, uint256, uint256 [] calldata loots, uint256 [] calldata amounts) external;
+    function craft(uint256 factoryId, uint256 schematicsId) external;
 
     function claimCraft(uint256 _tokenId) external;
-
-
 }
