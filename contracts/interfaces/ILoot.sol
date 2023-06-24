@@ -2,14 +2,12 @@
 
 pragma solidity 0.8.18;
 
-
-
 interface ILoot {
-
     struct Loot {
         uint256 id;
         string name;
         string description;
+        string animation;
         string uri;
         bool isBroken;
     }

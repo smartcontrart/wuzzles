@@ -14,6 +14,7 @@ interface IFactory {
         uint256 id;
         string name;
         string description;
+        string animation;
         string uri;
     }
 

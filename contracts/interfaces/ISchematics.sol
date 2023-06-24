@@ -7,6 +7,7 @@ interface ISchematics {
         uint256 id;
         string name;
         string description;
+        string animation;
         string uri;
         uint256 constructionTime;
         uint256[] inputs;

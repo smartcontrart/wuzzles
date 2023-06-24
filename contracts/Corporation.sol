@@ -20,6 +20,7 @@ contract Void2122Corporation is
     string[] uriComponents;
     mapping(uint256 => Corporation) public corporations;
     mapping(uint256 => mapping(address => bool)) corporationsMembers;
+    mapping(address => uint256) memberCorporation;
     mapping(address => bool) isAdmin;
 
     error InvalidLoots();
@@ -155,10 +156,22 @@ contract Void2122Corporation is
         if (msg.sender != corp.owner) revert Unauthorized();
         if (!corporationsMembers[corp.id][_member]) {
             corporationsMembers[corp.id][_member] = true;
+            memberCorporation[_member] = corp.id;
             emit MemberAdded(_member);
         } else {
             corporationsMembers[corp.id][_member] = false;
+            memberCorporation[_member] = 0;
             emit MemberRemoved(_member);
         }
+    }
+
+    function getPlayerCorporation(
+        address player
+    ) external view returns (string memory) {
+        uint256 playerCorporation = memberCorporation[player];
+        if (memberCorporation[player] > 0) {
+            return corporations[memberCorporation[player]].name;
+        }
+        return "";
     }
 }

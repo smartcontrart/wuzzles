@@ -22,6 +22,7 @@ describe("Void2122", function () {
     id: 1,
     name: "test factory",
     description: "factory description",
+    animation: "factory animation",
     uri: "factory uri",
   };
 
@@ -29,6 +30,7 @@ describe("Void2122", function () {
     id: 1,
     name: "test loot",
     description: "loot description",
+    animation: "loot animation",
     uri: "loot uri",
     isBroken: true,
   };
@@ -37,13 +39,15 @@ describe("Void2122", function () {
     id: 1,
     name: "test mod",
     description: "mod description",
+    animation: "mod animation",
     uri: "mod uri",
   };
 
   const defaultSchematic = {
     id: 1,
-    name: "test schematics",
-    description: "schematics description",
+    name: "test schematic",
+    description: "schematic description",
+    animation: "schematic animation",
     uri: "schematics uri",
     constructionTime: 1,
     inputs: [1, 2],
@@ -59,7 +63,8 @@ describe("Void2122", function () {
     generation: 1,
     corporation: 1,
     model: "test model",
-    description: "test description",
+    description: "unit description",
+    animation: "unit animation",
     uris: ["uri1", "uri2"],
     values: [1, 1, 1, 1],
     rarity: "Rare",

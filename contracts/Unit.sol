@@ -5,17 +5,20 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/IUnit.sol";
+import "./Corporation.sol";
 import "./Mod.sol";
 
 contract Void2122Unit is ERC721Upgradeable, IUnit {
     uint256 public unitIds;
     uint256 public royaltyAmount;
     address public royalties_recipient;
+    address public corporationAddress;
     address public modAddress;
     string public constant contractName = "Void 2122 - Units";
     mapping(uint256 => Unit) units;
     mapping(address => bool) isAdmin;
     mapping(address => uint256) mods;
+    string[] uriComponents;
 
     error Unauthorized();
 
@@ -25,6 +28,14 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         royaltyAmount = 10;
         royalties_recipient = msg.sender;
         isAdmin[msg.sender] = true;
+        uriComponents = [
+            'data:application/json;utf8,{"name":"',
+            '", "description":"',
+            '", "image":"',
+            '", "animation":"',
+            '", "attributes":[',
+            "]}"
+        ];
     }
 
     modifier adminRequired() {
@@ -53,20 +64,72 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         isAdmin[_admin] = !isAdmin[_admin];
     }
 
+    function setCorporationAddress(
+        address _corporationAddress
+    ) external adminRequired {
+        corporationAddress = _corporationAddress;
+    }
+
     function setModAddress(address _modAddress) external adminRequired {
         modAddress = _modAddress;
     }
 
-    // function uri(
-    //     uint256 tokenId
-    // ) public view virtual override returns (string memory) {
-    //     if (tokenId == 1 && !_advancedCardShifted) {
-    //         return
-    //             string(abi.encodePacked(_uri, Strings.toString(14), ".json"));
-    //     }
-    //     return
-    //         string(abi.encodePacked(_uri, Strings.toString(tokenId), ".json"));
-    // }
+    function getCorporation(
+        uint256 _tokenId
+    ) public view returns (bytes memory) {
+        string memory corpName = Void2122Corporation(corporationAddress)
+            .getPlayerCorporation(ownerOf(_tokenId));
+        if (
+            keccak256(abi.encodePacked(corpName)) ==
+            keccak256(abi.encodePacked(""))
+        ) {
+            return abi.encodePacked(corpName);
+        } else {
+            return
+                abi.encodePacked(
+                    '"}, {"trait_type": "Corporation", "value: "',
+                    corpName
+                );
+        }
+    }
+
+    function tokenURI(
+        uint256 _tokenId
+    ) public view virtual override returns (string memory) {
+        Unit memory _unit = units[_tokenId];
+        bytes memory corporation = getCorporation(_tokenId);
+        bytes memory attributes = abi.encodePacked(
+            '{"trait_type": "Level", "value: "',
+            _unit.level,
+            '"}, {"trait_type": "Generation", "value: "',
+            _unit.generation,
+            corporation,
+            '"}, {"trait_type": "Model", "value: "',
+            _unit.model,
+            '"}, {"trait_type": "Rarity", "value: "',
+            _unit.rarity,
+            '"}, {"trait_type": "Total Mods Available", "value: "',
+            _unit.modSlots,
+            '"}, {"trait_type": "Value Top", "value: "',
+            _unit.values[0],
+            '"}, {"trait_type": "Value Left", "value: "',
+            _unit.values[1],
+            '"}, {"trait_type": "Value Bottom", "value: "',
+            _unit.values[2],
+            '"}, {"trait_type": "Value Right", "value: "',
+            _unit.values[3],
+            '"},'
+        );
+        bytes memory byteString = abi.encodePacked(
+            abi.encodePacked(uriComponents[0], _unit.name),
+            abi.encodePacked(uriComponents[1], _unit.description),
+            abi.encodePacked(uriComponents[2], _unit.uris[0]),
+            abi.encodePacked(uriComponents[2], _unit.animation),
+            abi.encodePacked(uriComponents[3], attributes),
+            abi.encodePacked(uriComponents[4])
+        );
+        return string(byteString);
+    }
 
     function setRoyalties(
         address payable _recipient,
@@ -95,10 +158,7 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         emit UnitCreated(_unit);
     }
 
-    function checkModBalance(
-        Unit storage _unit,
-        uint256 _modId
-    ) internal view returns (bool) {
+    function checkModBalance(Unit storage _unit, uint256 _modId) internal view {
         uint8 modsNeeded = 1;
         for (uint8 i = 0; i < _unit.mods.length; i++) {
             if (_unit.mods[i] == _modId) {
