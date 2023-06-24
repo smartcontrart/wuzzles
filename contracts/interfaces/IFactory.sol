@@ -17,6 +17,7 @@ interface IFactory {
         string uri;
     }
 
+    event CraftInitiated();
     event FactoryCreated(Factory);
 
     /// @notice Function to create a factory

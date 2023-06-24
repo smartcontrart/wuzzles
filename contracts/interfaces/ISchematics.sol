@@ -8,7 +8,6 @@ interface ISchematics {
         string name;
         string description;
         string uri;
-        bytes32 inputsHash;
         uint256 constructionTime;
         uint256[] inputs;
         uint256[] inputAmounts;

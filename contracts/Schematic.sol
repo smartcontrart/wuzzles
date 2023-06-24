@@ -112,6 +112,7 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
         uint256 _schematicsId
     )
         external
+        view
         returns (uint256, bool, uint256, uint256[] memory, uint256[] memory)
     {
         Schematics memory schematic = schematics[_schematicsId];

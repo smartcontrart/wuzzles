@@ -3,7 +3,6 @@
 pragma solidity 0.8.18;
 
 interface IUnit {
-    
     struct Unit {
         uint256 id;
         string name;
@@ -12,21 +11,20 @@ interface IUnit {
         string corporation;
         string model;
         string description;
-        string [] uris;
-        uint256 [] values;
+        string[] uris;
+        uint256[] values;
         string rarity;
         uint256 modSlots;
-        uint256 [] mods;
+        uint256[] mods;
     }
 
     event UnitCreated(Unit);
 
     function createUnit(Unit calldata _unit) external;
 
-    // function addMod(uint256 unitId, uint256 modId) external;
+    function addMod(uint256 unitId, uint256 modId) external;
 
     // function destroyMod(uint256 unitId, uint256 modId) external;
 
     // function switchVisual(uint256 unitId, uint256 modId) external;
-
 }

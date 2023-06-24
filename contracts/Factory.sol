@@ -124,6 +124,7 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
         rewardPendingUnlock[_tokenId] = _craftReward;
         rewardIsUnit[_tokenId] = _rewardIsUnit;
         timeLocks[_tokenId] = block.timestamp + _constructionTime;
+        emit CraftInitiated();
     }
 
     function claimCraft(uint256 _tokenId) external {
@@ -134,8 +135,7 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
         if (rewardIsUnit[_tokenId]) {
             Void2122Unit(unitAddress).mint(
                 msg.sender,
-                rewardPendingUnlock[_tokenId],
-                1
+                rewardPendingUnlock[_tokenId]
             );
         } else {
             Void2122Mod(modAddress).mint(

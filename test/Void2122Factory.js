@@ -15,6 +15,18 @@ describe("Void2122Factory", function () {
     uri: "factory uri",
   };
 
+  const defaultSchematics = {
+    id: 1,
+    name: "test schematics",
+    description: "schematics description",
+    uri: "schematics uri",
+    constructionTime: 10,
+    inputs: [1, 2],
+    inputAmounts: [1, 1],
+    output: 0,
+    outputIsUnit: false,
+  };
+
   async function deployVoid2122Factory() {
     // Contracts are deployed using the first signer/account by default
     const [deployer, player1, player2] = await ethers.getSigners();
@@ -137,14 +149,42 @@ describe("Void2122Factory", function () {
   });
 
   describe("Unit tests", async function () {
-    const { void2122Factory, deployer } = await loadFixture(
-      deployVoid2122Factory
-    );
-
     it("Should create a factory", async function () {
+      const {
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+        deployer,
+      } = await loadFixture(deployVoid2122Factory);
       expect(
         await void2122Factory.connect(deployer).createFactory(defaultFactory)
       ).to.emit(void2122Factory, "FactoryCreated");
+    });
+
+    it("should craft", async function () {
+      const {
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+        deployer,
+      } = await loadFixture(deployVoid2122Factory);
+
+      await void2122Factory.connect(deployer).createFactory(defaultFactory);
+
+      expect(
+        await void2122Schematic
+          .connect(deployer)
+          .createSchematics(defaultSchematics)
+      ).to.emit(void2122Schematic, "SchematicCreated");
+
+      // expect(await void2122Factory.connect(deployer).craft(1, 1)).to.emit(
+      //   void2122Factory,
+      //   "CraftInitiated"
+      // );
     });
   });
 });

@@ -13,6 +13,11 @@ describe("Void2122Schematic", function () {
     name: "test schematics",
     description: "schematics description",
     uri: "schematics uri",
+    constructionTime: 10,
+    inputs: [1, 2],
+    inputAmounts: [1, 1],
+    output: 0,
+    outputIsUnit: false,
   };
 
   async function deployVoid2122Schematic() {
@@ -76,7 +81,7 @@ describe("Void2122Schematic", function () {
       expect(
         await void2122Schematic
           .connect(deployer)
-          .createSchematic(defaultSchematics)
+          .createSchematics(defaultSchematics)
       ).to.emit(void2122Schematic, "SchematicCreated");
     });
   });
