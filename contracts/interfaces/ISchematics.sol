@@ -15,7 +15,7 @@ interface ISchematics {
         bool outputIsUnit;
     }
 
-    event SchematicsCreated(Schematics);
+    event SchematicCreated(Schematics);
 
     /// @notice Function used to create a Schematics
     function createSchematics(Schematics calldata schematics) external;

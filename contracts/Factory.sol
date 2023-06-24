@@ -119,8 +119,8 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
             uint256[] memory _amounts
         ) = Void2122Schematic(schematicAddress).validateCraft(_schematicId);
         if (_craftReward == 0) revert InvalidCraft();
-        Void2122Schematic(schematicAddress).burn(_schematicId, 1);
-        Void2122Loot(lootAddress).burnBatch(_lootIds, _amounts);
+        Void2122Schematic(schematicAddress).burn(msg.sender, _schematicId, 1);
+        Void2122Loot(lootAddress).burnBatch(msg.sender, _lootIds, _amounts);
         rewardPendingUnlock[_tokenId] = _craftReward;
         rewardIsUnit[_tokenId] = _rewardIsUnit;
         timeLocks[_tokenId] = block.timestamp + _constructionTime;

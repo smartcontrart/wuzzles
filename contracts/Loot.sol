@@ -6,13 +6,12 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/ILoot.sol";
 
-
 contract Void2122Loot is ERC1155Upgradeable, ILoot {
     uint256 public lootIds;
     uint256 public royaltyAmount;
     address public royalties_recipient;
-    string constant public contractName = "Void 2122 - Loots";
-    mapping (uint256 => Loot) loots;
+    string public constant contractName = "Void 2122 - Loots";
+    mapping(uint256 => Loot) loots;
     mapping(address => bool) isAdmin;
 
     error Unauthorized();
@@ -59,15 +58,16 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
         _mintBatch(to, ids, amounts, "0x0");
     }
 
-        function burnBatch(
+    function burnBatch(
+        address owner,
         uint256[] memory ids,
         uint256[] memory amounts
     ) external {
-        _burnBatch(msg.sender, ids, amounts);
+        _burnBatch(owner, ids, amounts);
     }
 
-    function burn(uint256 tokenId, uint256 quantity) public {
-        _burn(msg.sender, tokenId, quantity);
+    function burn(address owner, uint256 tokenId, uint256 quantity) public {
+        _burn(owner, tokenId, quantity);
     }
 
     // function uri(
@@ -104,10 +104,7 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
 
     function createLoot(Loot calldata _loot) external {
         loots[lootIds] = _loot;
-        lootIds ++;
+        lootIds++;
         emit LootCreated(_loot);
     }
-
-
-
 }

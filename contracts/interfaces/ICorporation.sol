@@ -2,10 +2,8 @@
 
 pragma solidity 0.8.18;
 
-
 interface ICorporation {
-
-    struct Corporation{
+    struct Corporation {
         uint256 id;
         address owner;
         string name;
@@ -16,6 +14,7 @@ interface ICorporation {
     }
 
     event CorporationCreated(Corporation);
+    event CorporationDisbanded(Corporation);
     event MemberAdded(address);
     event MemberRemoved(address);
 
@@ -25,6 +24,8 @@ interface ICorporation {
 
     function disbandCorporation(Corporation calldata corporation) external;
 
-    function addOrRemoveMember(uint256 _corporationId, address _member) external;
-
+    function addOrRemoveMember(
+        uint256 _corporationId,
+        address _member
+    ) external;
 }

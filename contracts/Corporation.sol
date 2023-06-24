@@ -8,14 +8,18 @@ import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/ICorporation.sol";
 import "hardhat/console.sol";
 
-contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation {
+contract Void2122Corporation is
+    Initializable,
+    ERC1155Upgradeable,
+    ICorporation
+{
     uint256 public corporationIds;
     uint256 public royaltyAmount;
     address public royalties_recipient;
-    string constant public contractName = "Void 2122 - Corporations";
-    string [] uriComponents;
-    mapping (uint256 => Corporation) public corporations;
-    mapping (uint256 => mapping (address => bool)) corporationsMembers;
+    string public constant contractName = "Void 2122 - Corporations";
+    string[] uriComponents;
+    mapping(uint256 => Corporation) public corporations;
+    mapping(uint256 => mapping(address => bool)) corporationsMembers;
     mapping(address => bool) isAdmin;
 
     error InvalidLoots();
@@ -33,7 +37,7 @@ contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation
             '", "image":"',
             '", "animation":"',
             '", "attributes":[',
-            ']}'
+            "]}"
         ];
     }
 
@@ -130,24 +134,27 @@ contract Void2122Corporation is Initializable, ERC1155Upgradeable , ICorporation
         corp.owner = msg.sender;
         corp.active = true;
         corporations[corporationIds] = corp;
-        corporationIds ++;
+        corporationIds++;
         emit CorporationCreated(corp);
     }
 
     function disbandCorporation(Corporation calldata _corporation) external {
-        corporations[_corporation.id].active  = false;
+        corporations[_corporation.id].active = false;
+        emit CorporationDisbanded(_corporation);
     }
 
-    function addOrRemoveMember(uint256 _corporationId, address _member) external{
+    function addOrRemoveMember(
+        uint256 _corporationId,
+        address _member
+    ) external {
         Corporation memory corp = corporations[_corporationId];
-        if(msg.sender != corp.owner) revert Unauthorized();
-        if(!corporationsMembers[corp.id][_member]){
+        if (msg.sender != corp.owner) revert Unauthorized();
+        if (!corporationsMembers[corp.id][_member]) {
             corporationsMembers[corp.id][_member] = true;
             emit MemberAdded(_member);
-        }else{
+        } else {
             corporationsMembers[corp.id][_member] = false;
             emit MemberRemoved(_member);
         }
     }
-
 }

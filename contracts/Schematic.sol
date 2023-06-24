@@ -5,6 +5,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/ISchematics.sol";
+import "hardhat/console.sol";
 
 contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
     uint256 public schematicsIds;
@@ -59,8 +60,8 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
         _mintBatch(to, ids, amounts, "0x0");
     }
 
-    function burn(uint256 tokenId, uint256 quantity) public {
-        _burn(msg.sender, tokenId, quantity);
+    function burn(address owner, uint256 tokenId, uint256 quantity) public {
+        _burn(owner, tokenId, quantity);
     }
 
     function burnBatch(
@@ -105,7 +106,7 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
     function createSchematics(Schematics calldata _schematics) external {
         schematics[schematicsIds] = _schematics;
         schematicsIds++;
-        emit SchematicsCreated(_schematics);
+        emit SchematicCreated(_schematics);
     }
 
     function validateCraft(
