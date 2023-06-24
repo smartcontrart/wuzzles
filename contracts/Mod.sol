@@ -10,8 +10,8 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
     uint256 public modIds;
     uint256 public royaltyAmount;
     address public royalties_recipient;
-    string constant public contractName = "Void 2122 - Mods";
-    mapping (uint256 => Mod) mods;
+    string public constant contractName = "Void 2122 - Mods";
+    mapping(uint256 => Mod) mods;
     mapping(address => bool) isAdmin;
 
     error Unauthorized();
@@ -69,6 +69,10 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
         _burn(msg.sender, tokenId, quantity);
     }
 
+    function toggleAdmin(address _admin) external adminRequired {
+        isAdmin[_admin] = !isAdmin[_admin];
+    }
+
     // function uri(
     //     uint256 tokenId
     // ) public view virtual override returns (string memory) {
@@ -103,7 +107,7 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
 
     function createMod(Mod calldata _mod) external {
         mods[modIds] = _mod;
-        modIds ++;
+        modIds++;
         emit ModCreated(_mod);
     }
 }

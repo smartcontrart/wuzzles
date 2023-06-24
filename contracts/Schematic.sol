@@ -60,8 +60,8 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
         _mintBatch(to, ids, amounts, "0x0");
     }
 
-    function burn(address owner, uint256 tokenId, uint256 quantity) public {
-        _burn(owner, tokenId, quantity);
+    function burn(uint256 tokenId, uint256 quantity) public {
+        _burn(tx.origin, tokenId, quantity);
     }
 
     function burnBatch(
@@ -69,6 +69,10 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
         uint256[] memory amounts
     ) external {
         _burnBatch(msg.sender, ids, amounts);
+    }
+
+    function toggleAdmin(address _admin) external adminRequired {
+        isAdmin[_admin] = !isAdmin[_admin];
     }
 
     // function uri(

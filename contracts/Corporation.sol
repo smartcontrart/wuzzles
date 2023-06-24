@@ -86,6 +86,10 @@ contract Void2122Corporation is
         _burnBatch(msg.sender, ids, amounts);
     }
 
+    function toggleAdmin(address _admin) external adminRequired {
+        isAdmin[_admin] = !isAdmin[_admin];
+    }
+
     function uri(
         uint256 tokenId
     ) public view virtual override returns (string memory) {

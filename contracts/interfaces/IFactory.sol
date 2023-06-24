@@ -18,6 +18,7 @@ interface IFactory {
     }
 
     event CraftInitiated();
+    event CraftClaimed();
     event FactoryCreated(Factory);
 
     /// @notice Function to create a factory

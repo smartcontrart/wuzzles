@@ -8,6 +8,7 @@ import "./Loot.sol";
 import "./Mod.sol";
 import "./Schematic.sol";
 import "./Unit.sol";
+import "hardhat/console.sol";
 
 contract Void2122Factory is ERC721Upgradeable, IFactory {
     uint256 public factoryIds;
@@ -51,6 +52,10 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
 
     function burn(uint256 tokenId) public {
         _burn(tokenId);
+    }
+
+    function toggleAdmin(address _admin) external adminRequired {
+        isAdmin[_admin] = !isAdmin[_admin];
     }
 
     // function uri(
@@ -110,6 +115,7 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     }
 
     function craft(uint256 _tokenId, uint256 _schematicId) external {
+        if (msg.sender != ownerOf(_tokenId)) revert OnlyOwner();
         if (timeLocks[_tokenId] > block.timestamp) revert FactoryInUse();
         (
             uint256 _craftReward,
@@ -119,8 +125,8 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
             uint256[] memory _amounts
         ) = Void2122Schematic(schematicAddress).validateCraft(_schematicId);
         if (_craftReward == 0) revert InvalidCraft();
-        Void2122Schematic(schematicAddress).burn(msg.sender, _schematicId, 1);
-        Void2122Loot(lootAddress).burnBatch(msg.sender, _lootIds, _amounts);
+        Void2122Schematic(schematicAddress).burn(_schematicId, 1);
+        Void2122Loot(lootAddress).burnBatch(_lootIds, _amounts);
         rewardPendingUnlock[_tokenId] = _craftReward;
         rewardIsUnit[_tokenId] = _rewardIsUnit;
         timeLocks[_tokenId] = block.timestamp + _constructionTime;
@@ -130,8 +136,7 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     function claimCraft(uint256 _tokenId) external {
         if (block.timestamp < timeLocks[_tokenId]) revert TimerOngoing();
         if (rewardPendingUnlock[_tokenId] == 0) revert RewardUnavailable();
-        if (msg.sender != IERC721Upgradeable(address(this)).ownerOf(_tokenId))
-            revert OnlyOwner();
+        if (msg.sender != ownerOf(_tokenId)) revert OnlyOwner();
         if (rewardIsUnit[_tokenId]) {
             Void2122Unit(unitAddress).mint(
                 msg.sender,
@@ -145,5 +150,6 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
             );
         }
         rewardPendingUnlock[_tokenId] = 0;
+        emit CraftClaimed();
     }
 }

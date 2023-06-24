@@ -59,15 +59,18 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
     }
 
     function burnBatch(
-        address owner,
         uint256[] memory ids,
         uint256[] memory amounts
     ) external {
-        _burnBatch(owner, ids, amounts);
+        _burnBatch(tx.origin, ids, amounts);
     }
 
-    function burn(address owner, uint256 tokenId, uint256 quantity) public {
-        _burn(owner, tokenId, quantity);
+    function burn(uint256 tokenId, uint256 quantity) public {
+        _burn(tx.origin, tokenId, quantity);
+    }
+
+    function toggleAdmin(address _admin) external adminRequired {
+        isAdmin[_admin] = !isAdmin[_admin];
     }
 
     // function uri(

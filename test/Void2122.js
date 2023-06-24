@@ -45,7 +45,7 @@ describe("Void2122", function () {
     name: "test schematics",
     description: "schematics description",
     uri: "schematics uri",
-    constructionTime: 10,
+    constructionTime: 1,
     inputs: [1, 2],
     inputAmounts: [1, 1],
     output: 1,
@@ -172,6 +172,9 @@ describe("Void2122", function () {
     await void2122Factory.setModAddress(void2122Mod.address);
     await void2122Factory.setSchematicAddress(void2122Schematic.address);
     await void2122Factory.setUnitAddress(void2122Unit.address);
+
+    await void2122Mod.toggleAdmin(void2122Factory.address);
+    await void2122Unit.toggleAdmin(void2122Factory.address);
 
     return {
       void2122Corporation,
@@ -400,7 +403,7 @@ describe("Void2122", function () {
       );
     });
 
-    it("Should create a factory able to craft", async function () {
+    it("Should create a factory able to craft a reward and claim it", async function () {
       const {
         void2122Corporation,
         void2122Factory,
@@ -421,15 +424,19 @@ describe("Void2122", function () {
         void2122Schematic.connect(deployer).createSchematics(defaultSchematic)
       ).to.emit(void2122Schematic, "SchematicCreated");
 
+      await void2122Factory.connect(deployer).mint(player1.address, 1);
       await void2122Schematic.connect(deployer).mint(player1.address, 1, 1);
       await void2122Loot.connect(deployer).mint(player1.address, 1, 1);
       await void2122Loot.connect(deployer).mint(player1.address, 2, 1);
-      console.log(void2122Factory.address);
-      //   console.log(player1.address);
 
       await expect(void2122Factory.connect(player1).craft(1, 1)).to.emit(
         void2122Factory,
         "CraftInitiated"
+      );
+
+      await expect(void2122Factory.connect(player1).claimCraft(1)).to.emit(
+        void2122Factory,
+        "CraftClaimed"
       );
     });
   });

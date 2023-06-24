@@ -46,6 +46,10 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         _burn(tokenId);
     }
 
+    function toggleAdmin(address _admin) external adminRequired {
+        isAdmin[_admin] = !isAdmin[_admin];
+    }
+
     function addMod(uint256 _unitId, uint256 _modId) external {}
 
     // function uri(
