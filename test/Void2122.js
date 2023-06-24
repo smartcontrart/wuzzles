@@ -421,7 +421,7 @@ describe("Void2122", function () {
       ).to.emit(void2122Factory, "FactoryCreated");
 
       await expect(
-        void2122Schematic.connect(deployer).createSchematics(defaultSchematic)
+        void2122Schematic.connect(deployer).createSchematic(defaultSchematic)
       ).to.emit(void2122Schematic, "SchematicCreated");
 
       await void2122Factory.connect(deployer).mint(player1.address, 1);
@@ -438,6 +438,87 @@ describe("Void2122", function () {
         void2122Factory,
         "CraftClaimed"
       );
+    });
+  });
+
+  describe("Loot tests", function () {
+    it("Should create a loot", async function () {
+      const {
+        void2122Corporation,
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+        deployer,
+        player1,
+        player2,
+      } = await loadFixture(deployVoid2122Environment);
+
+      await expect(
+        void2122Loot.connect(deployer).createLoot(defaultLoot)
+      ).to.emit(void2122Loot, "LootCreated");
+    });
+  });
+
+  describe("Mod tests", function () {
+    it("Should create a mod", async function () {
+      const {
+        void2122Corporation,
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+        deployer,
+        player1,
+        player2,
+      } = await loadFixture(deployVoid2122Environment);
+
+      await expect(void2122Mod.connect(deployer).createMod(defaultMod)).to.emit(
+        void2122Mod,
+        "ModCreated"
+      );
+    });
+  });
+
+  describe("Schematic tests", function () {
+    it("Should create a schematic", async function () {
+      const {
+        void2122Corporation,
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+        deployer,
+        player1,
+        player2,
+      } = await loadFixture(deployVoid2122Environment);
+
+      await expect(
+        void2122Schematic.connect(deployer).createSchematic(defaultSchematic)
+      ).to.emit(void2122Schematic, "SchematicCreated");
+    });
+  });
+
+  describe("Unit tests", function () {
+    it("Should create a unit", async function () {
+      const {
+        void2122Corporation,
+        void2122Factory,
+        void2122Loot,
+        void2122Mod,
+        void2122Schematic,
+        void2122Unit,
+        deployer,
+        player1,
+        player2,
+      } = await loadFixture(deployVoid2122Environment);
+
+      await expect(
+        void2122Unit.connect(deployer).createUnit(defaultUnit)
+      ).to.emit(void2122Unit, "UnitCreated");
     });
   });
 });

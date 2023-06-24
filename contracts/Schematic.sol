@@ -107,7 +107,7 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
         payable(recipient).transfer(address(this).balance);
     }
 
-    function createSchematics(Schematics calldata _schematics) external {
+    function createSchematic(Schematics calldata _schematics) external {
         schematics[schematicsIds] = _schematics;
         schematicsIds++;
         emit SchematicCreated(_schematics);

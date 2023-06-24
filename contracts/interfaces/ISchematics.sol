@@ -18,7 +18,7 @@ interface ISchematics {
     event SchematicCreated(Schematics);
 
     /// @notice Function used to create a Schematics
-    function createSchematics(Schematics calldata schematics) external;
+    function createSchematic(Schematics calldata schematics) external;
 
     function validateCraft(
         uint256

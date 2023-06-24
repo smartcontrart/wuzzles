@@ -13,6 +13,7 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
     string public constant contractName = "Void 2122 - Units";
     mapping(uint256 => Unit) units;
     mapping(address => bool) isAdmin;
+    mapping(address => uint256) mods;
 
     error Unauthorized();
 
@@ -50,8 +51,6 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         isAdmin[_admin] = !isAdmin[_admin];
     }
 
-    function addMod(uint256 _unitId, uint256 _modId) external {}
-
     // function uri(
     //     uint256 tokenId
     // ) public view virtual override returns (string memory) {
@@ -88,5 +87,18 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         units[unitIds] = _unit;
         unitIds++;
         emit UnitCreated(_unit);
+    }
+
+    function addMod(
+        uint256 _unitId,
+        uint256 _modId,
+        uint256 _modSlotToReplace
+    ) external {
+        Unit storage _unit = units[_unitId];
+        if (_unit.mods.length < _unit.modSlots) {
+            _unit.mods.push(_modId);
+        } else {
+            _unit.mods[_modSlotToReplace] = _modId;
+        }
     }
 }

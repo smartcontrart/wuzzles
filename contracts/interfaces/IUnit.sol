@@ -20,9 +20,13 @@ interface IUnit {
 
     event UnitCreated(Unit);
 
-    function createUnit(Unit calldata _unit) external;
+    function createUnit(Unit calldata unit) external;
 
-    function addMod(uint256 unitId, uint256 modId) external;
+    function addMod(
+        uint256 unitId,
+        uint256 modId,
+        uint256 modSlotToReplace
+    ) external;
 
     // function destroyMod(uint256 unitId, uint256 modId) external;
 
