@@ -521,14 +521,50 @@ describe("Void2122", function () {
         void2122Unit.connect(deployer).createUnit(defaultUnit)
       ).to.emit(void2122Unit, "UnitCreated");
 
+      // Can't add mod without one
+      await expect(
+        void2122Unit.connect(player1).addMod(1, 1)
+      ).to.be.revertedWithCustomError(void2122Unit, "ModBalanceInsufficient");
+
       await void2122Mod.connect(deployer).createMod(defaultMod);
       await void2122Mod.connect(deployer).mint(player1.address, 1, 1);
+
       await void2122Unit.connect(deployer).createUnit(defaultUnit);
       await void2122Unit.connect(deployer).mint(player1.address, 1);
 
-      await expect(void2122Unit.connect(player1).addMod(1, 1, 0))
+      // Can add mod with one
+      await expect(void2122Unit.connect(player1).addMod(1, 1))
         .to.emit(void2122Unit, "ModAdded")
         .withArgs(1, 1);
+
+      // Can't add twice the same mod
+      await expect(
+        void2122Unit.connect(player1).addMod(1, 1)
+      ).to.be.revertedWithCustomError(void2122Unit, "ModBalanceInsufficient");
+
+      await void2122Mod.connect(deployer).mint(player1.address, 1, 1);
+
+      // Can add two times a mod if you have enough
+      await expect(void2122Unit.connect(player1).addMod(1, 1))
+        .to.emit(void2122Unit, "ModAdded")
+        .withArgs(1, 1);
+
+      await void2122Mod.connect(deployer).mint(player1.address, 1, 1);
+
+      //Can't add more mods than available slots
+      await expect(
+        void2122Unit.connect(player1).addMod(1, 1)
+      ).to.be.revertedWithCustomError(void2122Unit, "NoModSpaceAvailable");
+
+      // Can replace a mod
+      await expect(void2122Unit.connect(player1).replaceMod(1, 1, 0))
+        .to.emit(void2122Unit, "ModAdded")
+        .withArgs(1, 1);
+
+      // Can't replace a mod outside of bounds
+      await expect(void2122Unit.connect(player1).replaceMod(1, 1, 2))
+        .to.be.revertedWithCustomError(void2122Unit, "ModPositionInvalid")
+        .withArgs(2);
     });
   });
 });

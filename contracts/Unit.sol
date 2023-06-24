@@ -95,19 +95,40 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         emit UnitCreated(_unit);
     }
 
-    function addMod(
+    function checkModBalance(
+        Unit storage _unit,
+        uint256 _modId
+    ) internal view returns (bool) {
+        uint8 modsNeeded = 1;
+        for (uint8 i = 0; i < _unit.mods.length; i++) {
+            if (_unit.mods[i] == _modId) {
+                modsNeeded++;
+            }
+        }
+        if (Void2122Mod(modAddress).balanceOf(msg.sender, _modId) < modsNeeded)
+            revert ModBalanceInsufficient(_modId);
+    }
+
+    function addMod(uint256 _unitId, uint256 _modId) external {
+        Unit storage _unit = units[_unitId];
+        if (_unit.mods.length >= _unit.modSlots) {
+            revert NoModSpaceAvailable();
+        }
+        checkModBalance(_unit, _modId);
+        _unit.mods.push(_modId);
+        emit ModAdded(_unitId, _modId);
+    }
+
+    function replaceMod(
         uint256 _unitId,
         uint256 _modId,
-        uint256 _modSlotToReplace
+        uint256 _positionOfModToReplace
     ) external {
-        if (Void2122Mod(modAddress).balanceOf(msg.sender, _modId) == 0)
-            revert ModNotOwned(_modId);
         Unit storage _unit = units[_unitId];
-        if (_unit.mods.length < _unit.modSlots) {
-            _unit.mods.push(_modId);
-        } else {
-            _unit.mods[_modSlotToReplace] = _modId;
-        }
+        if (_positionOfModToReplace >= _unit.modSlots)
+            revert ModPositionInvalid(_positionOfModToReplace);
+        checkModBalance(_unit, _modId);
+        _unit.mods[_positionOfModToReplace] = _modId;
         emit ModAdded(_unitId, _modId);
     }
 

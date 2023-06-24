@@ -18,20 +18,24 @@ interface IUnit {
         uint256[] mods;
     }
 
-    error ModNotOwned(uint256);
+    error ModBalanceInsufficient(uint256);
+    error ModPositionInvalid(uint256);
+    error NoModSpaceAvailable();
 
     event ModAdded(uint256, uint256);
     event UnitCreated(Unit);
 
     function createUnit(Unit calldata unit) external;
 
-    function addMod(
-        uint256 unitId,
-        uint256 modId,
-        uint256 modSlotToReplace
-    ) external;
+    function addMod(uint256 unitId, uint256 modId) external;
 
     function destroyMod(uint256 unitId, uint256 modId) external;
+
+    function replaceMod(
+        uint256 _unitId,
+        uint256 _modId,
+        uint256 _positionOfModToReplace
+    ) external;
 
     // function switchVisual(uint256 unitId, uint256 modId) external;
 }
