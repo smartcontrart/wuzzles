@@ -5,11 +5,13 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
 import "./interfaces/IUnit.sol";
+import "./Mod.sol";
 
 contract Void2122Unit is ERC721Upgradeable, IUnit {
     uint256 public unitIds;
     uint256 public royaltyAmount;
     address public royalties_recipient;
+    address public modAddress;
     string public constant contractName = "Void 2122 - Units";
     mapping(uint256 => Unit) units;
     mapping(address => bool) isAdmin;
@@ -49,6 +51,10 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
 
     function toggleAdmin(address _admin) external adminRequired {
         isAdmin[_admin] = !isAdmin[_admin];
+    }
+
+    function setModAddress(address _modAddress) external adminRequired {
+        modAddress = _modAddress;
     }
 
     // function uri(
@@ -94,11 +100,16 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         uint256 _modId,
         uint256 _modSlotToReplace
     ) external {
+        if (Void2122Mod(modAddress).balanceOf(msg.sender, _modId) == 0)
+            revert ModNotOwned(_modId);
         Unit storage _unit = units[_unitId];
         if (_unit.mods.length < _unit.modSlots) {
             _unit.mods.push(_modId);
         } else {
             _unit.mods[_modSlotToReplace] = _modId;
         }
+        emit ModAdded(_unitId, _modId);
     }
+
+    function destroyMod(uint256 unitId, uint256 modId) external {}
 }

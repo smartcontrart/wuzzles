@@ -18,6 +18,9 @@ interface IUnit {
         uint256[] mods;
     }
 
+    error ModNotOwned(uint256);
+
+    event ModAdded(uint256, uint256);
     event UnitCreated(Unit);
 
     function createUnit(Unit calldata unit) external;
@@ -28,7 +31,7 @@ interface IUnit {
         uint256 modSlotToReplace
     ) external;
 
-    // function destroyMod(uint256 unitId, uint256 modId) external;
+    function destroyMod(uint256 unitId, uint256 modId) external;
 
     // function switchVisual(uint256 unitId, uint256 modId) external;
 }

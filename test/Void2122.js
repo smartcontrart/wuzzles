@@ -175,6 +175,7 @@ describe("Void2122", function () {
 
     await void2122Mod.toggleAdmin(void2122Factory.address);
     await void2122Unit.toggleAdmin(void2122Factory.address);
+    await void2122Unit.setModAddress(void2122Mod.address);
 
     return {
       void2122Corporation,
@@ -514,11 +515,20 @@ describe("Void2122", function () {
         deployer,
         player1,
         player2,
-      } = await loadFixture(deployVoid2122Environment);
+      } = await loadFixture(deployVoid2122EnvironmentWithContractsConfigured);
 
       await expect(
         void2122Unit.connect(deployer).createUnit(defaultUnit)
       ).to.emit(void2122Unit, "UnitCreated");
+
+      await void2122Mod.connect(deployer).createMod(defaultMod);
+      await void2122Mod.connect(deployer).mint(player1.address, 1, 1);
+      await void2122Unit.connect(deployer).createUnit(defaultUnit);
+      await void2122Unit.connect(deployer).mint(player1.address, 1);
+
+      await expect(void2122Unit.connect(player1).addMod(1, 1, 0))
+        .to.emit(void2122Unit, "ModAdded")
+        .withArgs(1, 1);
     });
   });
 });
