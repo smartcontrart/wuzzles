@@ -13,6 +13,7 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
     string public constant contractName = "Void 2122 - Loots";
     mapping(uint256 => Loot) loots;
     mapping(address => bool) isAdmin;
+    string[] uriComponents;
 
     error Unauthorized();
 
@@ -22,6 +23,13 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
         royaltyAmount = 10;
         royalties_recipient = msg.sender;
         isAdmin[msg.sender] = true;
+        uriComponents = [
+            'data:application/json;utf8,{"name":"',
+            '", "description":"',
+            '", "image":"',
+            '", "animation":"',
+            "}"
+        ];
     }
 
     modifier adminRequired() {
@@ -73,16 +81,19 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
         isAdmin[_admin] = !isAdmin[_admin];
     }
 
-    // function uri(
-    //     uint256 tokenId
-    // ) public view virtual override returns (string memory) {
-    //     if (tokenId == 1 && !_advancedCardShifted) {
-    //         return
-    //             string(abi.encodePacked(_uri, Strings.toString(14), ".json"));
-    //     }
-    //     return
-    //         string(abi.encodePacked(_uri, Strings.toString(tokenId), ".json"));
-    // }
+    function uri(
+        uint256 _tokenId
+    ) public view virtual override returns (string memory) {
+        Loot memory loot = loots[_tokenId];
+        bytes memory byteString = abi.encodePacked(
+            abi.encodePacked(uriComponents[0], loot.name),
+            abi.encodePacked(uriComponents[1], loot.description),
+            abi.encodePacked(uriComponents[2], loot.image),
+            abi.encodePacked(uriComponents[3], loot.animation),
+            abi.encodePacked(uriComponents[4])
+        );
+        return string(byteString);
+    }
 
     function setRoyalties(
         address payable _recipient,

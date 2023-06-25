@@ -14,6 +14,7 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
     string public constant contractName = "Void 2122 - Schematics";
     mapping(uint256 => Schematics) schematics;
     mapping(address => bool) isAdmin;
+    string[] uriComponents;
 
     error InvalidLoots();
     error Unauthorized();
@@ -24,6 +25,13 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
         royaltyAmount = 10;
         royalties_recipient = msg.sender;
         isAdmin[msg.sender] = true;
+        uriComponents = [
+            'data:application/json;utf8,{"name":"',
+            '", "description":"',
+            '", "image":"',
+            '", "animation":"',
+            "}"
+        ];
     }
 
     modifier adminRequired() {
@@ -75,16 +83,19 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
         isAdmin[_admin] = !isAdmin[_admin];
     }
 
-    // function uri(
-    //     uint256 tokenId
-    // ) public view virtual override returns (string memory) {
-    //     if (tokenId == 1 && !_advancedCardShifted) {
-    //         return
-    //             string(abi.encodePacked(_uri, Strings.toString(14), ".json"));
-    //     }
-    //     return
-    //         string(abi.encodePacked(_uri, Strings.toString(tokenId), ".json"));
-    // }
+    function uri(
+        uint256 _tokenId
+    ) public view virtual override returns (string memory) {
+        Schematics memory schematic = schematics[_tokenId];
+        bytes memory byteString = abi.encodePacked(
+            abi.encodePacked(uriComponents[0], schematic.name),
+            abi.encodePacked(uriComponents[1], schematic.description),
+            abi.encodePacked(uriComponents[2], schematic.image),
+            abi.encodePacked(uriComponents[3], schematic.animation),
+            abi.encodePacked(uriComponents[4])
+        );
+        return string(byteString);
+    }
 
     function setRoyalties(
         address payable _recipient,

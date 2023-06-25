@@ -7,6 +7,7 @@ interface ILoot {
         uint256 id;
         string name;
         string description;
+        string image;
         string animation;
         string uri;
         bool isBroken;

@@ -11,6 +11,7 @@ interface IUnit {
         string corporation;
         string model;
         string description;
+        string image;
         string animation;
         string[] uris;
         uint256[] values;

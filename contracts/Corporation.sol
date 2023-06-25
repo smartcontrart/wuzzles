@@ -106,9 +106,9 @@ contract Void2122Corporation is
             abi.encodePacked(uriComponents[0], corp.name),
             abi.encodePacked(uriComponents[1], corp.description),
             abi.encodePacked(uriComponents[2], corp.image),
-            abi.encodePacked(uriComponents[2], corp.animation),
-            abi.encodePacked(uriComponents[3], attributes),
-            abi.encodePacked(uriComponents[4])
+            abi.encodePacked(uriComponents[3], corp.animation),
+            abi.encodePacked(uriComponents[4], attributes),
+            abi.encodePacked(uriComponents[5])
         );
         return string(byteString);
     }
@@ -168,7 +168,6 @@ contract Void2122Corporation is
     function getPlayerCorporation(
         address player
     ) external view returns (string memory) {
-        uint256 playerCorporation = memberCorporation[player];
         if (memberCorporation[player] > 0) {
             return corporations[memberCorporation[player]].name;
         }

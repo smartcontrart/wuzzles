@@ -13,6 +13,7 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
     string public constant contractName = "Void 2122 - Mods";
     mapping(uint256 => Mod) mods;
     mapping(address => bool) isAdmin;
+    string[] uriComponents;
 
     error Unauthorized();
 
@@ -22,6 +23,14 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
         royaltyAmount = 10;
         royalties_recipient = msg.sender;
         isAdmin[msg.sender] = true;
+        uriComponents = [
+            'data:application/json;utf8,{"name":"',
+            '", "description":"',
+            '", "image":"',
+            '", "animation":"',
+            '", "attributes":[',
+            "]}"
+        ];
     }
 
     modifier adminRequired() {
@@ -73,16 +82,31 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
         isAdmin[_admin] = !isAdmin[_admin];
     }
 
-    // function uri(
-    //     uint256 tokenId
-    // ) public view virtual override returns (string memory) {
-    //     if (tokenId == 1 && !_advancedCardShifted) {
-    //         return
-    //             string(abi.encodePacked(_uri, Strings.toString(14), ".json"));
-    //     }
-    //     return
-    //         string(abi.encodePacked(_uri, Strings.toString(tokenId), ".json"));
-    // }
+    function uri(
+        uint256 _tokenId
+    ) public view virtual override returns (string memory) {
+        Mod memory mod = mods[_tokenId];
+        bytes memory attributes = abi.encodePacked(
+            '{"trait_type": "Top Bonus", "value: "',
+            mod.bonus[0],
+            '"}, {"trait_type": "Left Bonus", "value: "',
+            mod.bonus[1],
+            '"}, {"trait_type": "Bottom Bonus", "value: "',
+            mod.bonus[2],
+            '"}, {"trait_type": "Right Bonus", "value: "',
+            mod.bonus[3],
+            '"},'
+        );
+        bytes memory byteString = abi.encodePacked(
+            abi.encodePacked(uriComponents[0], mod.name),
+            abi.encodePacked(uriComponents[1], mod.description),
+            abi.encodePacked(uriComponents[2], mod.image),
+            abi.encodePacked(uriComponents[3], mod.animation),
+            abi.encodePacked(uriComponents[4], attributes),
+            abi.encodePacked(uriComponents[5])
+        );
+        return string(byteString);
+    }
 
     function setRoyalties(
         address payable _recipient,

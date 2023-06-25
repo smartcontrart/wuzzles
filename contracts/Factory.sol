@@ -23,6 +23,7 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     mapping(uint256 => uint256) timeLocks;
     mapping(uint256 => uint256) rewardPendingUnlock;
     mapping(uint256 => bool) rewardIsUnit;
+    string[] uriComponents;
 
     function initialize() public initializer {
         __ERC721_init("Void 2122 - Factories", "");
@@ -30,6 +31,14 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
         royaltyAmount = 10;
         royalties_recipient = msg.sender;
         isAdmin[msg.sender] = true;
+        uriComponents = [
+            'data:application/json;utf8,{"name":"',
+            '", "description":"',
+            '", "image":"',
+            '", "animation":"',
+            '", "attributes":[',
+            "]}"
+        ];
     }
 
     modifier adminRequired() {
@@ -58,16 +67,25 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
         isAdmin[_admin] = !isAdmin[_admin];
     }
 
-    // function uri(
-    //     uint256 tokenId
-    // ) public view virtual override returns (string memory) {
-    //     if (tokenId == 1 && !_advancedCardShifted) {
-    //         return
-    //             string(abi.encodePacked(_uri, Strings.toString(14), ".json"));
-    //     }
-    //     return
-    //         string(abi.encodePacked(_uri, Strings.toString(tokenId), ".json"));
-    // }
+    function tokenURI(
+        uint256 _tokenId
+    ) public view virtual override returns (string memory) {
+        Factory memory factory = factories[_tokenId];
+        bytes memory attributes = abi.encodePacked(
+            '{"trait_type": "Building Unit", "value: "',
+            block.timestamp < timeLocks[_tokenId] ? "True" : "False",
+            '"},'
+        );
+        bytes memory byteString = abi.encodePacked(
+            abi.encodePacked(uriComponents[0], factory.name),
+            abi.encodePacked(uriComponents[1], factory.description),
+            abi.encodePacked(uriComponents[2], factory.image),
+            abi.encodePacked(uriComponents[3], factory.animation),
+            abi.encodePacked(uriComponents[4], attributes),
+            abi.encodePacked(uriComponents[5])
+        );
+        return string(byteString);
+    }
 
     function setRoyalties(
         address payable _recipient,

@@ -7,8 +7,10 @@ interface IMod {
         uint256 id;
         string name;
         string description;
+        string image;
         string animation;
         string uri;
+        uint256[4] bonus;
     }
 
     event ModCreated(Mod);

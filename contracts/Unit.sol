@@ -124,9 +124,9 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
             abi.encodePacked(uriComponents[0], _unit.name),
             abi.encodePacked(uriComponents[1], _unit.description),
             abi.encodePacked(uriComponents[2], _unit.uris[0]),
-            abi.encodePacked(uriComponents[2], _unit.animation),
-            abi.encodePacked(uriComponents[3], attributes),
-            abi.encodePacked(uriComponents[4])
+            abi.encodePacked(uriComponents[3], _unit.animation),
+            abi.encodePacked(uriComponents[4], attributes),
+            abi.encodePacked(uriComponents[5])
         );
         return string(byteString);
     }
