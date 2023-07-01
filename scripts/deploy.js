@@ -6,6 +6,8 @@
 // global scope, and execute the script.
 const hre = require("hardhat");
 
+var fs = require("fs");
+
 async function main() {
   const [deployer] = await ethers.getSigners();
   console.log(`Deployer: ${deployer.address}`);
@@ -96,6 +98,27 @@ async function main() {
   await run("verify:verify", {
     address: void2122Unit.address,
   });
+
+  const logs = {
+    contracts: {
+      corporation: Void2122Corporation.address,
+      factory: void2122Factory.address,
+      loot: void2122Loot.address,
+      mod: void2122Mod.address,
+      schematics: void2122Schematic.address,
+      unit: void2122Unit.address,
+    },
+    proxies: {
+      corporation: void2122Corporation.address,
+      factory: void2122Factory.address,
+      loot: void2122Loot.address,
+      mod: void2122Mod.address,
+      schematics: void2122Schematic.address,
+      unit: void2122Unit.address,
+    },
+  };
+
+  fs.writeFileSync("./contract-addresses.json", JSON.stringify(logs));
 }
 
 // We recommend this pattern to be able to use async/await everywhere
