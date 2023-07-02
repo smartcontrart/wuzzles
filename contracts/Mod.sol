@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 import "./interfaces/IMod.sol";
 
 contract Void2122Mod is ERC1155Upgradeable, IMod {
@@ -88,13 +89,13 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
         Mod memory mod = mods[_tokenId];
         bytes memory attributes = abi.encodePacked(
             '{"trait_type": "Top Bonus", "value": "',
-            mod.bonus[0],
+            Strings.toString(mod.bonus[0]),
             '"}, {"trait_type": "Left Bonus", "value": "',
-            mod.bonus[1],
+            Strings.toString(mod.bonus[1]),
             '"}, {"trait_type": "Bottom Bonus", "value": "',
-            mod.bonus[2],
+            Strings.toString(mod.bonus[2]),
             '"}, {"trait_type": "Right Bonus", "value": "',
-            mod.bonus[3],
+            Strings.toString(mod.bonus[3]),
             '"}'
         );
         bytes memory byteString = abi.encodePacked(

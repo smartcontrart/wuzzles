@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -97,7 +97,7 @@ contract Void2122Corporation is
         Corporation memory corp = corporations[tokenId];
         bytes memory attributes = abi.encodePacked(
             '{"trait_type": "Active", "value": "',
-            corp.active,
+            corp.active ? "True" : "False",
             '"}, {"trait_type": "Leader", "value": "',
             corp.owner,
             '"}'

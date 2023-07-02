@@ -1,0 +1,12 @@
+{
+    "name":"test mod", 
+    "description":"mod description", 
+    "image":"https://arweave.net/uZDljbH-xZe1BMg2gjxhjx-4wlF2U7RQ7mh70ryzlUE", 
+    "animation":"", 
+    "attributes":[
+        {"trait_type": "Top Bonus", "value": ""}, 
+        {"trait_type": "Left Bonus", "value": ""}, 
+        {"trait_type": "Bottom Bonus", "value": ""}, 
+        {"trait_type": "Right Bonus", "value": ""}
+        ]
+}

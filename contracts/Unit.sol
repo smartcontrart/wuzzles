@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 import "./interfaces/IUnit.sol";
 import "./Corporation.sol";
 import "./Mod.sol";
@@ -99,26 +100,30 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         Unit memory _unit = units[_tokenId];
         bytes memory corporation = getCorporation(_tokenId);
         bytes memory attributes = abi.encodePacked(
-            '{"trait_type": "Level", "value": "',
-            _unit.level,
-            '"}, {"trait_type": "Generation", "value": "',
-            _unit.generation,
-            corporation,
-            '"}, {"trait_type": "Model", "value": "',
-            _unit.model,
-            '"}, {"trait_type": "Rarity", "value": "',
-            _unit.rarity,
-            '"}, {"trait_type": "Total Mods Available", "value": "',
-            _unit.modSlots,
-            '"}, {"trait_type": "Value Top", "value": "',
-            _unit.values[0],
-            '"}, {"trait_type": "Value Left", "value": "',
-            _unit.values[1],
-            '"}, {"trait_type": "Value Bottom", "value": "',
-            _unit.values[2],
-            '"}, {"trait_type": "Value Right", "value": "',
-            _unit.values[3],
-            '"},'
+            abi.encodePacked(
+                '{"trait_type": "Level", "value": "',
+                Strings.toString(_unit.level),
+                '"}, {"trait_type": "Generation", "value": "',
+                Strings.toString(_unit.generation),
+                corporation,
+                '"}, {"trait_type": "Model", "value": "',
+                _unit.model,
+                '"}, {"trait_type": "Rarity", "value": "',
+                _unit.rarity,
+                '"}, {"trait_type": "Total Mods Available", "value": "'
+            ),
+            abi.encodePacked(
+                Strings.toString(_unit.modSlots),
+                '"}, {"trait_type": "Value Top", "value": "',
+                Strings.toString(_unit.values[0]),
+                '"}, {"trait_type": "Value Left", "value": "',
+                Strings.toString(_unit.values[1]),
+                '"}, {"trait_type": "Value Bottom", "value": "',
+                Strings.toString(_unit.values[2]),
+                '"}, {"trait_type": "Value Right", "value": "',
+                Strings.toString(_unit.values[3]),
+                '"},'
+            )
         );
         bytes memory byteString = abi.encodePacked(
             abi.encodePacked(uriComponents[0], _unit.name),
