@@ -105,7 +105,7 @@ async function main() {
       factory: void2122Factory.address,
       loot: void2122Loot.address,
       mod: void2122Mod.address,
-      schematics: void2122Schematic.address,
+      schematic: void2122Schematic.address,
       unit: void2122Unit.address,
     },
     proxies: {
@@ -113,7 +113,7 @@ async function main() {
       factory: void2122Factory.address,
       loot: void2122Loot.address,
       mod: void2122Mod.address,
-      schematics: void2122Schematic.address,
+      schematic: void2122Schematic.address,
       unit: void2122Unit.address,
     },
   };
