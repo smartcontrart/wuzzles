@@ -122,7 +122,7 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
                 Strings.toString(_unit.values[2]),
                 '"}, {"trait_type": "Value Right", "value": "',
                 Strings.toString(_unit.values[3]),
-                '"},'
+                '"}'
             )
         );
         bytes memory byteString = abi.encodePacked(

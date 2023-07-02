@@ -80,6 +80,9 @@ async function main() {
   await void2122Unit.setModAddress(void2122Mod.address);
   console.log(`Mod address set in Unit`);
 
+  await void2122Unit.setCorporationAddress(void2122Corporation.address);
+  console.log(`Corporation address set in Unit`);
+
   await run("verify:verify", {
     address: void2122Corporation.address,
   });

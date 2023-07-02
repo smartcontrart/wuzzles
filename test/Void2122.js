@@ -187,6 +187,7 @@ describe("Void2122", function () {
     await void2122Mod.toggleAdmin(void2122Factory.address);
     await void2122Unit.toggleAdmin(void2122Factory.address);
     await void2122Unit.setModAddress(void2122Mod.address);
+    await void2122Unit.setCorporationAddress(void2122Corporation.address);
 
     return {
       void2122Corporation,
@@ -322,7 +323,7 @@ describe("Void2122", function () {
   });
 
   describe("Corporation tests", function () {
-    it("Should create a corporation, add and remove members and disband a coropration", async function () {
+    it("Should create a corporation, mint it, have a uri, add and remove members and disband a coropration", async function () {
       const {
         void2122Corporation,
         void2122Factory,
@@ -340,6 +341,17 @@ describe("Void2122", function () {
           .connect(deployer)
           .createCorporation(defaultCorporation)
       ).to.emit(void2122Corporation, "CorporationCreated");
+
+      void2122Corporation.connect(deployer).mint(player1.address, 1, 1);
+      expect(
+        await void2122Corporation
+          .connect(deployer)
+          .balanceOf(player1.address, 1)
+      ).to.equal(1);
+
+      expect(await void2122Corporation.connect(deployer).uri(1)).to.equal(
+        'data:application/json;utf8,{"name":"test corporation", "description":"corporation description", "image":"corporation image", "animation":"corporation animation", "attributes":[{"trait_type": "Active", "value": "True"}, {"trait_type": "Name", "value": "test corporation"}, {"trait_type": "Id", "value": "1"}]}'
+      );
 
       await expect(
         void2122Corporation
@@ -366,7 +378,7 @@ describe("Void2122", function () {
   });
 
   describe("Factory tests", function () {
-    it("create a factory", async function () {
+    it("create a factory,mint it and have a uri", async function () {
       const {
         void2122Corporation,
         void2122Factory,
@@ -382,6 +394,15 @@ describe("Void2122", function () {
       await expect(
         void2122Factory.connect(deployer).createFactory(defaultFactory)
       ).to.emit(void2122Factory, "FactoryCreated");
+
+      void2122Factory.connect(deployer).mint(player1.address, 1);
+      expect(await void2122Factory.connect(deployer).ownerOf(1)).to.equal(
+        player1.address
+      );
+
+      expect(await void2122Factory.connect(deployer).tokenURI(1)).to.equal(
+        'data:application/json;utf8,{"name":"test factory", "description":"factory description", "image":"factory image", "animation":"factory animation", "attributes":[{"trait_type": "Building Unit", "value": "False"}]}'
+      );
     });
 
     it("Should set contract addresses", async function () {
@@ -454,7 +475,7 @@ describe("Void2122", function () {
   });
 
   describe("Loot tests", function () {
-    it("Should create a loot", async function () {
+    it("Should create a loot, mint it and have a uri", async function () {
       const {
         void2122Corporation,
         void2122Factory,
@@ -470,11 +491,20 @@ describe("Void2122", function () {
       await expect(
         void2122Loot.connect(deployer).createLoot(defaultLoot)
       ).to.emit(void2122Loot, "LootCreated");
+
+      void2122Loot.connect(deployer).mint(player1.address, 1, 1);
+      expect(
+        await void2122Loot.connect(deployer).balanceOf(player1.address, 1)
+      ).to.equal(1);
+
+      expect(await void2122Loot.connect(deployer).uri(1)).to.equal(
+        'data:application/json;utf8,{"name":"test loot", "description":"loot description", "image":"loot image", "animation":"loot animation"}'
+      );
     });
   });
 
   describe("Mod tests", function () {
-    it("Should create a mod", async function () {
+    it("Should create a mod, mint it and have a uri", async function () {
       const {
         void2122Corporation,
         void2122Factory,
@@ -491,11 +521,20 @@ describe("Void2122", function () {
         void2122Mod,
         "ModCreated"
       );
+
+      void2122Mod.connect(deployer).mint(player1.address, 1, 1);
+      expect(
+        await void2122Mod.connect(deployer).balanceOf(player1.address, 1)
+      ).to.equal(1);
+
+      expect(await void2122Mod.connect(deployer).uri(1)).to.equal(
+        'data:application/json;utf8,{"name":"test mod", "description":"mod description", "image":"mod image", "animation":"mod animation", "attributes":[{"trait_type": "Top Bonus", "value": "0"}, {"trait_type": "Left Bonus", "value": "1"}, {"trait_type": "Bottom Bonus", "value": "0"}, {"trait_type": "Right Bonus", "value": "2"}]}'
+      );
     });
   });
 
   describe("Schematic tests", function () {
-    it("Should create a schematic", async function () {
+    it("Should create a schematic, mint it and have a uri", async function () {
       const {
         void2122Corporation,
         void2122Factory,
@@ -511,11 +550,20 @@ describe("Void2122", function () {
       await expect(
         void2122Schematic.connect(deployer).createSchematic(defaultSchematic)
       ).to.emit(void2122Schematic, "SchematicCreated");
+
+      void2122Schematic.connect(deployer).mint(player1.address, 1, 1);
+      expect(
+        await void2122Schematic.connect(deployer).balanceOf(player1.address, 1)
+      ).to.equal(1);
+
+      expect(await void2122Schematic.connect(deployer).uri(1)).to.equal(
+        'data:application/json;utf8,{"name":"test schematic", "description":"schematic description", "image":"schematic image", "animation":"schematic animation"}'
+      );
     });
   });
 
   describe("Unit tests", function () {
-    it("Should create a unit", async function () {
+    it("Should create a unit, mint it, have a uri, add and remove mods", async function () {
       const {
         void2122Corporation,
         void2122Factory,
@@ -532,6 +580,15 @@ describe("Void2122", function () {
         void2122Unit.connect(deployer).createUnit(defaultUnit)
       ).to.emit(void2122Unit, "UnitCreated");
 
+      void2122Unit.connect(deployer).mint(player1.address, 1);
+      expect(await void2122Unit.connect(deployer).ownerOf(1)).to.equal(
+        player1.address
+      );
+
+      expect(await void2122Unit.connect(deployer).tokenURI(1)).to.equal(
+        'data:application/json;utf8,{"name":"test unit", "description":"unit description", "image":"uri1", "animation":"unit animation", "attributes":[{"trait_type": "Level", "value": "1"}, {"trait_type": "Generation", "value": "1"}, {"trait_type": "Model", "value": "unit model"}, {"trait_type": "Rarity", "value": "Rare"}, {"trait_type": "Total Mods Available", "value": "2"}, {"trait_type": "Value Top", "value": "1"}, {"trait_type": "Value Left", "value": "1"}, {"trait_type": "Value Bottom", "value": "1"}, {"trait_type": "Value Right", "value": "1"}]}'
+      );
+
       // Can't add mod without one
       await expect(
         void2122Unit.connect(player1).addMod(1, 1)
@@ -541,7 +598,7 @@ describe("Void2122", function () {
       await void2122Mod.connect(deployer).mint(player1.address, 1, 1);
 
       await void2122Unit.connect(deployer).createUnit(defaultUnit);
-      await void2122Unit.connect(deployer).mint(player1.address, 1);
+      // await void2122Unit.connect(deployer).mint(player1.address, 1);
 
       // Can add mod with one
       await expect(void2122Unit.connect(player1).addMod(1, 1))

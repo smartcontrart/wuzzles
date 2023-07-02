@@ -5,6 +5,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@manifoldxyz/royalty-registry-solidity/contracts/specs/IEIP2981.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 import "./interfaces/ICorporation.sol";
 import "hardhat/console.sol";
 
@@ -98,8 +99,10 @@ contract Void2122Corporation is
         bytes memory attributes = abi.encodePacked(
             '{"trait_type": "Active", "value": "',
             corp.active ? "True" : "False",
-            '"}, {"trait_type": "Leader", "value": "',
-            corp.owner,
+            '"}, {"trait_type": "Name", "value": "',
+            corp.name,
+            '"}, {"trait_type": "Id", "value": "',
+            Strings.toString(corp.id),
             '"}'
         );
         bytes memory byteString = abi.encodePacked(
