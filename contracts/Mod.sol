@@ -87,15 +87,15 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
     ) public view virtual override returns (string memory) {
         Mod memory mod = mods[_tokenId];
         bytes memory attributes = abi.encodePacked(
-            '{"trait_type": "Top Bonus", "value: "',
+            '{"trait_type": "Top Bonus", "value": "',
             mod.bonus[0],
-            '"}, {"trait_type": "Left Bonus", "value: "',
+            '"}, {"trait_type": "Left Bonus", "value": "',
             mod.bonus[1],
-            '"}, {"trait_type": "Bottom Bonus", "value: "',
+            '"}, {"trait_type": "Bottom Bonus", "value": "',
             mod.bonus[2],
-            '"}, {"trait_type": "Right Bonus", "value: "',
+            '"}, {"trait_type": "Right Bonus", "value": "',
             mod.bonus[3],
-            '"},'
+            '"}'
         );
         bytes memory byteString = abi.encodePacked(
             abi.encodePacked(uriComponents[0], mod.name),

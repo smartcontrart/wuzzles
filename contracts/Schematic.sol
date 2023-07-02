@@ -30,7 +30,7 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
             '", "description":"',
             '", "image":"',
             '", "animation":"',
-            "}"
+            '"}'
         ];
     }
 

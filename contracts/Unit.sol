@@ -87,7 +87,7 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         } else {
             return
                 abi.encodePacked(
-                    '"}, {"trait_type": "Corporation", "value: "',
+                    '"}, {"trait_type": "Corporation", "value": "',
                     corpName
                 );
         }
@@ -99,24 +99,24 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         Unit memory _unit = units[_tokenId];
         bytes memory corporation = getCorporation(_tokenId);
         bytes memory attributes = abi.encodePacked(
-            '{"trait_type": "Level", "value: "',
+            '{"trait_type": "Level", "value": "',
             _unit.level,
-            '"}, {"trait_type": "Generation", "value: "',
+            '"}, {"trait_type": "Generation", "value": "',
             _unit.generation,
             corporation,
-            '"}, {"trait_type": "Model", "value: "',
+            '"}, {"trait_type": "Model", "value": "',
             _unit.model,
-            '"}, {"trait_type": "Rarity", "value: "',
+            '"}, {"trait_type": "Rarity", "value": "',
             _unit.rarity,
-            '"}, {"trait_type": "Total Mods Available", "value: "',
+            '"}, {"trait_type": "Total Mods Available", "value": "',
             _unit.modSlots,
-            '"}, {"trait_type": "Value Top", "value: "',
+            '"}, {"trait_type": "Value Top", "value": "',
             _unit.values[0],
-            '"}, {"trait_type": "Value Left", "value: "',
+            '"}, {"trait_type": "Value Left", "value": "',
             _unit.values[1],
-            '"}, {"trait_type": "Value Bottom", "value: "',
+            '"}, {"trait_type": "Value Bottom", "value": "',
             _unit.values[2],
-            '"}, {"trait_type": "Value Right", "value: "',
+            '"}, {"trait_type": "Value Right", "value": "',
             _unit.values[3],
             '"},'
         );

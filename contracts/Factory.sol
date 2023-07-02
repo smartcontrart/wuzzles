@@ -72,9 +72,9 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     ) public view virtual override returns (string memory) {
         Factory memory factory = factories[_tokenId];
         bytes memory attributes = abi.encodePacked(
-            '{"trait_type": "Building Unit", "value: "',
+            '{"trait_type": "Building Unit", "value": "',
             block.timestamp < timeLocks[_tokenId] ? "True" : "False",
-            '"},'
+            '"}'
         );
         bytes memory byteString = abi.encodePacked(
             abi.encodePacked(uriComponents[0], factory.name),

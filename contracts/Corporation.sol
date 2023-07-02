@@ -96,11 +96,11 @@ contract Void2122Corporation is
     ) public view virtual override returns (string memory) {
         Corporation memory corp = corporations[tokenId];
         bytes memory attributes = abi.encodePacked(
-            '{"trait_type": "Active", "value: "',
+            '{"trait_type": "Active", "value": "',
             corp.active,
-            '"}, {"trait_type": "Leader", "value: "',
+            '"}, {"trait_type": "Leader", "value": "',
             corp.owner,
-            '"},'
+            '"}'
         );
         bytes memory byteString = abi.encodePacked(
             abi.encodePacked(uriComponents[0], corp.name),

@@ -28,7 +28,7 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
             '", "description":"',
             '", "image":"',
             '", "animation":"',
-            "}"
+            '"}'
         ];
     }
 

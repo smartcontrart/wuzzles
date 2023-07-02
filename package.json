@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@manifoldxyz/royalty-registry-solidity": "^2.0.3",
-    "@openzeppelin/contracts-upgradeable": "^4.8.3"
+    "@openzeppelin/contracts-upgradeable": "^4.8.3",
+    "dotenv": "^16.3.1"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
