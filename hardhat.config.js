@@ -18,6 +18,7 @@ module.exports = {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
   networks: {
+    hardhat: {},
     goerli: {
       url: "https://goerli.infura.io/v3/" + process.env.INFURA_API_KEY,
       accounts: [`0x` + process.env.PRIVATE_KEY],
