@@ -21,6 +21,7 @@ interface IUnit {
 
     struct Unit {
         uint256 template;
+        uint256 visual;
         uint256[] mods;
     }
 
@@ -35,13 +36,16 @@ interface IUnit {
 
     function addMod(uint256 _tokenId, uint256 _modId) external;
 
-    function destroyMod(uint256 _tokenId, uint256 _modId) external;
-
     function replaceMod(
         uint256 _tokenId,
         uint256 _modId,
         uint256 _positionOfModToReplace
     ) external;
 
-    function switchVisual(uint256 _tokenId) external;
+    function destroyMod(
+        uint256 _tokenId,
+        uint256 _positionOfModToDestroy
+    ) external;
+
+    function switchVisual(uint256 _tokenId, uint256 _visual) external;
 }

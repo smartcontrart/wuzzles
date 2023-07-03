@@ -211,7 +211,6 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
 
     function destroyMod(
         uint256 _tokenId,
-        uint256 _modId,
         uint256 _positionOfModToDestroy
     ) external {
         Unit storage _unit = units[_tokenId];
