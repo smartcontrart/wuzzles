@@ -57,7 +57,7 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
     }
 
     function mint(address _to, uint256 _unitTemplate) external adminRequired {
-        Unit memory _unit = Unit(_unitTemplate, new uint256[](0));
+        Unit memory _unit = Unit(_unitTemplate, 0, new uint256[](0));
         units[tokenId] = _unit;
         _mint(_to, tokenId);
         tokenId++;
@@ -135,7 +135,10 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         bytes memory byteString = abi.encodePacked(
             abi.encodePacked(uriComponents[0], _unitTemplate.name),
             abi.encodePacked(uriComponents[1], _unitTemplate.description),
-            abi.encodePacked(uriComponents[2], _unitTemplate.uris[0]),
+            abi.encodePacked(
+                uriComponents[2],
+                _unitTemplate.uris[_unit.visual]
+            ),
             abi.encodePacked(uriComponents[3], _unitTemplate.animation),
             abi.encodePacked(uriComponents[4], attributes),
             abi.encodePacked(uriComponents[5])
@@ -206,5 +209,20 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         emit ModAdded(_tokenId, _modId);
     }
 
-    function destroyMod(uint256 _tokenId, uint256 modId) external {}
+    function destroyMod(
+        uint256 _tokenId,
+        uint256 _modId,
+        uint256 _positionOfModToDestroy
+    ) external {
+        Unit storage _unit = units[_tokenId];
+        if (_positionOfModToDestroy >= _unit.mods.length)
+            revert ModPositionInvalid(_positionOfModToDestroy);
+        _unit.mods[_positionOfModToDestroy] = 0;
+    }
+
+    function switchVisual(uint256 _tokenId, uint256 _visual) external {
+        // Need to add check for a valid visual
+        Unit storage _unit = units[_tokenId];
+        _unit.visual = _visual;
+    }
 }

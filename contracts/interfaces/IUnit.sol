@@ -33,9 +33,9 @@ interface IUnit {
 
     function createUnitTemplate(UnitTemplate calldata _unitTemplate) external;
 
-    function addMod(uint256 _tokenId, uint256 modId) external;
+    function addMod(uint256 _tokenId, uint256 _modId) external;
 
-    function destroyMod(uint256 _tokenId, uint256 modId) external;
+    function destroyMod(uint256 _tokenId, uint256 _modId) external;
 
     function replaceMod(
         uint256 _tokenId,
@@ -43,5 +43,5 @@ interface IUnit {
         uint256 _positionOfModToReplace
     ) external;
 
-    // function switchVisual(uint256 unitId, uint256 modId) external;
+    function switchVisual(uint256 _tokenId) external;
 }
