@@ -3,7 +3,7 @@
 pragma solidity 0.8.17;
 
 interface IUnit {
-    struct Unit {
+    struct UnitTemplate {
         uint256 id;
         string name;
         uint256 level;
@@ -17,6 +17,10 @@ interface IUnit {
         uint256[] values;
         string rarity;
         uint256 modSlots;
+    }
+
+    struct Unit {
+        uint256 template;
         uint256[] mods;
     }
 
@@ -25,16 +29,16 @@ interface IUnit {
     error NoModSpaceAvailable();
 
     event ModAdded(uint256, uint256);
-    event UnitCreated(Unit);
+    event UnitTemplateCreated(UnitTemplate);
 
-    function createUnit(Unit calldata unit) external;
+    function createUnitTemplate(UnitTemplate calldata _unitTemplate) external;
 
-    function addMod(uint256 unitId, uint256 modId) external;
+    function addMod(uint256 _tokenId, uint256 modId) external;
 
-    function destroyMod(uint256 unitId, uint256 modId) external;
+    function destroyMod(uint256 _tokenId, uint256 modId) external;
 
     function replaceMod(
-        uint256 _unitId,
+        uint256 _tokenId,
         uint256 _modId,
         uint256 _positionOfModToReplace
     ) external;

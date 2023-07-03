@@ -61,7 +61,7 @@ describe("Void2122", function () {
     outputIsUnit: false,
   };
 
-  const defaultUnit = {
+  const defaultUnitTemplate = {
     id: 1,
     name: "test unit",
     level: 1,
@@ -75,7 +75,6 @@ describe("Void2122", function () {
     values: [1, 1, 1, 1],
     rarity: "Rare",
     modSlots: 2,
-    mods: [],
   };
 
   async function deployVoid2122Environment() {
@@ -577,8 +576,8 @@ describe("Void2122", function () {
       } = await loadFixture(deployVoid2122EnvironmentWithContractsConfigured);
 
       await expect(
-        void2122Unit.connect(deployer).createUnit(defaultUnit)
-      ).to.emit(void2122Unit, "UnitCreated");
+        void2122Unit.connect(deployer).createUnitTemplate(defaultUnitTemplate)
+      ).to.emit(void2122Unit, "UnitTemplateCreated");
 
       void2122Unit.connect(deployer).mint(player1.address, 1);
       expect(await void2122Unit.connect(deployer).ownerOf(1)).to.equal(
@@ -597,7 +596,9 @@ describe("Void2122", function () {
       await void2122Mod.connect(deployer).createMod(defaultMod);
       await void2122Mod.connect(deployer).mint(player1.address, 1, 1);
 
-      await void2122Unit.connect(deployer).createUnit(defaultUnit);
+      await void2122Unit
+        .connect(deployer)
+        .createUnitTemplate(defaultUnitTemplate);
       // await void2122Unit.connect(deployer).mint(player1.address, 1);
 
       // Can add mod with one

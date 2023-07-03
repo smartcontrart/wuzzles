@@ -11,12 +11,14 @@ import "./Mod.sol";
 
 contract Void2122Unit is ERC721Upgradeable, IUnit {
     uint256 public unitIds;
+    uint256 public tokenId;
     uint256 public royaltyAmount;
     address public royalties_recipient;
     address public corporationAddress;
     address public modAddress;
     string public constant contractName = "Void 2122 - Units";
     mapping(uint256 => Unit) units;
+    mapping(uint256 => UnitTemplate) unitTemplates;
     mapping(address => bool) isAdmin;
     mapping(address => uint256) mods;
     string[] uriComponents;
@@ -26,6 +28,7 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
     function initialize() public initializer {
         __ERC721_init("Void 2122 - Units", "V2122Units");
         unitIds = 1;
+        tokenId = 1;
         royaltyAmount = 10;
         royalties_recipient = msg.sender;
         isAdmin[msg.sender] = true;
@@ -53,12 +56,15 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
             super.supportsInterface(interfaceId);
     }
 
-    function mint(address to, uint256 id) external adminRequired {
-        _mint(to, id);
+    function mint(address _to, uint256 _unitTemplate) external adminRequired {
+        Unit memory _unit = Unit(_unitTemplate, new uint256[](0));
+        units[tokenId] = _unit;
+        _mint(_to, tokenId);
+        tokenId++;
     }
 
-    function burn(uint256 tokenId) public {
-        _burn(tokenId);
+    function burn(uint256 _tokenId) public {
+        _burn(_tokenId);
     }
 
     function toggleAdmin(address _admin) external adminRequired {
@@ -98,38 +104,39 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         uint256 _tokenId
     ) public view virtual override returns (string memory) {
         Unit memory _unit = units[_tokenId];
+        UnitTemplate memory _unitTemplate = unitTemplates[_unit.template];
         bytes memory corporation = getCorporation(_tokenId);
         bytes memory attributes = abi.encodePacked(
             abi.encodePacked(
                 '{"trait_type": "Level", "value": "',
-                Strings.toString(_unit.level),
+                Strings.toString(_unitTemplate.level),
                 '"}, {"trait_type": "Generation", "value": "',
-                Strings.toString(_unit.generation),
+                Strings.toString(_unitTemplate.generation),
                 corporation,
                 '"}, {"trait_type": "Model", "value": "',
-                _unit.model,
+                _unitTemplate.model,
                 '"}, {"trait_type": "Rarity", "value": "',
-                _unit.rarity,
+                _unitTemplate.rarity,
                 '"}, {"trait_type": "Total Mods Available", "value": "'
             ),
             abi.encodePacked(
-                Strings.toString(_unit.modSlots),
+                Strings.toString(_unitTemplate.modSlots),
                 '"}, {"trait_type": "Value Top", "value": "',
-                Strings.toString(_unit.values[0]),
+                Strings.toString(_unitTemplate.values[0]),
                 '"}, {"trait_type": "Value Left", "value": "',
-                Strings.toString(_unit.values[1]),
+                Strings.toString(_unitTemplate.values[1]),
                 '"}, {"trait_type": "Value Bottom", "value": "',
-                Strings.toString(_unit.values[2]),
+                Strings.toString(_unitTemplate.values[2]),
                 '"}, {"trait_type": "Value Right", "value": "',
-                Strings.toString(_unit.values[3]),
+                Strings.toString(_unitTemplate.values[3]),
                 '"}'
             )
         );
         bytes memory byteString = abi.encodePacked(
-            abi.encodePacked(uriComponents[0], _unit.name),
-            abi.encodePacked(uriComponents[1], _unit.description),
-            abi.encodePacked(uriComponents[2], _unit.uris[0]),
-            abi.encodePacked(uriComponents[3], _unit.animation),
+            abi.encodePacked(uriComponents[0], _unitTemplate.name),
+            abi.encodePacked(uriComponents[1], _unitTemplate.description),
+            abi.encodePacked(uriComponents[2], _unitTemplate.uris[0]),
+            abi.encodePacked(uriComponents[3], _unitTemplate.animation),
             abi.encodePacked(uriComponents[4], attributes),
             abi.encodePacked(uriComponents[5])
         );
@@ -157,10 +164,10 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         payable(recipient).transfer(address(this).balance);
     }
 
-    function createUnit(Unit calldata _unit) external {
-        units[unitIds] = _unit;
+    function createUnitTemplate(UnitTemplate calldata _unitTemplate) external {
+        unitTemplates[unitIds] = _unitTemplate;
         unitIds++;
-        emit UnitCreated(_unit);
+        emit UnitTemplateCreated(_unitTemplate);
     }
 
     function checkModBalance(Unit storage _unit, uint256 _modId) internal view {
@@ -174,28 +181,30 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
             revert ModBalanceInsufficient(_modId);
     }
 
-    function addMod(uint256 _unitId, uint256 _modId) external {
-        Unit storage _unit = units[_unitId];
-        if (_unit.mods.length >= _unit.modSlots) {
+    function addMod(uint256 _tokenId, uint256 _modId) external {
+        Unit storage _unit = units[_tokenId];
+        UnitTemplate memory _unitTemplate = unitTemplates[_unit.template];
+        if (_unit.mods.length >= _unitTemplate.modSlots) {
             revert NoModSpaceAvailable();
         }
         checkModBalance(_unit, _modId);
         _unit.mods.push(_modId);
-        emit ModAdded(_unitId, _modId);
+        emit ModAdded(_tokenId, _modId);
     }
 
     function replaceMod(
-        uint256 _unitId,
+        uint256 _tokenId,
         uint256 _modId,
         uint256 _positionOfModToReplace
     ) external {
-        Unit storage _unit = units[_unitId];
-        if (_positionOfModToReplace >= _unit.modSlots)
+        Unit storage _unit = units[_tokenId];
+        UnitTemplate memory _unitTemplate = unitTemplates[_unit.template];
+        if (_positionOfModToReplace >= _unitTemplate.modSlots)
             revert ModPositionInvalid(_positionOfModToReplace);
         checkModBalance(_unit, _modId);
         _unit.mods[_positionOfModToReplace] = _modId;
-        emit ModAdded(_unitId, _modId);
+        emit ModAdded(_tokenId, _modId);
     }
 
-    function destroyMod(uint256 unitId, uint256 modId) external {}
+    function destroyMod(uint256 _tokenId, uint256 modId) external {}
 }

@@ -72,8 +72,7 @@
                 "uris": ["https://arweave.net/YcjMrfzfImNc5HL6-Jlou8ZjTjmFWQ4dHmpbrxLnj2c", "uri2"],
                 "values": [1, 1, 1, 1],
                 "rarity": "Rare",
-                "modSlots": 2,
-                "mods": []
+                "modSlots": 2
             }
         ]
         
