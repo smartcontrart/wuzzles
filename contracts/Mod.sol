@@ -90,11 +90,11 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
         bytes memory attributes = abi.encodePacked(
             '{"trait_type": "Top Bonus", "value": "',
             Strings.toString(mod.bonus[0]),
-            '"}, {"trait_type": "Left Bonus", "value": "',
+            '"}, {"trait_type": "Right Bonus", "value": "',
             Strings.toString(mod.bonus[1]),
             '"}, {"trait_type": "Bottom Bonus", "value": "',
             Strings.toString(mod.bonus[2]),
-            '"}, {"trait_type": "Right Bonus", "value": "',
+            '"}, {"trait_type": "Left Bonus", "value": "',
             Strings.toString(mod.bonus[3]),
             '"}'
         );

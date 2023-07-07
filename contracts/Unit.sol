@@ -123,11 +123,11 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
                 Strings.toString(_unitTemplate.modSlots),
                 '"}, {"trait_type": "Value Top", "value": "',
                 Strings.toString(_unitTemplate.values[0]),
-                '"}, {"trait_type": "Value Left", "value": "',
+                '"}, {"trait_type": "Value Right", "value": "',
                 Strings.toString(_unitTemplate.values[1]),
                 '"}, {"trait_type": "Value Bottom", "value": "',
                 Strings.toString(_unitTemplate.values[2]),
-                '"}, {"trait_type": "Value Right", "value": "',
+                '"}, {"trait_type": "Value Left", "value": "',
                 Strings.toString(_unitTemplate.values[3]),
                 '"}'
             )

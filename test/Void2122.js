@@ -527,7 +527,7 @@ describe("Void2122", function () {
       ).to.equal(1);
 
       expect(await void2122Mod.connect(deployer).uri(1)).to.equal(
-        'data:application/json;utf8,{"name":"test mod", "description":"mod description", "image":"mod image", "animation":"mod animation", "attributes":[{"trait_type": "Top Bonus", "value": "0"}, {"trait_type": "Left Bonus", "value": "1"}, {"trait_type": "Bottom Bonus", "value": "0"}, {"trait_type": "Right Bonus", "value": "2"}]}'
+        'data:application/json;utf8,{"name":"test mod", "description":"mod description", "image":"mod image", "animation":"mod animation", "attributes":[{"trait_type": "Top Bonus", "value": "0"}, {"trait_type": "Right Bonus", "value": "1"}, {"trait_type": "Bottom Bonus", "value": "0"}, {"trait_type": "Left Bonus", "value": "2"}]}'
       );
     });
   });
@@ -585,7 +585,7 @@ describe("Void2122", function () {
       );
 
       expect(await void2122Unit.connect(deployer).tokenURI(1)).to.equal(
-        'data:application/json;utf8,{"name":"test unit", "description":"unit description", "image":"uri1", "animation":"unit animation", "attributes":[{"trait_type": "Level", "value": "1"}, {"trait_type": "Generation", "value": "1"}, {"trait_type": "Model", "value": "unit model"}, {"trait_type": "Rarity", "value": "Rare"}, {"trait_type": "Total Mods Available", "value": "2"}, {"trait_type": "Value Top", "value": "1"}, {"trait_type": "Value Left", "value": "1"}, {"trait_type": "Value Bottom", "value": "1"}, {"trait_type": "Value Right", "value": "1"}]}'
+        'data:application/json;utf8,{"name":"test unit", "description":"unit description", "image":"uri1", "animation":"unit animation", "attributes":[{"trait_type": "Level", "value": "1"}, {"trait_type": "Generation", "value": "1"}, {"trait_type": "Model", "value": "unit model"}, {"trait_type": "Rarity", "value": "Rare"}, {"trait_type": "Total Mods Available", "value": "2"}, {"trait_type": "Value Top", "value": "1"}, {"trait_type": "Value Right", "value": "1"}, {"trait_type": "Value Bottom", "value": "1"}, {"trait_type": "Value Left", "value": "1"}]}'
       );
 
       // Can't add mod without one
