@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Connect from "./Connect.js";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Alert, Button } from "react-bootstrap";
+import { Container, Row, Col, Alert, Button, Image } from "react-bootstrap";
 import { AccountInfoContext } from "../Context/AccountInfo.js";
 
 import "../App.css";
@@ -53,13 +53,120 @@ function Home() {
   //   );
   // }
 
+  function renderCorporations() {
+    return accountInfo.nfts.corporation.map((nft, index) => {
+      console.log(nft);
+      return (
+        <Row>
+          <Col>
+            <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            {nft.title}
+          </Col>
+        </Row>
+      );
+    });
+  }
+
+  function renderFactories() {
+    return accountInfo.nfts.factory.map((nft, index) => {
+      return (
+        <Row>
+          <Col>
+            <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            {nft.title}
+          </Col>
+        </Row>
+      );
+    });
+  }
+
+  function renderLoots() {
+    return accountInfo.nfts.loot.map((nft, index) => {
+      return (
+        <Row>
+          <Col>
+            <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            {nft.title}
+          </Col>
+        </Row>
+      );
+    });
+  }
+
+  function renderMods() {
+    return accountInfo.nfts.mod.map((nft, index) => {
+      return (
+        <Row>
+          <Col>
+            <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            {nft.title}
+          </Col>
+        </Row>
+      );
+    });
+  }
+
+  function renderSchematics() {
+    return accountInfo.nfts.schematic.map((nft, index) => {
+      return (
+        <Row>
+          <Col>
+            <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            {nft.title}
+          </Col>
+        </Row>
+      );
+    });
+  }
+
+  function renderUnits() {
+    return accountInfo.nfts.unit.map((nft, index) => {
+      return (
+        <Row>
+          <Col>
+            <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            {nft.title}
+          </Col>
+        </Row>
+      );
+    });
+  }
+
   function renderUserInterface() {
-    // return renderMintButton();
+    if (accountInfo.nftsLoaded) {
+      return (
+        <>
+          <Row>
+            <Col>Corporations</Col>
+          </Row>
+          {renderCorporations()}
+          <Row>
+            <Col>Factories</Col>
+          </Row>
+          {renderFactories()}
+          <Row>
+            <Col>Loots</Col>
+          </Row>
+          {renderLoots()}
+          <Row>
+            <Col>Mods</Col>
+          </Row>
+          {renderMods()}
+          <Row>
+            <Col>Schematics</Col>
+          </Row>
+          {renderSchematics()}
+          <Row>
+            <Col>Units</Col>
+          </Row>
+          {renderUnits()}
+        </>
+      );
+    }
   }
 
   return (
     <Container className="mb-5">
-      {console.log(accountInfo)}
       <Row style={{ fontWeight: "bold" }}>
         <Col className="title_font">Void2122 - Test</Col>
       </Row>

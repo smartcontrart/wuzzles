@@ -160,8 +160,7 @@ class Connect extends Component {
             break;
         }
       });
-      this.context.updateAccountInfo({ nfts: nfts });
-      console.log(nfts);
+      this.context.updateAccountInfo({ nfts: nfts, nftsLoaded: true });
     }
   }
 
