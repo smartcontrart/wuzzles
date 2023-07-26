@@ -1,0 +1,80 @@
+{
+    "cards":{
+        "corporations":[
+            {
+                "id": 1,
+                "owner": "0x0000000000000000000000000000000000000000",
+                "name": "test corporation",
+                "description": "corporation description",
+                "image": "https://arweave.net/h0Aor-WyJlni1Tu78aOYoJRd4VBcsA9b5LkjrNgWjas",
+                "animation": "",
+                "active": false
+            }
+        ],
+        "factories":[
+            {
+                "id": 1,
+                "name": "test factory",
+                "description": "factory description",
+                "image": "https://arweave.net/yXqMTZ1mR8KjwNR4bMlY3shty6XyzPcwTnhabN-0yo0",
+                "animation": "",
+                "uri": "factory uri"
+            }
+        ],
+        "loots":[
+            {
+                "id": 1,
+                "name": "test loot",
+                "description": "loot description",
+                "image": "https://arweave.net/2myeRQ7_bqL0Rc3XgKKCFkGkAAphUUSq9IAskzRm_vA",
+                "animation": "",
+                "uri": "loot uri",
+                "isBroken": true
+            }
+        ],
+        "mods":[
+            {
+                "id": 1,
+                "name": "test mod",
+                "description": "mod description",
+                "image": "https://arweave.net/uZDljbH-xZe1BMg2gjxhjx-4wlF2U7RQ7mh70ryzlUE",
+                "animation": "",
+                "uri": "mod uri",
+                "bonus": [0, 1, 0, 2]
+            }
+        ],
+        "schematics":[
+            {
+                "id": 1,
+                "name": "test schematic",
+                "description": "schematic description",
+                "image": "https://arweave.net/fyAntr19eVPit1mkoNJhnB2Ot8sDooV06h2lBndDCAw",
+                "animation": "",
+                "uri": "schematics uri",
+                "constructionTime": 1,
+                "inputs": [1, 2],
+                "inputAmounts": [1, 1],
+                "output": 1,
+                "outputIsUnit": false
+            }
+        ],
+        "units":[
+            {
+                "id": 1,
+                "name": "test unit",
+                "level": 1,
+                "generation": 1,
+                "corporation": 1,
+                "model": "unit model",
+                "description": "unit description",
+                "image": "https://arweave.net/YcjMrfzfImNc5HL6-Jlou8ZjTjmFWQ4dHmpbrxLnj2c",
+                "animation": "",
+                "uris": ["https://arweave.net/YcjMrfzfImNc5HL6-Jlou8ZjTjmFWQ4dHmpbrxLnj2c", "uri2"],
+                "values": [1, 1, 1, 1],
+                "rarity": "Rare",
+                "modSlots": 2
+            }
+        ]
+        
+    }
+}

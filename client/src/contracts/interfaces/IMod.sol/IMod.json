@@ -1,0 +1,111 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IMod",
+  "sourceName": "contracts/interfaces/IMod.sol",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "image",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "animation",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "uri",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256[4]",
+              "name": "bonus",
+              "type": "uint256[4]"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct IMod.Mod",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "name": "ModCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "image",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "animation",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "uri",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256[4]",
+              "name": "bonus",
+              "type": "uint256[4]"
+            }
+          ],
+          "internalType": "struct IMod.Mod",
+          "name": "mod",
+          "type": "tuple"
+        }
+      ],
+      "name": "createMod",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

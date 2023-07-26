@@ -1,0 +1,174 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IFactory",
+  "sourceName": "contracts/interfaces/IFactory.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "FactoryInUse",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidCraft",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OnlyOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "RewardUnavailable",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TimerOngoing",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Unauthorized",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "CraftClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "CraftInitiated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "image",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "animation",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "uri",
+              "type": "string"
+            }
+          ],
+          "indexed": false,
+          "internalType": "struct IFactory.Factory",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "name": "FactoryCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "claimCraft",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "factoryId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "schematicsId",
+          "type": "uint256"
+        }
+      ],
+      "name": "craft",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "image",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "animation",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "uri",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct IFactory.Factory",
+          "name": "factory",
+          "type": "tuple"
+        }
+      ],
+      "name": "createFactory",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
