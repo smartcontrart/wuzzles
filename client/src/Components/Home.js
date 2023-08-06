@@ -60,7 +60,12 @@ function Home() {
         <Row>
           <Col>
             <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            <br />
             {nft.title}
+            <br />
+            <Button className="mb-2">Add/Remove member</Button>
+            <br />
+            <Button className="mb-2">Disband</Button>
           </Col>
         </Row>
       );
@@ -73,7 +78,12 @@ function Home() {
         <Row>
           <Col>
             <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            <br />
             {nft.title}
+            <br />
+            <Button className="mb-2">Craft</Button>
+            <br />
+            <Button className="mb-2">Claim</Button>
           </Col>
         </Row>
       );
@@ -86,6 +96,7 @@ function Home() {
         <Row>
           <Col>
             <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            <br />
             {nft.title}
           </Col>
         </Row>
@@ -99,6 +110,7 @@ function Home() {
         <Row>
           <Col>
             <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            <br />
             {nft.title}
           </Col>
         </Row>
@@ -112,6 +124,7 @@ function Home() {
         <Row>
           <Col>
             <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            <br />
             {nft.title}
           </Col>
         </Row>
@@ -125,7 +138,16 @@ function Home() {
         <Row>
           <Col>
             <Image src={nft.media[0].thumbnail} height="250px"></Image>
+            <br />
             {nft.title}
+            <br />
+            <Button className="mb-2">Add Mod</Button>
+            <br />
+            <Button className="mb-2">Replace Mod</Button>
+            <br />
+            <Button className="mb-2">Destroy Mod</Button>
+            <br />
+            <Button className="mb-2">Switch visual</Button>
           </Col>
         </Row>
       );
@@ -168,7 +190,7 @@ function Home() {
   return (
     <Container className="mb-5">
       <Row style={{ fontWeight: "bold" }}>
-        <Col className="title_font">Void2122 - Test</Col>
+        <Col className="title_font">Void2122 - Home</Col>
       </Row>
       <Row className="d-flex xs_center">{renderUserInterface()}</Row>
       <Row>
@@ -184,11 +206,6 @@ function Home() {
         </Col>
       </Row>
       <Row className="d-flex xs_center">{renderAlert()}</Row>
-      <Row>
-        <Col className="d-flex align-items-center justify-content-center">
-          <Connect />
-        </Col>
-      </Row>
     </Container>
   );
 }
