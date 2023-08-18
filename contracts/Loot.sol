@@ -11,7 +11,7 @@ contract Void2122Loot is ERC1155Upgradeable, ILoot {
     uint256 public royaltyAmount;
     address public royalties_recipient;
     string public constant contractName = "Void 2122 - Loots";
-    mapping(uint256 => Loot) loots;
+    mapping(uint256 => Loot) public loots;
     mapping(address => bool) isAdmin;
     string[] uriComponents;
 

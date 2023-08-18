@@ -2,6 +2,7 @@
   "name": "hardhat-project",
   "scripts": {
     "deploy": "npx hardhat run scripts/deploy.js",
+    "upgrade contracts": "npx hardhat run scripts/upgrade.js",
     "createTestCards": "npx hardhat run scripts/createTestCards.js",
     "mintNFTs": "npx hardhat run scripts/mintNFTs.js",
     "test": "REPORT_GAS=true npx hardhat test",

@@ -19,10 +19,8 @@ class AccountInfoProvider extends Component {
     walletETHBalance: 0,
     mintPrice: 0,
     signedMessage: null,
-    loadedNFTs: false,
-    dropOpened: false,
+    nftsLoaded: false,
     connectWallet: null,
-    hasMinted: null,
     instancesLoaded: false,
   };
 

@@ -5,7 +5,7 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
-const contractAddresses = require("../contract-addresses.json");
+const contractAddresses = require("../logs/contract-addresses.json");
 
 async function main() {
   console.log(contractAddresses);

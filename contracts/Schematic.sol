@@ -12,7 +12,7 @@ contract Void2122Schematic is ERC1155Upgradeable, ISchematics {
     uint256 public royaltyAmount;
     address public royalties_recipient;
     string public constant contractName = "Void 2122 - Schematics";
-    mapping(uint256 => Schematics) schematics;
+    mapping(uint256 => Schematics) public schematics;
     mapping(address => bool) isAdmin;
     string[] uriComponents;
 

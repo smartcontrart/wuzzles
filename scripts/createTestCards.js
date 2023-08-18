@@ -5,7 +5,7 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
-const contractAddresses = require("../contract-addresses.json");
+const contractAddresses = require("../logs/contract-addresses.json");
 const cardsData = require("../cardsData.json");
 
 var fs = require("fs");
@@ -99,7 +99,7 @@ async function main() {
 
   let units = cardsData.cards.units;
   for (let i = 0; i < units.length; i++) {
-    await void2122Unit.connect(deployer).createUnit(units[i]);
+    await void2122Unit.connect(deployer).createUnitTemplate(units[i]);
   }
 
   console.log("Cards created");

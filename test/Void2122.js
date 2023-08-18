@@ -599,7 +599,11 @@ describe("Void2122", function () {
       await void2122Unit
         .connect(deployer)
         .createUnitTemplate(defaultUnitTemplate);
-      // await void2122Unit.connect(deployer).mint(player1.address, 1);
+
+      let unitURIBefore = await void2122Unit.tokenURI(1);
+      expect(unitURIBefore).to.equal(
+        'data:application/json;utf8,{"name":"test unit", "description":"unit description", "image":"uri1", "animation":"unit animation", "attributes":[{"trait_type": "Level", "value": "1"}, {"trait_type": "Generation", "value": "1"}, {"trait_type": "Model", "value": "unit model"}, {"trait_type": "Rarity", "value": "Rare"}, {"trait_type": "Total Mods Available", "value": "2"}, {"trait_type": "Value Top", "value": "1"}, {"trait_type": "Value Right", "value": "1"}, {"trait_type": "Value Bottom", "value": "1"}, {"trait_type": "Value Left", "value": "1"}]}'
+      );
 
       // Can add mod with one
       await expect(void2122Unit.connect(player1).addMod(1, 1))
@@ -617,6 +621,12 @@ describe("Void2122", function () {
       await expect(void2122Unit.connect(player1).addMod(1, 1))
         .to.emit(void2122Unit, "ModAdded")
         .withArgs(1, 1);
+
+      let unitURIAfter = await void2122Unit.tokenURI(1);
+
+      expect(unitURIAfter).to.equal(
+        'data:application/json;utf8,{"name":"test unit", "description":"unit description", "image":"uri1", "animation":"unit animation", "attributes":[{"trait_type": "Level", "value": "1"}, {"trait_type": "Generation", "value": "1"}, {"trait_type": "Model", "value": "unit model"}, {"trait_type": "Rarity", "value": "Rare"}, {"trait_type": "Total Mods Available", "value": "2"}, {"trait_type": "Value Top", "value": "1"}, {"trait_type": "Value Right", "value": "3"}, {"trait_type": "Value Bottom", "value": "1"}, {"trait_type": "Value Left", "value": "5"}]}'
+      );
 
       await void2122Mod.connect(deployer).mint(player1.address, 1, 1);
 

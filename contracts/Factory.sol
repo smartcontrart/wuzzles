@@ -18,12 +18,14 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
     address public unitAddress;
     uint256 public royaltyAmount;
     address public royalties_recipient;
-    mapping(uint256 => Factory) factories;
+    mapping(uint256 => Factory) public factories;
     mapping(address => bool) isAdmin;
     mapping(uint256 => uint256) timeLocks;
     mapping(uint256 => uint256) rewardPendingUnlock;
     mapping(uint256 => bool) rewardIsUnit;
     string[] uriComponents;
+    address public ThreeHeAddress;
+    address public creditsAddress;
 
     function initialize() public initializer {
         __ERC721_init("Void 2122 - Factories", "");
@@ -112,6 +114,14 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
         lootAddress = _lootAddress;
     }
 
+    function setThreeHeAddress(address _ThreeHeAddress) external adminRequired {
+        ThreeHeAddress = _ThreeHeAddress;
+    }
+
+    function setCreditsAddress(address _creditsAddress) external adminRequired {
+        creditsAddress = _creditsAddress;
+    }
+
     function setModAddress(address _modAddress) external adminRequired {
         modAddress = _modAddress;
     }
@@ -130,6 +140,12 @@ contract Void2122Factory is ERC721Upgradeable, IFactory {
         factories[factoryIds] = _factory;
         factoryIds++;
         emit FactoryCreated(_factory);
+    }
+
+    function getRemainingLockTime(
+        uint256 _tokenId
+    ) public view returns (uint256) {
+        return timeLocks[_tokenId] - block.timestamp;
     }
 
     function craft(uint256 _tokenId, uint256 _schematicId) external {

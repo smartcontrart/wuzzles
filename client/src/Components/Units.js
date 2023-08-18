@@ -1,7 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Connect from "./Connect.js";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Alert, Button, Image } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Alert,
+  Button,
+  Image,
+  Dropdown,
+} from "react-bootstrap";
 import { AccountInfoContext } from "../Context/AccountInfo.js";
 
 import "../App.css";
@@ -13,6 +21,15 @@ function Home() {
     content: null,
     variant: null,
   });
+  const [availableMods, setAvailableMods] = useState([]);
+
+  // useEffect(() => {
+  //   if (accountInfo.nftsLoaded) {
+  //     // console.log("executed");
+  //     setAvailableMods(accountInfo.nfts.mods);
+  //   }
+  //   // Update the document title using the browser API
+  // }, [accountInfo.nftsLoaded]);
 
   function displayAlert(message, variant) {
     setAlert({ active: true, content: message, variant: variant });
@@ -53,6 +70,28 @@ function Home() {
   //   );
   // }
 
+  function renderModsToAdd() {
+    return accountInfo.nfts.mod.map((mod, index) => {
+      // TODO Filter out installed mods
+      return <Dropdown.Item href="#/action-1">{mod.title}</Dropdown.Item>;
+    });
+  }
+
+  function renderModsToReplace(nft) {
+    console.log(nft);
+    return accountInfo.nfts.unit.map((mod, index) => {
+      // TODO Filter out installed mods
+      return <Dropdown.Item href="#/action-1">{mod.title}</Dropdown.Item>;
+    });
+  }
+
+  function renderModsToDestroy() {
+    return accountInfo.nfts.mod.map((mod, index) => {
+      // TODO Filter out installed mods
+      return <Dropdown.Item href="#/action-1">{mod.title}</Dropdown.Item>;
+    });
+  }
+
   function renderUnits() {
     return accountInfo.nfts.unit.map((nft, index) => {
       return (
@@ -62,10 +101,28 @@ function Home() {
             <br />
             {nft.title}
             <br />
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Select a Mod to Add
+              </Dropdown.Toggle>
+              <Dropdown.Menu>{renderModsToAdd()}</Dropdown.Menu>
+            </Dropdown>
             <Button className="mb-2">Add Mod</Button>
             <br />
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Select a Mod to Replace
+              </Dropdown.Toggle>
+              <Dropdown.Menu>{renderModsToReplace(nft)}</Dropdown.Menu>
+            </Dropdown>
             <Button className="mb-2">Replace Mod</Button>
             <br />
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Select a Mod to Destroy
+              </Dropdown.Toggle>
+              <Dropdown.Menu>{renderModsToDestroy()}</Dropdown.Menu>
+            </Dropdown>
             <Button className="mb-2">Destroy Mod</Button>
             <br />
             <Button className="mb-2">Switch visual</Button>

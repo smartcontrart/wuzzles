@@ -53,18 +53,31 @@ function Home() {
   //   );
   // }
 
+  function renderInterface(nft) {
+    if (nft.rawMetadata.attributes[0].value == "True") {
+      return <div>Factory in Use</div>;
+    } else {
+      return (
+        <>
+          <br />
+          <Button className="mb-2">Craft</Button>
+          <br />
+          <Button className="mb-2">Claim</Button>
+        </>
+      );
+    }
+  }
+
   function renderFactories() {
     return accountInfo.nfts.factory.map((nft, index) => {
+      console.log(nft.rawMetadata.attributes[0].value);
       return (
         <Row>
           <Col>
             <Image src={nft.media[0].thumbnail} height="250px"></Image>
             <br />
             {nft.title}
-            <br />
-            <Button className="mb-2">Craft</Button>
-            <br />
-            <Button className="mb-2">Claim</Button>
+            {renderInterface(nft)}
           </Col>
         </Row>
       );

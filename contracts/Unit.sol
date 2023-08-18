@@ -17,10 +17,9 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
     address public corporationAddress;
     address public modAddress;
     string public constant contractName = "Void 2122 - Units";
-    mapping(uint256 => Unit) units;
+    mapping(uint256 => Unit) public units;
     mapping(uint256 => UnitTemplate) unitTemplates;
     mapping(address => bool) isAdmin;
-    mapping(address => uint256) mods;
     string[] uriComponents;
 
     error Unauthorized();
@@ -105,6 +104,19 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
     ) public view virtual override returns (string memory) {
         Unit memory _unit = units[_tokenId];
         UnitTemplate memory _unitTemplate = unitTemplates[_unit.template];
+        uint256 _valueTop = _unitTemplate.values[0];
+        uint256 _valueRight = _unitTemplate.values[1];
+        uint256 _valueBottom = _unitTemplate.values[2];
+        uint256 _valueLeft = _unitTemplate.values[3];
+        for (uint8 i = 0; i < _unit.mods.length; i++) {
+            uint256[4] memory bonuses = Void2122Mod(modAddress).getModBonus(
+                _unit.mods[i]
+            );
+            _valueTop += bonuses[0];
+            _valueRight += bonuses[1];
+            _valueBottom += bonuses[2];
+            _valueLeft += bonuses[3];
+        }
         bytes memory corporation = getCorporation(_tokenId);
         bytes memory attributes = abi.encodePacked(
             abi.encodePacked(
@@ -122,13 +134,13 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
             abi.encodePacked(
                 Strings.toString(_unitTemplate.modSlots),
                 '"}, {"trait_type": "Value Top", "value": "',
-                Strings.toString(_unitTemplate.values[0]),
+                Strings.toString(_valueTop),
                 '"}, {"trait_type": "Value Right", "value": "',
-                Strings.toString(_unitTemplate.values[1]),
+                Strings.toString(_valueRight),
                 '"}, {"trait_type": "Value Bottom", "value": "',
-                Strings.toString(_unitTemplate.values[2]),
+                Strings.toString(_valueBottom),
                 '"}, {"trait_type": "Value Left", "value": "',
-                Strings.toString(_unitTemplate.values[3]),
+                Strings.toString(_valueLeft),
                 '"}'
             )
         );
@@ -223,5 +235,12 @@ contract Void2122Unit is ERC721Upgradeable, IUnit {
         // Need to add check for a valid visual
         Unit storage _unit = units[_tokenId];
         _unit.visual = _visual;
+    }
+
+    function getUnitMods(
+        uint256 _tokenId
+    ) external view returns (uint256[] memory) {
+        Unit storage _unit = units[_tokenId];
+        return _unit.mods;
     }
 }

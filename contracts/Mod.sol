@@ -12,7 +12,7 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
     uint256 public royaltyAmount;
     address public royalties_recipient;
     string public constant contractName = "Void 2122 - Mods";
-    mapping(uint256 => Mod) mods;
+    mapping(uint256 => Mod) public mods;
     mapping(address => bool) isAdmin;
     string[] uriComponents;
 
@@ -115,6 +115,13 @@ contract Void2122Mod is ERC1155Upgradeable, IMod {
     ) external adminRequired {
         royalties_recipient = _recipient;
         royaltyAmount = _royaltyPerCent;
+    }
+
+    function getModBonus(
+        uint256 _tokenId
+    ) external view returns (uint256[4] memory) {
+        Mod memory mod = mods[_tokenId];
+        return mod.bonus;
     }
 
     function royaltyInfo(

@@ -102,14 +102,29 @@ async function main() {
     address: void2122Unit.address,
   });
 
+  const corporationImplementationAddress =
+    await upgrades.erc1967.getImplementationAddress(
+      void2122Corporation.address
+    );
+  const factoryImplementationAddress =
+    await upgrades.erc1967.getImplementationAddress(void2122Factory.address);
+  const lootImplementationAddress =
+    await upgrades.erc1967.getImplementationAddress(void2122Loot.address);
+  const modImplementationAddress =
+    await upgrades.erc1967.getImplementationAddress(void2122Mod.address);
+  const schematicImplementationAddress =
+    await upgrades.erc1967.getImplementationAddress(void2122Schematic.address);
+  const unitImplementationAddress =
+    await upgrades.erc1967.getImplementationAddress(void2122Unit.address);
+
   const logs = {
     contracts: {
-      corporation: Void2122Corporation.address,
-      factory: void2122Factory.address,
-      loot: void2122Loot.address,
-      mod: void2122Mod.address,
-      schematic: void2122Schematic.address,
-      unit: void2122Unit.address,
+      corporation: corporationImplementationAddress,
+      factory: factoryImplementationAddress,
+      loot: lootImplementationAddress,
+      mod: modImplementationAddress,
+      schematic: schematicImplementationAddress,
+      unit: unitImplementationAddress,
     },
     proxies: {
       corporation: void2122Corporation.address,
@@ -121,7 +136,14 @@ async function main() {
     },
   };
 
-  fs.writeFileSync("./contract-addresses.json", JSON.stringify(logs));
+  console.log(logs);
+
+  !fs.existsSync("./logs") ? fs.mkdirSync("./logs") : undefined;
+  fs.writeFileSync(
+    `./logs/contract-addresses_log_${Date.now()}.json`,
+    JSON.stringify(logs)
+  );
+  fs.writeFileSync("./logs/contract-addresses.json", JSON.stringify(logs));
 }
 
 // We recommend this pattern to be able to use async/await everywhere
