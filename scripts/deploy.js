@@ -5,8 +5,34 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
-
 var fs = require("fs");
+const contractsData = require("../logs/contractsData.json");
+
+// Clock Still Image: https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/0.jpg
+// Broken Clock Still Image: https://arweave.net/ngGdza9zgpCqEZMnrsbFIgbDZvcMVfaNyDRSB6u-hZs
+// Unique Still Image: https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/0.jpg
+// Unique: https://arweave.net/ZI4UmLdWFdiMocrjfPcBEJRVzLdu4QnvJhhURwMtNLY
+
+const clock = "https://arweave.net/-iNIWNsWRLHhpufr-3tHzvZbsE3l78pt9eK42MRDQbI";
+const brokenClock =
+  " https://arweave.net/6HuqHbnIESs8CYMTb2fBDH2xW52v1i-g8nK0D_G8g48";
+const OneOne =
+  "https://tir6cevy7j3rrlj2x4kfgfakoutplllnklxfvufmsmr6jo3k5s5q.arweave.net/miPhErj6dxitOr8UUxQKdSb1rW1S7lrQrJMj5Ltq7Ls";
+const frames =
+  "https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/";
+
+const numberOfFrames = 25;
+
+const images = [
+  "https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/0.jpg",
+  "https://arweave.net/ngGdza9zgpCqEZMnrsbFIgbDZvcMVfaNyDRSB6u-hZs",
+  "https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/0.jpg",
+];
+// Animation: [
+//   "https://arweave.net/ZI4UmLdWFdiMocrjfPcBEJRVzLdu4QnvJhhURwMtNLY",
+//   "https://arweave.net/6HuqHbnIESs8CYMTb2fBDH2xW52v1i-g8nK0D_G8g48",
+//   "https://arweave.net/-iNIWNsWRLHhpufr-3tHzvZbsE3l78pt9eK42MRDQbI",
+// ];
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -16,134 +42,48 @@ async function main() {
 
   console.log(`Deploying on ${chainId}`);
 
-  const Void2122Corporation = await ethers.getContractFactory(
-    "Void2122Corporation"
-  );
-  const void2122Corporation = await upgrades.deployProxy(
-    Void2122Corporation,
-    deployer
-  );
-  await void2122Corporation.deployed();
+  console.log("Deploying Killing Time...");
+  const kt = await hre.ethers.deployContract("KillingTime");
+  await kt.deployed();
+  console.log(`KT deployed to ${kt.address}`);
 
-  console.log(`Corporation deployed to ${void2122Corporation.address}`);
+  console.log("Setting the URI");
+  await kt.setURIs(images, [clock, brokenClock, OneOne]);
 
-  const Void2122Factory = await ethers.getContractFactory("Void2122Factory");
-  const void2122Factory = await upgrades.deployProxy(Void2122Factory, deployer);
-  await void2122Factory.deployed();
+  console.log("Setting the frames");
+  await kt.setFrames(numberOfFrames, frames);
 
-  console.log(`Factory deployed to ${void2122Factory.address}`);
+  console.log("Deploying Minting contract...");
+  const ktMint = await ethers.deployContract("KillingTimeMint", [kt.address]);
+  console.log(`KTMint deployed to ${ktMint.address}`);
 
-  const Void2122Loot = await ethers.getContractFactory("Void2122Loot");
-  const void2122Loot = await upgrades.deployProxy(Void2122Loot, deployer);
-  await void2122Loot.deployed();
+  console.log("Adding Mint contract as KT admin...");
+  await kt.toggleAdmin(ktMint.address);
 
-  console.log(`Loot deployed to ${void2122Loot.address}`);
-
-  const Void2122Mod = await ethers.getContractFactory("Void2122Mod");
-  const void2122Mod = await upgrades.deployProxy(Void2122Mod, deployer);
-  await void2122Mod.deployed();
-
-  console.log(`Mod deployed to ${void2122Mod.address}`);
-
-  const Void2122Schematic = await ethers.getContractFactory(
-    "Void2122Schematic"
-  );
-  const void2122Schematic = await upgrades.deployProxy(
-    Void2122Schematic,
-    deployer
-  );
-  await void2122Schematic.deployed();
-
-  console.log(`Schematic deployed to ${void2122Schematic.address}`);
-
-  const Void2122Unit = await ethers.getContractFactory("Void2122Unit");
-  const void2122Unit = await upgrades.deployProxy(Void2122Unit, deployer);
-  await void2122Unit.deployed();
-
-  console.log(`Unit deployed to ${void2122Unit.address}`);
-
-  await void2122Factory.setLootAddress(void2122Loot.address);
-  console.log(`Loot address set in Factory`);
-  await void2122Factory.setModAddress(void2122Mod.address);
-  console.log(`Mod address set in Factory`);
-  await void2122Factory.setSchematicAddress(void2122Schematic.address);
-  console.log(`Schematic address set in Factory`);
-  await void2122Factory.setUnitAddress(void2122Unit.address);
-  console.log(`Unit address set in Factory`);
-
-  await void2122Mod.toggleAdmin(void2122Factory.address);
-  console.log(`Factory added as admin in Mod`);
-
-  await void2122Unit.toggleAdmin(void2122Factory.address);
-  console.log(`Factory added as admin in Unit`);
-
-  await void2122Unit.setModAddress(void2122Mod.address);
-  console.log(`Mod address set in Unit`);
-
-  await void2122Unit.setCorporationAddress(void2122Corporation.address);
-  console.log(`Corporation address set in Unit`);
-
-  await run("verify:verify", {
-    address: void2122Corporation.address,
-  });
-  await run("verify:verify", {
-    address: void2122Factory.address,
-  });
-  await run("verify:verify", {
-    address: void2122Loot.address,
-  });
-  await run("verify:verify", {
-    address: void2122Mod.address,
-  });
-  await run("verify:verify", {
-    address: void2122Schematic.address,
-  });
-  await run("verify:verify", {
-    address: void2122Unit.address,
-  });
-
-  const corporationImplementationAddress =
-    await upgrades.erc1967.getImplementationAddress(
-      void2122Corporation.address
-    );
-  const factoryImplementationAddress =
-    await upgrades.erc1967.getImplementationAddress(void2122Factory.address);
-  const lootImplementationAddress =
-    await upgrades.erc1967.getImplementationAddress(void2122Loot.address);
-  const modImplementationAddress =
-    await upgrades.erc1967.getImplementationAddress(void2122Mod.address);
-  const schematicImplementationAddress =
-    await upgrades.erc1967.getImplementationAddress(void2122Schematic.address);
-  const unitImplementationAddress =
-    await upgrades.erc1967.getImplementationAddress(void2122Unit.address);
-
-  const logs = {
-    contracts: {
-      corporation: corporationImplementationAddress,
-      factory: factoryImplementationAddress,
-      loot: lootImplementationAddress,
-      mod: modImplementationAddress,
-      schematic: schematicImplementationAddress,
-      unit: unitImplementationAddress,
-    },
-    proxies: {
-      corporation: void2122Corporation.address,
-      factory: void2122Factory.address,
-      loot: void2122Loot.address,
-      mod: void2122Mod.address,
-      schematic: void2122Schematic.address,
-      unit: void2122Unit.address,
-    },
+  if (!contractsData[hre.network.name]) {
+    contractsData[hre.network.name] = { KT: {}, KTMint: {} };
+  }
+  contractsData[hre.network.name]["KT"] = {
+    contract: kt.address,
+    arguments: "",
+  };
+  contractsData[hre.network.name]["KTMint"] = {
+    contract: ktMint.address,
+    arguments: [kt.address],
   };
 
-  console.log(logs);
+  await storeDeploymentInformation();
 
+  console.log(contractsData);
+}
+
+async function storeDeploymentInformation() {
   !fs.existsSync("./logs") ? fs.mkdirSync("./logs") : undefined;
   fs.writeFileSync(
-    `./logs/contract-addresses_log_${Date.now()}.json`,
-    JSON.stringify(logs)
+    `./logs/contractData_${Date.now()}.json`,
+    JSON.stringify(contractsData)
   );
-  fs.writeFileSync("./logs/contract-addresses.json", JSON.stringify(logs));
+  fs.writeFileSync(`./logs/contractsData.json`, JSON.stringify(contractsData));
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -5,46 +5,17 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
-const addresses = require("../logs/contract-addresses.json");
+const contractsData = require("../logs/contractsData.json");
 
 var fs = require("fs");
 
 async function main() {
   await run("verify:verify", {
-    address: addresses.contracts.corporation,
+    address: contractsData[hre.network.name]["KT"].contract,
   });
   await run("verify:verify", {
-    address: addresses.proxies.corporation,
-  });
-  await run("verify:verify", {
-    address: addresses.contracts.factory,
-  });
-  await run("verify:verify", {
-    address: addresses.proxies.factory,
-  });
-  await run("verify:verify", {
-    address: addresses.contracts.loot,
-  });
-  await run("verify:verify", {
-    address: addresses.proxies.loot,
-  });
-  await run("verify:verify", {
-    address: addresses.contracts.mod,
-  });
-  await run("verify:verify", {
-    address: addresses.proxies.mod,
-  });
-  await run("verify:verify", {
-    address: addresses.contracts.schematic,
-  });
-  await run("verify:verify", {
-    address: addresses.proxies.schematic,
-  });
-  await run("verify:verify", {
-    address: addresses.contracts.unit,
-  });
-  await run("verify:verify", {
-    address: addresses.proxies.unit,
+    address: contractsData[hre.network.name]["KTMint"].contract,
+    constructorArguments: contractsData[hre.network.name]["KTMint"].arguments,
   });
 }
 

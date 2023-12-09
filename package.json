@@ -2,9 +2,8 @@
   "name": "hardhat-project",
   "scripts": {
     "deploy": "npx hardhat run scripts/deploy.js",
-    "upgrade contracts": "npx hardhat run scripts/upgrade.js",
-    "createTestCards": "npx hardhat run scripts/createTestCards.js",
-    "mintNFTs": "npx hardhat run scripts/mintNFTs.js",
+    "verify": "npx hardhat run scripts/verify.js",
+    "upgradeContracts": "npx hardhat run scripts/upgradeContracts.js",
     "test": "REPORT_GAS=true npx hardhat test",
     "coverage": "npx hardhat coverage",
     "size": "yarn hardhat size-contracts"
@@ -26,6 +25,7 @@
     "@types/chai": "^4.2.0",
     "@types/mocha": ">=9.1.0",
     "chai": "^4.2.0",
+    "erc721a-upgradeable": "^4.2.3",
     "hardhat": "^2.14.0",
     "hardhat-contract-sizer": "^2.9.0",
     "hardhat-gas-reporter": "^1.0.8",

@@ -454,6 +454,36 @@
       "address": "0x42bb0668d2D2d6F45193e7F08e3a6DaECea522Dd",
       "txHash": "0x115a3fa4ec799859b9b741d1a9c5717c165964ca6a91820e6889ad2e724fa120",
       "kind": "transparent"
+    },
+    {
+      "address": "0xaCB3083fa6f28CCcaCb7C4068e1A142915A81DAE",
+      "txHash": "0xc783aca72e1617d5bcd76dabcbdc2a6b5a06b0ace21b60ff58b0bdc525ca4e2e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xfBd58d4Aa7a68919D8cB17d11E0aE75b29cEf6f0",
+      "txHash": "0x07d73c2f7971ed9890c5bc729d74ffb1cd8766a9c3bdfaef55b3550e3de2fc5a",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5Db82132058ED9765e3e5A7CfA1cf97ad6329C75",
+      "txHash": "0xff3fec1841e0199fbd185f4feb892a6834abb1689723820c70ff2b71e1c43fd9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xeA17AAfa8144B3eBd846E359930b47fFE0a84119",
+      "txHash": "0x58d5a545b2a674b7da64796f077e585d380e06171c143db35b93b3c5ecd3c5a5",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x91Cf0ce9ee0F1d1C0DEa6597F5bfA6D35C4e59eA",
+      "txHash": "0x4dd85f11f93b319a262b28b1f9560d7fb8c4d8dfa8ae713f1415254f27b835b2",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xbc035ee62A87398d7f33613D92ac15463334287f",
+      "txHash": "0xd4c88965f6eca629ad60e9791ff5a7b3ebcc052b83622b395cb2b51d3b14b490",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -8347,6 +8377,1343 @@
               }
             ],
             "numberOfBytes": "416"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "e8822a54b88b3785752db0033ad490576adde21873c4acc230b3cbc253d61f32": {
+      "address": "0xCa3D7f920A1422a4057934c862D346A04d00deC3",
+      "txHash": "0x28736e028012908d1b490bb416d46214e635611967475598101ba613005c4bc3",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "royaltyAmount",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:9"
+          },
+          {
+            "label": "royalties_recipient",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:10"
+          },
+          {
+            "label": "isAdmin",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:12"
+          },
+          {
+            "label": "isCirculated",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:13"
+          },
+          {
+            "label": "diamonds",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:14"
+          },
+          {
+            "label": "shits",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:15"
+          },
+          {
+            "label": "frontURIS",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:16"
+          },
+          {
+            "label": "backURIS",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:17"
+          },
+          {
+            "label": "agedFrontURIS",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:18"
+          },
+          {
+            "label": "agedBackURIS",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:19"
+          },
+          {
+            "label": "revealed",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_bool",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:20"
+          },
+          {
+            "label": "generalSupply",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:21"
+          },
+          {
+            "label": "shitSupply",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:22"
+          },
+          {
+            "label": "diamondSupply",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:23"
+          },
+          {
+            "label": "tokenId",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:24"
+          },
+          {
+            "label": "shitId",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:25"
+          },
+          {
+            "label": "diamondId",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:26"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "e2b83ba28ef27ac2b6fec27d66229f1ae0968f82452441f9e775f2dfc7ae1fe8": {
+      "address": "0x0ebd07d56381c6e7184edC28D19FaC576D2bB046",
+      "txHash": "0x238f50bb2193bd4045592a7b4c42ad45a7f57e7339a53f4c55456cae44eb5766",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "royaltyAmount",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:9"
+          },
+          {
+            "label": "royalties_recipient",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:10"
+          },
+          {
+            "label": "isAdmin",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:12"
+          },
+          {
+            "label": "isCirculated",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:13"
+          },
+          {
+            "label": "diamonds",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:14"
+          },
+          {
+            "label": "shits",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:15"
+          },
+          {
+            "label": "frontURIS",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:16"
+          },
+          {
+            "label": "backURIS",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:17"
+          },
+          {
+            "label": "agedFrontURIS",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:18"
+          },
+          {
+            "label": "agedBackURIS",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:19"
+          },
+          {
+            "label": "revealed",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_bool",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:20"
+          },
+          {
+            "label": "generalSupply",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:21"
+          },
+          {
+            "label": "shitSupply",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:22"
+          },
+          {
+            "label": "diamondSupply",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:23"
+          },
+          {
+            "label": "tokenId",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:24"
+          },
+          {
+            "label": "shitId",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:25"
+          },
+          {
+            "label": "diamondId",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:26"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "6554a1a3b7a9a4ddbb8e2b81080ca42cc4098b9b427750f14a4f4e95c128b797": {
+      "address": "0x0e254cd0457FFe9E6c4C520a5677CD4A19DCd5E9",
+      "txHash": "0x75b6c9e00b880697c0b8fc356709516c1283933fce5f1e34c7a08e3c63b8cd95",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "royaltyAmount",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:9"
+          },
+          {
+            "label": "royalties_recipient",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:10"
+          },
+          {
+            "label": "isAdmin",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:12"
+          },
+          {
+            "label": "isCirculated",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:13"
+          },
+          {
+            "label": "diamonds",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:14"
+          },
+          {
+            "label": "shits",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:15"
+          },
+          {
+            "label": "frontURIS",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:16"
+          },
+          {
+            "label": "backURIS",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:17"
+          },
+          {
+            "label": "agedFrontURIS",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:18"
+          },
+          {
+            "label": "agedBackURIS",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:19"
+          },
+          {
+            "label": "revealed",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_bool",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:20"
+          },
+          {
+            "label": "generalSupply",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:21"
+          },
+          {
+            "label": "shitSupply",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:22"
+          },
+          {
+            "label": "diamondSupply",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:23"
+          },
+          {
+            "label": "tokenId",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:24"
+          },
+          {
+            "label": "shitId",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:25"
+          },
+          {
+            "label": "diamondId",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:26"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "72e694de8c9ab3940621192029e9c25b9ea7a0c5b057785ae4ed151868f24c61": {
+      "address": "0xB2F6F8a397aE051164ef6626C4d64EAbd026D4A0",
+      "txHash": "0xb0a69acd5fb8141faf68c8d8dbed0ba6c8497f2a75e31676087009f7f556031d",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:25"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:28"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:31"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:34"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:477"
+          },
+          {
+            "label": "royaltyAmount",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:12"
+          },
+          {
+            "label": "royalties_recipient",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_address",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:13"
+          },
+          {
+            "label": "isAdmin",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:15"
+          },
+          {
+            "label": "isCirculated",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:16"
+          },
+          {
+            "label": "frontURIS",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:17"
+          },
+          {
+            "label": "backURIS",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:18"
+          },
+          {
+            "label": "agedFrontURIS",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:19"
+          },
+          {
+            "label": "agedBackURIS",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:20"
+          },
+          {
+            "label": "revealed",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_bool",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:21"
+          },
+          {
+            "label": "generalSupply",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:22"
+          },
+          {
+            "label": "shitSupply",
+            "offset": 0,
+            "slot": "161",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:23"
+          },
+          {
+            "label": "diamondSupply",
+            "offset": 0,
+            "slot": "162",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:24"
+          },
+          {
+            "label": "tokenId",
+            "offset": 0,
+            "slot": "163",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:25"
+          },
+          {
+            "label": "generalId",
+            "offset": 0,
+            "slot": "164",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:26"
+          },
+          {
+            "label": "shitId",
+            "offset": 0,
+            "slot": "165",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:27"
+          },
+          {
+            "label": "diamondId",
+            "offset": 0,
+            "slot": "166",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:28"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "21e86ec34492cdfe18cbe909f821da29a9c2a8fe81cc9a7e066262da7277c976": {
+      "address": "0xC8a9c2b8126aF7C7874F1e1F0799B562119f310E",
+      "txHash": "0x491f0b81220648ad965a1cf75e3f9c44aaa93d185d532a7f1e2ce95bcd5305f2",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:25"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:28"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:31"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:34"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:477"
+          },
+          {
+            "label": "royaltyAmount",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:11"
+          },
+          {
+            "label": "royalties_recipient",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_address",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:12"
+          },
+          {
+            "label": "isAdmin",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:14"
+          },
+          {
+            "label": "isCirculated",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:15"
+          },
+          {
+            "label": "frontURIS",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:16"
+          },
+          {
+            "label": "backURIS",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:17"
+          },
+          {
+            "label": "agedFrontURIS",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:18"
+          },
+          {
+            "label": "agedBackURIS",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:19"
+          },
+          {
+            "label": "revealed",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_bool",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:20"
+          },
+          {
+            "label": "generalSupply",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:21"
+          },
+          {
+            "label": "shitSupply",
+            "offset": 0,
+            "slot": "161",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:22"
+          },
+          {
+            "label": "diamondSupply",
+            "offset": 0,
+            "slot": "162",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:23"
+          },
+          {
+            "label": "tokenId",
+            "offset": 0,
+            "slot": "163",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:24"
+          },
+          {
+            "label": "shitId",
+            "offset": 0,
+            "slot": "164",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:25"
+          },
+          {
+            "label": "diamondId",
+            "offset": 0,
+            "slot": "165",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:26"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "2bf4a95c07be21c69bc511abe2c2b2bd2733d08fad9d8d9e6bc6ae7390d431c7": {
+      "address": "0xFAE70a51f20608a6555d47489EaF37CDdf05C856",
+      "txHash": "0x2dbe302f4e323b03aa300947a3076cee52980f07214e5443388396897d1cbd2a",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:25"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:28"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:31"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:34"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:477"
+          },
+          {
+            "label": "royaltyAmount",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:11"
+          },
+          {
+            "label": "royalties_recipient",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_address",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:12"
+          },
+          {
+            "label": "isAdmin",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:14"
+          },
+          {
+            "label": "isCirculated",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:15"
+          },
+          {
+            "label": "frontURIS",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:16"
+          },
+          {
+            "label": "backURIS",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:17"
+          },
+          {
+            "label": "agedFrontURIS",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:18"
+          },
+          {
+            "label": "agedBackURIS",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_string_storage",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:19"
+          },
+          {
+            "label": "revealed",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_bool",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:20"
+          },
+          {
+            "label": "generalSupply",
+            "offset": 0,
+            "slot": "160",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:21"
+          },
+          {
+            "label": "shitSupply",
+            "offset": 0,
+            "slot": "161",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:22"
+          },
+          {
+            "label": "diamondSupply",
+            "offset": 0,
+            "slot": "162",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:23"
+          },
+          {
+            "label": "tokenId",
+            "offset": 0,
+            "slot": "163",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:24"
+          },
+          {
+            "label": "shitId",
+            "offset": 0,
+            "slot": "164",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:25"
+          },
+          {
+            "label": "diamondId",
+            "offset": 0,
+            "slot": "165",
+            "type": "t_uint256",
+            "contract": "Tokcunts",
+            "src": "contracts/Tokcunts.sol:26"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
           },
           "t_uint256": {
             "label": "uint256",
