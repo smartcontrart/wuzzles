@@ -28,6 +28,8 @@ const images = [
   "https://arweave.net/ngGdza9zgpCqEZMnrsbFIgbDZvcMVfaNyDRSB6u-hZs",
   "https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/0.jpg",
 ];
+
+const ktAddress = "0xbe2aedbecbb98eb89b043642b3e2b58476203912";
 // Animation: [
 //   "https://arweave.net/ZI4UmLdWFdiMocrjfPcBEJRVzLdu4QnvJhhURwMtNLY",
 //   "https://arweave.net/6HuqHbnIESs8CYMTb2fBDH2xW52v1i-g8nK0D_G8g48",
@@ -42,10 +44,9 @@ async function main() {
 
   console.log(`Deploying on ${chainId}`);
 
-  console.log("Deploying Killing Time...");
-  const kt = await hre.ethers.deployContract("KillingTime");
-  await kt.deployed();
-  console.log(`KT deployed to ${kt.address}`);
+  console.log("Finding Killing Time...");
+  const kt = await hre.ethers.getContractAt("KillingTime", ktAddress);
+  console.log(`KT found at ${kt.address}`);
 
   console.log("Setting the URI");
   await kt.setURIs(images, [clock, brokenClock, OneOne]);
@@ -54,7 +55,7 @@ async function main() {
   await kt.setFrames(numberOfFrames, frames);
 
   console.log("Deploying Minting contract...");
-  const ktMint = await ethers.deployContract("KillingTimeMint", [kt.address]);
+  const ktMint = await ethers.deployContract("KillingTimeMint", [ktAddress]);
   console.log(`KTMint deployed to ${ktMint.address}`);
 
   console.log("Adding Mint contract as KT admin...");
