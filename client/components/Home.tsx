@@ -23,8 +23,6 @@ export default function Home() {
   useEffect(() => {
     const fetchDropStatus = async () => {
       try {
-        console.log("address:");
-        console.log(process.env.NEXT_PUBLIC_KT_MINT);
         const data = await readContracts({
           contracts: [
             {
@@ -37,8 +35,6 @@ export default function Home() {
             },
           ],
         });
-        console.log("data");
-        console.log(data);
         setDropStatus(data[0].result as boolean);
       } catch (error) {
         console.error(error);
