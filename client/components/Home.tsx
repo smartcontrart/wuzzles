@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import clock from "../visuals/clock.gif";
 import UserInterface from "./UserInterface";
+import KillingTimeMint from "../contracts/KillingTimeMint.sol/KillingTimeMint.json";
 import {
   useAccount,
   useNetwork,
