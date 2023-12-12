@@ -35,7 +35,6 @@ export default function Home() {
             },
           ],
         });
-        console.log(data[0].result);
         setDropStatus(data[0].result as boolean);
       } catch (error) {
         console.error(error);
