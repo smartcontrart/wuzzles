@@ -23,10 +23,8 @@ export default function Home() {
   useEffect(() => {
     const fetchDropStatus = async () => {
       try {
-        console.log("chain");
-        console.log(chain);
-        console.log("KillingTimeMint");
-        console.log(KillingTimeMint);
+        console.log("address:");
+        console.log(process.env.NEXT_PUBLIC_KT_MINT);
         const data = await readContracts({
           contracts: [
             {
