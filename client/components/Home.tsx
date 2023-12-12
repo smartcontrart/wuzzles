@@ -23,6 +23,8 @@ export default function Home() {
   useEffect(() => {
     const fetchDropStatus = async () => {
       try {
+        console.log(chain);
+        console.log(KillingTimeMint);
         const data = await readContracts({
           contracts: [
             {
@@ -35,12 +37,13 @@ export default function Home() {
             },
           ],
         });
+        console.log(data[0].result);
         setDropStatus(data[0].result as boolean);
       } catch (error) {
         console.error(error);
       }
     };
-
+    console.log(dropStatus);
     setUserConnected(isConnected);
     fetchDropStatus();
   }, [isConnected, chain]);
