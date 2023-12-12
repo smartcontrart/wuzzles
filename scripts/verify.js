@@ -13,6 +13,8 @@ async function main() {
   await run("verify:verify", {
     address: contractsData[hre.network.name]["KT"].contract,
   });
+
+  console.log(contractsData[hre.network.name]["KTMint"].arguments);
   await run("verify:verify", {
     address: contractsData[hre.network.name]["KTMint"].contract,
     constructorArguments: contractsData[hre.network.name]["KTMint"].arguments,

@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import {
+  useNetwork,
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
@@ -8,6 +9,7 @@ import KillingTime from "../contracts/KillingTime.sol/KillingTime.json";
 
 export default function FrameButton({ clock }: any) {
   const [alert, setAlert] = useState({ display: false, message: "" });
+  const { chain, chains } = useNetwork();
 
   const displayAlert = (message: string) => {
     const updatedAlert = { display: true, message: message };
@@ -23,7 +25,10 @@ export default function FrameButton({ clock }: any) {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_KT_CONTRACT_ADDRESS as `0x${string}`,
+    address:
+      chain!.id === 5
+        ? (process.env.NEXT_PUBLIC_KT_GOERLI as `0x${string}`)
+        : (process.env.NEXT_PUBLIC_KT as `0x${string}`),
     abi: KillingTime.abi,
     functionName: "toggleFrameClock",
     args: [clock ? clock.tokenId : null],
@@ -37,6 +42,7 @@ export default function FrameButton({ clock }: any) {
     <span className="grid align-center">
       {!isLoading ? (
         <button
+          disabled={write ? true : false}
           className="border-solid border-2 p-2 w-24 m-2"
           onClick={() => write()}
         >

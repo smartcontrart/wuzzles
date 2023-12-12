@@ -1,11 +1,11 @@
 import { useState, useContext, useEffect } from "react";
 import {
+  useNetwork,
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
   readContracts,
 } from "wagmi";
-import KillingTime from "../contracts/KillingTime.sol/KillingTime.json";
 import KillingTimeMint from "../contracts/KillingTimeMint.sol/KillingTimeMint.json";
 
 export default function UserInterface() {
@@ -13,6 +13,8 @@ export default function UserInterface() {
   const [mintPrice, setMintPrice] = useState(0);
   const [insurance, setInsurance] = useState(false);
   const [alert, setAlert] = useState({ display: false, message: "" });
+
+  const { chain, chains } = useNetwork();
 
   const displayAlert = (message: string) => {
     const updatedAlert = { display: true, message: message };
@@ -29,8 +31,10 @@ export default function UserInterface() {
         const data = await readContracts({
           contracts: [
             {
-              address: process.env
-                .NEXT_PUBLIC_KT_MINT_CONTRACT_ADDRESS as `0x${string}`,
+              address:
+                chain!.id === 5
+                  ? (process.env.NEXT_PUBLIC_KT_MINT_GOERLI as `0x${string}`)
+                  : (process.env.NEXT_PUBLIC_KT_MINT as `0x${string}`),
               abi: KillingTimeMint.abi,
               functionName: "_insurancePrice",
             },
@@ -47,8 +51,10 @@ export default function UserInterface() {
         const data = await readContracts({
           contracts: [
             {
-              address: process.env
-                .NEXT_PUBLIC_KT_MINT_CONTRACT_ADDRESS as `0x${string}`,
+              address:
+                chain!.id === 5
+                  ? (process.env.NEXT_PUBLIC_KT_MINT_GOERLI as `0x${string}`)
+                  : (process.env.NEXT_PUBLIC_KT_MINT as `0x${string}`),
               abi: KillingTimeMint.abi,
               functionName: "_price",
             },
@@ -61,7 +67,7 @@ export default function UserInterface() {
     };
     fetchInsurancePrice();
     fetchMintPrice();
-  }, []);
+  }, [chain]);
 
   function handleChange() {
     setInsurance(!insurance);
@@ -72,7 +78,10 @@ export default function UserInterface() {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_KT_MINT_CONTRACT_ADDRESS as `0x${string}`,
+    address:
+      chain!.id === 5
+        ? (process.env.NEXT_PUBLIC_KT_MINT_GOERLI as `0x${string}`)
+        : (process.env.NEXT_PUBLIC_KT_MINT as `0x${string}`),
     abi: KillingTimeMint.abi,
     functionName: "mint",
     args: [insurance],

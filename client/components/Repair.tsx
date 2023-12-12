@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 import { Network, Alchemy } from "alchemy-sdk";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
+import Link from "next/link";
 import RepairInterface from "./RepairInterface";
 
 export default function Repair() {
@@ -10,6 +11,7 @@ export default function Repair() {
   const [clocksOwned, setClocksOwned] = useState([]);
   const [selection, setSelection] = useState(null);
   const [userConnected, setUserConnected] = useState(false);
+  const { chain, chains } = useNetwork();
 
   useEffect(() => {
     setUserConnected(isConnected);
@@ -17,13 +19,19 @@ export default function Repair() {
     const getClocks = async () => {
       const config = {
         apiKey: process.env.REACT_APP_ALCHEMY_KEY,
-        network: Network.ETH_GOERLI,
+        network: chain!.id === 1 ? Network.ETH_MAINNET : Network.ETH_GOERLI,
       };
       const alchemy = new Alchemy(config);
       const response = await alchemy.nft.getNftsForOwner(
         address as `0x${string}`,
         {
-          contractAddresses: [`${process.env.NEXT_PUBLIC_KT_CONTRACT_ADDRESS}`],
+          contractAddresses: [
+            `${
+              chain!.id === 5
+                ? process.env.NEXT_PUBLIC_KT_GOERLI
+                : process.env.NEXT_PUBLIC_KT
+            }`,
+          ],
         }
       );
       setClocksOwned(response.ownedNfts);
@@ -47,23 +55,31 @@ export default function Repair() {
             Your clocks
           </div>
           <div className="flex justify-center">
-            {clocksOwned.length > 0
-              ? clocksOwned.map((clock: any, idx: number) => (
-                  <Image
-                    className={`mx-5 ${
-                      selection && selection.tokenId === clock.tokenId
-                        ? "border-solid border-2 border-white"
-                        : null
-                    }`}
-                    alt="clock_image"
-                    key={idx}
-                    src={clock.image.cachedUrl}
-                    width={100}
-                    height={100}
-                    onClick={() => select(clock)}
-                  />
-                ))
-              : null}
+            {clocksOwned.length > 0 ? (
+              clocksOwned.map((clock: any, idx: number) => (
+                <Image
+                  className={`mx-5 ${
+                    selection && selection.tokenId === clock.tokenId
+                      ? "border-solid border-2 border-white"
+                      : null
+                  }`}
+                  alt="clock_image"
+                  key={idx}
+                  src={clock.image.cachedUrl}
+                  width={100}
+                  height={100}
+                  onClick={() => select(clock)}
+                />
+              ))
+            ) : (
+              <div>
+                You don&apos;t own any clocks yet, check{" "}
+                <Link className="underline" href="/">
+                  here
+                </Link>{" "}
+                if you can still mint some!
+              </div>
+            )}
           </div>
         </div>
         <div className="text-l">
