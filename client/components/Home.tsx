@@ -46,8 +46,6 @@ export default function Home() {
     };
     setUserConnected(isConnected);
     fetchDropStatus();
-    console.log("dropStatus");
-    console.log(dropStatus);
   }, [isConnected, chain]);
 
   useEffect(() => {}, [isConnected]);
