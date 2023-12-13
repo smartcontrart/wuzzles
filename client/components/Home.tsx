@@ -7,6 +7,7 @@ import UserInterface from "./UserInterface";
 import KillingTimeMint from "../contracts/KillingTimeMint.sol/KillingTimeMint.json";
 import {
   useAccount,
+  useBalance,
   useNetwork,
   usePrepareContractWrite,
   useContractWrite,
@@ -44,7 +45,11 @@ export default function Home() {
     fetchDropStatus();
   }, [isConnected, chain]);
 
-  useEffect(() => {}, [isConnected]);
+  useEffect(() => {}, [isConnected, address]);
+
+  const { data, isError, isLoading } = useBalance({
+    address: address,
+  });
 
   return (
     <div className="">
@@ -95,7 +100,7 @@ export default function Home() {
           <div className="grid justify-items-center my-10">
             {userConnected ? (
               dropStatus ? (
-                <UserInterface />
+                <UserInterface userBalanceData={data} />
               ) : (
                 <div>Drop closed</div>
               )

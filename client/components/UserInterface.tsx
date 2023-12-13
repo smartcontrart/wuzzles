@@ -8,7 +8,7 @@ import {
 } from "wagmi";
 import KillingTimeMint from "../contracts/KillingTimeMint.sol/KillingTimeMint.json";
 
-export default function UserInterface() {
+export default function UserInterface({ userBalanceData }) {
   const [insurancePrice, setInsurancePrice] = useState(0);
   const [mintPrice, setMintPrice] = useState(0);
   const [insurance, setInsurance] = useState(false);
@@ -102,13 +102,18 @@ export default function UserInterface() {
         </label>
       </div>
       {!isLoading ? (
-        <button className="border-solid border-2 p-2" onClick={() => write()}>
-          {`Mint for ${
-            insurance
-              ? Number(mintPrice + insurancePrice) / 10 ** 18
-              : Number(mintPrice) / 10 ** 18
-          } ETH`}
-        </button>
+        userBalanceData.value >=
+        (insurance ? Number(mintPrice + insurancePrice) : Number(mintPrice)) ? (
+          <button className="border-solid border-2 p-2" onClick={() => write()}>
+            {`Mint for ${
+              insurance
+                ? Number(mintPrice + insurancePrice) / 10 ** 18
+                : Number(mintPrice) / 10 ** 18
+            } ETH`}
+          </button>
+        ) : (
+          <div>Insufficient funds</div>
+        )
       ) : (
         <div>Minting...</div>
       )}
