@@ -40,7 +40,9 @@ export default function UserInterface({ userBalanceData }) {
             },
           ],
         });
-        setInsurancePrice(data[0].result as number);
+        if ((data[0].result as number) >= 0) {
+          setInsurancePrice(data[0].result as number);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -60,7 +62,9 @@ export default function UserInterface({ userBalanceData }) {
             },
           ],
         });
-        setMintPrice(data[0].result as number);
+        if ((data[0].result as number) >= 0) {
+          setMintPrice(data[0].result as number);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -102,8 +106,12 @@ export default function UserInterface({ userBalanceData }) {
         </label>
       </div>
       {!isLoading ? (
-        userBalanceData.value >=
-        (insurance ? Number(mintPrice + insurancePrice) : Number(mintPrice)) ? (
+        chain!.id !== 1 ? (
+          <div>Please connect to Ethereum mainnet</div>
+        ) : userBalanceData.value >=
+          (insurance
+            ? Number(mintPrice + insurancePrice)
+            : Number(mintPrice)) ? (
           <button className="border-solid border-2 p-2" onClick={() => write()}>
             {`Mint for ${
               insurance
