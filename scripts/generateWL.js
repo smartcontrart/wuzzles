@@ -37,7 +37,7 @@ async function main() {
   }
 
   console.log(signedAL);
-  fs.writeFileSync(`../signedList/signedList.json`, JSON.stringify(signedAL));
+  fs.writeFileSync(`./client/signedList.json`, JSON.stringify(signedAL));
 }
 
 main().catch((error) => {
