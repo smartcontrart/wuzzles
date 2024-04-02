@@ -22,14 +22,14 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col justify-between">
       {userConnected ? (
-        <div className="flex flex-col md:flex-row justify-between p-5 items-start">
+        <div className="flex flex-col md:flex-row md:justify-between p-5 items-start">
           {isConnected ? <UserInterface /> : null}
-          <span className="self-start m-3">
+          <span className="self-center md:self-start m-3">
             <ConnectButton chainStatus="icon" showBalance={false} />
           </span>
         </div>
       ) : (
-        <div className="flex justify-end p-5">
+        <div className="flex self-center md:self-end justify-end p-5">
           <ConnectButton chainStatus="icon" showBalance={false} />
         </div>
       )}
