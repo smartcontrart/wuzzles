@@ -31,20 +31,15 @@ import "../styles/globals.css";
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
-    polygon,
-    optimism,
-    arbitrum,
     base,
-    zora,
-    goerli,
     sepolia,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [sepolia] : []),
   ],
   [publicProvider()]
 );
 
 const { wallets } = getDefaultWallets({
-  appName: "KT",
+  appName: "Wuzzles",
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_ID!,
   chains,
 });
