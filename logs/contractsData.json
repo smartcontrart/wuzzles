@@ -13,14 +13,14 @@
   },
   "base": {
     "Wuzzles": {
-      "contract": "0x0859554eAe3e6837725B043D48657a4b92569c56",
+      "contract": "0xed6E89Cfe9a725eFfD6f86107EB12594221146dA",
       "arguments": [
         "https://arweave.net/z0Z0w8Qwssb1Dh0vOrkhr5WkFhoOtCqcE8_MVNVH3zk"
       ]
     },
     "WuzzlesMint": {
       "contract": "0x8EF02c93CB490a36e1bfd6f1Ddb75AD4c2f6D9B9",
-      "arguments": ["0x0859554eAe3e6837725B043D48657a4b92569c56"]
+      "arguments": ["0xed6E89Cfe9a725eFfD6f86107EB12594221146dA"]
     }
   }
 }

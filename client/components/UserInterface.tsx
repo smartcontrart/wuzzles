@@ -115,24 +115,6 @@ export default function UserInterface() {
     fetchMintPrice();
   }, [chain, publicMint, privateMint]);
 
-  const {
-    config,
-    error: prepareError,
-    isError: isPrepareError,
-  } = usePrepareContractWrite({
-    address:
-      chain!.id === 11155111
-        ? (process.env.NEXT_PUBLIC_WUZZLES_MINT_SEPOLIA as `0x${string}`)
-        : (process.env.NEXT_PUBLIC_WUZZLES_MINT as `0x${string}`),
-    abi: WuzzlesMint.abi,
-    functionName: "privateMint",
-    value: BigInt(mintPrice),
-  });
-  const { data, write } = useContractWrite(config);
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-  });
-
   return (
     <div className="flex flex-col bg-white self-center rounded-xl text-black p-3">
       <div className="flex flex-row justify-between text-xl">
@@ -141,7 +123,7 @@ export default function UserInterface() {
       </div>
       <div className="w-72 md:w-96 bg-neutral-200 rounded h-2"></div>
       <div className="flex flex-row justify-center">
-        {chain.id !== 11155111 ? (
+        {chain.id !== 8453 ? (
           <div className="text-xl">Please connect to Base</div>
         ) : publicMint ? (
           <PublicMint />
