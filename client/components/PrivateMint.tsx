@@ -17,13 +17,14 @@ export default function PrivateMint() {
 
   useEffect(() => {
     const findSignedMessage = async (account: any) => {
-      let signedMessage = null;
+      let signedMessage = { v: "", r: "", s: "" };
       for (let i = 0; i < signedList.length; i++) {
         let key = Object.keys(signedList[i])[0];
         if (key.toLowerCase() === address.toLowerCase()) {
           signedMessage = signedList[i][key];
         }
       }
+
       setSignedMessage(signedMessage);
     };
     console.log(signedMessage);
