@@ -44,10 +44,7 @@ export default function PublicMint() {
         >
           public mint.
         </button>
-      ) : (
-        <div>Minting...</div>
-      )}
-      {isSuccess && <div>mint successful.</div>}
+      ) : null}
     </span>
   );
 }

@@ -31,8 +31,6 @@ export default function PrivateMint() {
     findSignedMessage(address);
   }, [signedMessage, address, isConnected]);
 
-  console.log(signedMessage.v, signedMessage.r, signedMessage.s);
-
   const { config } = usePrepareContractWrite({
     address:
       chain!.id === 11155111
@@ -60,19 +58,7 @@ export default function PrivateMint() {
         >
           mint.
         </button>
-      ) : (
-        <div>Minting...</div>
-      )}
-      {isSuccess && (
-        <div>
-          Mint successful
-          <div>
-            <a href={`https://etherscan.io/tx/${data?.hash}`}>
-              See transaction
-            </a>
-          </div>
-        </div>
-      )}
+      ) : null}
     </span>
   );
 }

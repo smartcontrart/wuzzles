@@ -36,6 +36,7 @@ export default function UserInterface() {
           ],
         });
         setSupply(data[0].result as number);
+        console.log(data);
       } catch (error) {
         console.error(error);
       }

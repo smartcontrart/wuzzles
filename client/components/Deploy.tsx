@@ -25,7 +25,7 @@ export default function Deploy() {
     const hash = await walletClient?.deployContract({
       abi: Wuzzles.abi,
       bytecode: Wuzzles.bytecode as `0x${string}`,
-      args: [],
+      args: ["https://arweave.net/z0Z0w8Qwssb1Dh0vOrkhr5WkFhoOtCqcE8_MVNVH3zk"],
     });
   }
 
