@@ -47,7 +47,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="text-4xl p-5">wuzzles.</div>
+      <div className="text-4xl p-5 font-extrabold">wuzzles.</div>
     </div>
   );
 }

@@ -42,7 +42,7 @@ export default function PublicMint() {
           className="w-80 bg-neutral-200 rounded mt-5 mb-2 text-xl disabled:opacity-20"
           onClick={() => write!()}
         >
-          public mint.
+          mint.
         </button>
       ) : null}
     </span>
