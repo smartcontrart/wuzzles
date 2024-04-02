@@ -5,8 +5,9 @@ import {
   RainbowKitProvider,
   darkTheme,
   ConnectButton,
+  lightTheme,
 } from "@rainbow-me/rainbowkit";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { configureChains, createConfig, sepolia, WagmiConfig } from "wagmi";
 import {
   arbitrum,
   goerli,
@@ -25,7 +26,7 @@ import {
 } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
 import "../styles/globals.css";
-import { Nanum_Gothic_Coding } from "next/font/google";
+// import { Nanum_Gothic_Coding } from "next/font/google";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -36,6 +37,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
     base,
     zora,
     goerli,
+    sepolia,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
   ],
   [publicProvider()]
@@ -62,27 +64,18 @@ const wagmiConfig = createConfig({
   webSocketPublicClient,
 });
 
-const nanum_Gothic_Coding = Nanum_Gothic_Coding({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-// const cloister_black = localFont({ src: "../font/CloisterBlack.ttf" });
-
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <main className="nanum_Gothic_Coding min-h-screen bg-stone-800 text-slate-50 px-5 md:px-20 lg:px-40">
+    <main className="min-h-screen text-white ">
       <WagmiConfig config={wagmiConfig}>
         <RainbowKitProvider
-          theme={darkTheme({
-            accentColor: "rgb(100,100,100)",
-          })}
           chains={chains}
+          theme={lightTheme({
+            accentColor: "white",
+            accentColorForeground: "black",
+          })}
         >
           <Component {...pageProps} />
-          <div className="grid justify-items-center mt-5 pb-10">
-            <ConnectButton chainStatus="icon" showBalance={true} />
-          </div>
         </RainbowKitProvider>
       </WagmiConfig>
     </main>

@@ -11,13 +11,14 @@ var fs = require("fs");
 
 async function main() {
   await run("verify:verify", {
-    address: contractsData[hre.network.name]["KT"].contract,
+    address: contractsData[hre.network.name]["Wuzzles"].contract,
+    constructorArguments: contractsData[hre.network.name]["Wuzzles"].arguments,
   });
 
-  console.log(contractsData[hre.network.name]["KTMint"].arguments);
   await run("verify:verify", {
-    address: contractsData[hre.network.name]["KTMint"].contract,
-    constructorArguments: contractsData[hre.network.name]["KTMint"].arguments,
+    address: contractsData[hre.network.name]["WuzzlesMint"].contract,
+    constructorArguments:
+      contractsData[hre.network.name]["WuzzlesMint"].arguments,
   });
 }
 

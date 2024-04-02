@@ -1,21 +1,17 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @font-face {
-    font-family: 'CloisterBlack';
-    src: url('../font/CloisterBlack.ttf');
-}
-
-@font-face {
-    font-family: 'nanum-regular';
-    src: url('../font/NanumGothicCoding-Regular.ttf');
+  font-family: "TommySoft";
+  src: url("../font/MADE Tommy Soft Medium PERSONAL USE.otf");
 }
 
 html {
-    font-family: "nanum-regular";
+  font-family: "TommySoft";
+  background-color: #2667ff;
 }
 
-h1 {
-    font-family: "CloisterBlack";
+body {
+  background-color: #2667ff;
 }

@@ -5,46 +5,17 @@ require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  //   solidity: {
-  //     version: "0.8.17",
-  //     settings: {
-  //       optimizer: {
-  //         enabled: true,
-  //         runs: 1000,
-  //       },
-  //     },
-  //   },
-  //   etherscan: {
-  //     apiKey: process.env.ETHERSCAN_API_KEY,
-  //   },
-  //   networks: {
-  //     hardhat: {},
-  //     goerli: {
-  //       url: "https://goerli.infura.io/v3/" + process.env.INFURA_API_KEY,
-  //       accounts: [`0x` + process.env.PRIVATE_KEY],
-  //       timeout: 1000000,
-  //     },
-  //     mainnet: {
-  //       url: "https://mainnet.infura.io/v3/" + process.env.INFURA_API_KEY,
-  //       gasPrice: 50e9,
-  //       accounts: [`0x` + process.env.PRIVATE_KEY],
-  //       timeout: 1000000,
-  //     },
-  //   },
-  // };
-
   networks: {
     hardhat: {},
     goerli: {
-      url: "https://eth-goerli.g.alchemy.com/v2/" + process.env.ALCHEMY_GOERLI,
-      // url: "https://goerli.infura.io/v3/" + process.env.INFURA_API_KEY,
+      url: "https://goerli.infura.io/v3/" + process.env.INFURA_API_KEY,
       chainId: 5,
       accounts: [
         process.env.PRIVATE_KEY !== undefined
           ? process.env.PRIVATE_KEY
           : "0x1234567890123456789012345678901234567890123456789012345678901234",
       ],
-      timeout: 2000000,
+      timeout: 1000000,
     },
     mainnet: {
       url:
@@ -53,6 +24,18 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
       timeout: 1000000,
     },
+    sepolia: {
+      url:
+        "https://eth-sepolia.g.alchemy.com/v2/" + process.env.ALCHEMY_SEPOLIA,
+      chainId: 11155111,
+      accounts: [process.env.PRIVATE_KEY],
+      timeout: 1000000,
+    },
+    base: {
+      url: "https://mainnet.base.org",
+      accounts: [process.env.PRIVATE_KEY],
+      gasPrice: 1000000000,
+    },
   },
   etherscan: {
     apiKey: {
@@ -60,16 +43,20 @@ module.exports = {
         process.env.ETHERSCAN_API_KEY !== undefined
           ? process.env.ETHERSCAN_API_KEY
           : "",
-      goerli:
+      sepolia:
         process.env.ETHERSCAN_API_KEY !== undefined
           ? process.env.ETHERSCAN_API_KEY
+          : "",
+      base:
+        process.env.BASESCAN_API_KEY !== undefined
+          ? process.env.BASESCAN_API_KEY
           : "",
     },
   },
   solidity: {
     compilers: [
       {
-        version: "0.8.17",
+        version: "0.8.24",
         settings: {
           optimizer: {
             enabled: true,

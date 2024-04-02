@@ -8,33 +8,11 @@ const hre = require("hardhat");
 var fs = require("fs");
 const contractsData = require("../logs/contractsData.json");
 
-// Clock Still Image: https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/0.jpg
-// Broken Clock Still Image: https://arweave.net/ngGdza9zgpCqEZMnrsbFIgbDZvcMVfaNyDRSB6u-hZs
-// Unique Still Image: https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/0.jpg
-// Unique: https://arweave.net/ZI4UmLdWFdiMocrjfPcBEJRVzLdu4QnvJhhURwMtNLY
+const unrevealedURI =
+  "https://arweave.net/z0Z0w8Qwssb1Dh0vOrkhr5WkFhoOtCqcE8_MVNVH3zk";
 
-const clock = "https://arweave.net/-iNIWNsWRLHhpufr-3tHzvZbsE3l78pt9eK42MRDQbI";
-const brokenClock =
-  " https://arweave.net/6HuqHbnIESs8CYMTb2fBDH2xW52v1i-g8nK0D_G8g48";
-const OneOne =
-  "https://tir6cevy7j3rrlj2x4kfgfakoutplllnklxfvufmsmr6jo3k5s5q.arweave.net/miPhErj6dxitOr8UUxQKdSb1rW1S7lrQrJMj5Ltq7Ls";
-const frames =
-  "https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/";
-
-const numberOfFrames = 25;
-
-const images = [
-  "https://arweave.net/7Oc2zbWmuhGUDhgHfdWLtY9mwyorYSXdXL-k_ZLMnAY",
-  "https://arweave.net/KiXrq9lwIe9Ql-gwWwnoHCSSc_JGyOc8guGE5yVGTlc/0.jpg",
-  "https://arweave.net/ngGdza9zgpCqEZMnrsbFIgbDZvcMVfaNyDRSB6u-hZs",
-];
-
-const ktAddress = "0x1f35fcb331332dcf033d56779691bb76f8d8f39c";
-Animation: [
-  "https://tir6cevy7j3rrlj2x4kfgfakoutplllnklxfvufmsmr6jo3k5s5q.arweave.net/miPhErj6dxitOr8UUxQKdSb1rW1S7lrQrJMj5Ltq7Ls",
-  "https://arweave.net/6HuqHbnIESs8CYMTb2fBDH2xW52v1i-g8nK0D_G8g48",
-  "https://arweave.net/-iNIWNsWRLHhpufr-3tHzvZbsE3l78pt9eK42MRDQbI",
-];
+const revealedURI =
+  "https://arweave.net/L_mkz8t6tuF1l7UsZlUdOl8jBeEacIoiaS1Lw32t8Qk/";
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -42,38 +20,38 @@ async function main() {
 
   const chainId = await deployer.getChainId();
 
-  console.log(`Deploying on ${chainId}`);
+  console.log(`Deploying Wuzzles on ${chainId} ...`);
 
-  console.log("Finding Killing Time...");
-  const kt = await hre.ethers.getContractAt("KillingTime", ktAddress);
-  console.log(`KT found at ${ktAddress}`);
+  const Wuzzles = await ethers.getContractFactory("Wuzzles");
+  const wuzzles = await Wuzzles.deploy(unrevealedURI);
+  await wuzzles.deployed();
 
-  console.log("Setting the URI");
-  await kt.setURIs(images, [clock, brokenClock, OneOne]);
+  console.log(`Wuzzles deployed to ${wuzzles.address}`);
 
-  console.log("Setting the frames");
-  await kt.setFrames(numberOfFrames, frames);
+  console.log(`Deploying WuzzlesMint on ${chainId} ...`);
 
-  console.log("Deploying Minting contract...");
-  const ktMint = await ethers.deployContract("KillingTimeMint", [ktAddress]);
-  console.log(`KTMint deployed to ${ktMint.address}`);
+  const WuzzlesMint = await ethers.getContractFactory("WuzzlesMint");
+  const wuzzlesMint = await WuzzlesMint.deploy(wuzzles.address);
+  await wuzzlesMint.deployed();
 
-  console.log("Adding Mint contract as KT admin...");
-  await kt.toggleAdmin(ktMint.address);
+  console.log(`WuzzlesMint deployed to ${wuzzlesMint.address}`);
 
   if (!contractsData[hre.network.name]) {
-    contractsData[hre.network.name] = { KT: {}, KTMint: {} };
+    contractsData[hre.network.name] = { Wuzzles: {}, WuzzlesMint: {} };
   }
-  contractsData[hre.network.name]["KT"] = {
-    contract: ktAddress,
-    arguments: "",
+  contractsData[hre.network.name]["Wuzzles"] = {
+    contract: wuzzles.address,
+    arguments: [unrevealedURI],
   };
-  contractsData[hre.network.name]["KTMint"] = {
-    contract: ktMint.address,
-    arguments: [ktAddress],
+  contractsData[hre.network.name]["WuzzlesMint"] = {
+    contract: wuzzlesMint.address,
+    arguments: [wuzzles.address],
   };
 
   await storeDeploymentInformation();
+
+  console.log("Administering Wuzzles...");
+  await wuzzles.toggleAdmin(wuzzlesMint.address);
 
   console.log(contractsData);
 }

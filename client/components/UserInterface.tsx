@@ -1,48 +1,85 @@
 import { useState, useContext, useEffect } from "react";
 import {
+  useAccount,
   useNetwork,
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
   readContracts,
 } from "wagmi";
-import KillingTimeMint from "../contracts/KillingTimeMint.sol/KillingTimeMint.json";
+import WuzzlesMint from "../contracts/WuzzlesMint.sol/WuzzlesMint.json";
+import Wuzzles from "../contracts/Wuzzles.sol/Wuzzles.json";
+import PrivateMint from "./PrivateMint";
+import PublicMint from "./PublicMint";
 
-export default function UserInterface({ userBalanceData }) {
-  const [insurancePrice, setInsurancePrice] = useState(0);
+export default function UserInterface() {
   const [mintPrice, setMintPrice] = useState(0);
-  const [insurance, setInsurance] = useState(false);
-  const [alert, setAlert] = useState({ display: false, message: "" });
+  const [supply, setSupply] = useState(0);
+  const [privateMint, setPrivateMint] = useState(false);
+  const [publicMint, setPublicMint] = useState(false);
 
   const { chain, chains } = useNetwork();
 
-  const displayAlert = (message: string) => {
-    const updatedAlert = { display: true, message: message };
-    setAlert(updatedAlert);
-
-    setTimeout(() => {
-      setAlert({ display: false, message: "" });
-    }, 5000);
-  };
-
   useEffect(() => {
-    const fetchInsurancePrice = async () => {
+    const getSupply = async () => {
       try {
         const data = await readContracts({
           contracts: [
             {
               address:
-                chain!.id === 5
-                  ? (process.env.NEXT_PUBLIC_KT_MINT_GOERLI as `0x${string}`)
-                  : (process.env.NEXT_PUBLIC_KT_MINT as `0x${string}`),
-              abi: KillingTimeMint.abi,
-              functionName: "_insurancePrice",
+                chain!.id === 11155111
+                  ? (process.env.NEXT_PUBLIC_WUZZLES_SEPOLIA as `0x${string}`)
+                  : (process.env.NEXT_PUBLIC_WUZZLES as `0x${string}`),
+              abi: Wuzzles.abi,
+              functionName: "_tokenId",
             },
           ],
         });
-        if ((data[0].result as number) >= 0) {
-          setInsurancePrice(data[0].result as number);
-        }
+        setSupply(data[0].result as number);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const privateMintStatus = async () => {
+      try {
+        const data = await readContracts({
+          contracts: [
+            {
+              address:
+                chain!.id === 11155111
+                  ? (process.env
+                      .NEXT_PUBLIC_WUZZLES_MINT_SEPOLIA as `0x${string}`)
+                  : (process.env.NEXT_PUBLIC_WUZZLES_MINT as `0x${string}`),
+              abi: WuzzlesMint.abi,
+              functionName: "_privateMintOpened",
+            },
+          ],
+        });
+        setPrivateMint(data[0].result as boolean);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const publicMintStatus = async () => {
+      try {
+        const data = await readContracts({
+          contracts: [
+            {
+              address:
+                chain!.id === 11155111
+                  ? (process.env
+                      .NEXT_PUBLIC_WUZZLES_MINT_SEPOLIA as `0x${string}`)
+                  : (process.env.NEXT_PUBLIC_WUZZLES_MINT as `0x${string}`),
+              abi: WuzzlesMint.abi,
+              functionName: "_publicMintOpened",
+            },
+          ],
+        });
+        setPublicMint(data[0].result as boolean);
+        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -54,10 +91,11 @@ export default function UserInterface({ userBalanceData }) {
           contracts: [
             {
               address:
-                chain!.id === 5
-                  ? (process.env.NEXT_PUBLIC_KT_MINT_GOERLI as `0x${string}`)
-                  : (process.env.NEXT_PUBLIC_KT_MINT as `0x${string}`),
-              abi: KillingTimeMint.abi,
+                chain!.id === 11155111
+                  ? (process.env
+                      .NEXT_PUBLIC_WUZZLES_MINT_SEPOLIA as `0x${string}`)
+                  : (process.env.NEXT_PUBLIC_WUZZLES_MINT as `0x${string}`),
+              abi: WuzzlesMint.abi,
               functionName: "_price",
             },
           ],
@@ -69,13 +107,12 @@ export default function UserInterface({ userBalanceData }) {
         console.error(error);
       }
     };
-    fetchInsurancePrice();
-    fetchMintPrice();
-  }, [chain]);
 
-  function handleChange() {
-    setInsurance(!insurance);
-  }
+    getSupply();
+    privateMintStatus();
+    publicMintStatus();
+    fetchMintPrice();
+  }, [chain, publicMint, privateMint]);
 
   const {
     config,
@@ -83,59 +120,37 @@ export default function UserInterface({ userBalanceData }) {
     isError: isPrepareError,
   } = usePrepareContractWrite({
     address:
-      chain!.id === 5
-        ? (process.env.NEXT_PUBLIC_KT_MINT_GOERLI as `0x${string}`)
-        : (process.env.NEXT_PUBLIC_KT_MINT as `0x${string}`),
-    abi: KillingTimeMint.abi,
-    functionName: "mint",
-    args: [insurance],
-    value: BigInt(insurance ? mintPrice + insurancePrice : mintPrice),
+      chain!.id === 11155111
+        ? (process.env.NEXT_PUBLIC_WUZZLES_MINT_SEPOLIA as `0x${string}`)
+        : (process.env.NEXT_PUBLIC_WUZZLES_MINT as `0x${string}`),
+    abi: WuzzlesMint.abi,
+    functionName: "privateMint",
+    value: BigInt(mintPrice),
   });
-
   const { data, write } = useContractWrite(config);
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
 
   return (
-    <span className="grid align-center">
-      <div className="mb-2">
-        <input type="checkbox" onChange={handleChange} />
-        <label className="mx-5">
-          Add insurance for {Number(insurancePrice) / 10 ** 18} ETH
-        </label>
+    <div className="flex flex-col bg-white rounded-xl text-black p-3">
+      <div className="flex flex-row justify-between text-xl">
+        <div>0.009 eth</div>
+        <div>{Math.max(0, Number(supply) - 1)}/900 minted.</div>
       </div>
-      {!isLoading ? (
-        chain!.id !== 1 ? (
-          <div>Please connect to Ethereum mainnet</div>
-        ) : userBalanceData.value >=
-          (insurance
-            ? Number(mintPrice + insurancePrice)
-            : Number(mintPrice)) ? (
-          <button className="border-solid border-2 p-2" onClick={() => write()}>
-            {`Mint for ${
-              insurance
-                ? Number(mintPrice + insurancePrice) / 10 ** 18
-                : Number(mintPrice) / 10 ** 18
-            } ETH`}
-          </button>
-        ) : (
-          <div>Insufficient funds</div>
-        )
-      ) : (
-        <div>Minting...</div>
-      )}
-      {isSuccess && (
-        <div>
-          Mint successful{" "}
-          <div>
-            <a href={`https://etherscan.io/tx/${data?.hash}`}>
-              See transaction
-            </a>
-          </div>
-        </div>
-      )}
-      <p>{alert.message}</p>
-    </span>
+      <div className="w-96 bg-neutral-200 rounded h-2"></div>
+      <div className="flex flex-row justify-center">
+        {chain.id !== 11155111 ? (
+          <div className="text-xl">Please connect to Base</div>
+        ) : publicMint ? (
+          <PublicMint />
+        ) : privateMint && !publicMint ? (
+          <PrivateMint />
+        ) : null}
+      </div>
+      <div className="flex flex-row">
+        <div className="text-xs">max 1 per wallet</div>
+      </div>
+    </div>
   );
 }

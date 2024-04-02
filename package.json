@@ -1,6 +1,7 @@
 {
   "name": "hardhat-project",
   "scripts": {
+    "wl": "npx hardhat run scripts/generateWL.js",
     "deploy": "npx hardhat run scripts/deploy.js",
     "verify": "npx hardhat run scripts/verify.js",
     "upgradeContracts": "npx hardhat run scripts/upgradeContracts.js",
