@@ -55,7 +55,6 @@ export default function PrivateMint() {
           mint.
         </button>
       ) : null}
-      {signedMessage.v !== "" ? <div>you are on the wl!</div> : null}
     </span>
   );
 }
