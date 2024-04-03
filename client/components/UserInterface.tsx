@@ -134,15 +134,7 @@ export default function UserInterface() {
         <div>{Math.max(0, Number(supply) - 1)}/900 minted.</div>
       </div>
       <div className="w-72 md:w-96 bg-neutral-200 rounded h-2"></div>
-      <div className="flex flex-row justify-center">
-        {chain.id !== 8453 ? (
-          <div className="text-xl">Please connect to Base</div>
-        ) : publicMint ? (
-          <PublicMint />
-        ) : privateMint && !publicMint ? (
-          <PrivateMint />
-        ) : null}
-      </div>
+      <div className="flex flex-row justify-center">Sold out</div>
       {signedMessage.v !== "" ? <div>wallet wuzzlisted!</div> : null}
       <div className="flex flex-row">
         <div className="text-xs">max 1 per wallet</div>
