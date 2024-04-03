@@ -10,9 +10,6 @@ import { useAccount, useBalance, useNetwork, readContracts } from "wagmi";
 export default function Home() {
   const { address, connector, isConnected } = useAccount();
   const [userConnected, setUserConnected] = useState(false);
-  const [privateDropStatus, setPrivateDropStatus] = useState(false);
-  const [publicDropStatus, setPublicDropStatus] = useState(false);
-  const [price, setPrice] = useState(0);
   const { chain, chains } = useNetwork();
 
   useEffect(() => {

@@ -11,9 +11,12 @@ import WuzzlesMint from "../contracts/WuzzlesMint.sol/WuzzlesMint.json";
 import Wuzzles from "../contracts/Wuzzles.sol/Wuzzles.json";
 import PrivateMint from "./PrivateMint";
 import PublicMint from "./PublicMint";
+import signedList from "../signedList.json";
 
 export default function UserInterface() {
+  const [signedMessage, setSignedMessage] = useState({ v: "", r: "", s: "" });
   const [mintPrice, setMintPrice] = useState(0);
+  const { address, connector, isConnected } = useAccount();
   const [supply, setSupply] = useState(0);
   const [privateMint, setPrivateMint] = useState(false);
   const [publicMint, setPublicMint] = useState(false);
@@ -21,6 +24,18 @@ export default function UserInterface() {
   const { chain, chains } = useNetwork();
 
   useEffect(() => {
+    const findSignedMessage = async (account: any) => {
+      let signedMessage = { v: "", r: "", s: "" };
+      for (let i = 0; i < signedList.length; i++) {
+        let key = Object.keys(signedList[i])[0];
+        if (key.toLowerCase() === address.toLowerCase()) {
+          signedMessage = signedList[i][key];
+        }
+      }
+
+      setSignedMessage(signedMessage);
+    };
+
     const getSupply = async () => {
       try {
         const data = await readContracts({
@@ -36,7 +51,6 @@ export default function UserInterface() {
           ],
         });
         setSupply(data[0].result as number);
-        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -58,7 +72,6 @@ export default function UserInterface() {
           ],
         });
         setPrivateMint(data[0].result as boolean);
-        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -80,7 +93,6 @@ export default function UserInterface() {
           ],
         });
         setPublicMint(data[0].result as boolean);
-        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -108,12 +120,12 @@ export default function UserInterface() {
         console.error(error);
       }
     };
-
+    findSignedMessage(address);
     getSupply();
     privateMintStatus();
     publicMintStatus();
     fetchMintPrice();
-  }, [chain, publicMint, privateMint]);
+  }, [address, chain, publicMint, privateMint]);
 
   return (
     <div className="flex flex-col bg-white self-center rounded-xl text-black p-3">
@@ -131,6 +143,7 @@ export default function UserInterface() {
           <PrivateMint />
         ) : null}
       </div>
+      {signedMessage.v !== "" ? <div>wallet wuzzlisted!</div> : null}
       <div className="flex flex-row">
         <div className="text-xs">max 1 per wallet</div>
       </div>

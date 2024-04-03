@@ -28,7 +28,6 @@ export default function PublicMint() {
     value: BigInt(9 * 10 ** 15),
   });
 
-  console.log(pdata);
   const { data, write } = useContractWrite(config);
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,

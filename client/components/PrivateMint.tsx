@@ -10,7 +10,6 @@ import WuzzlesMint from "../contracts/WuzzlesMint.sol/WuzzlesMint.json";
 import signedList from "../signedList.json";
 
 export default function PrivateMint() {
-  const [alert, setAlert] = useState({ display: false, message: "" });
   const [signedMessage, setSignedMessage] = useState({ v: "", r: "", s: "" });
   const { address, connector, isConnected } = useAccount();
   const { chain, chains } = useNetwork();
@@ -27,7 +26,6 @@ export default function PrivateMint() {
 
       setSignedMessage(signedMessage);
     };
-    console.log(signedMessage);
     findSignedMessage(address);
   }, [signedMessage, address, isConnected]);
 
@@ -41,9 +39,7 @@ export default function PrivateMint() {
     args: [signedMessage.v, signedMessage.r, signedMessage.s],
     value: BigInt(9 * 10 ** 15),
   });
-  console.log(config);
   const { data, write } = useContractWrite(config);
-  console.log(write);
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
@@ -59,6 +55,7 @@ export default function PrivateMint() {
           mint.
         </button>
       ) : null}
+      {signedMessage.v !== "" ? <div>you are on the wl!</div> : null}
     </span>
   );
 }
